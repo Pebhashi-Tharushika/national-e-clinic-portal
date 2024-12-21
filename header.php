@@ -9,12 +9,13 @@ session_start();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>National E Clinic Portal</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css?family=Lato:300,400,900" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="stylesheet" href="style/header.css">
     <link rel="icon" href="images/logo_v.png" type="image/png">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/5a39afcc99.js" crossorigin="anonymous"></script>
     <script defer src="header.js"></script>
 </head>
@@ -28,7 +29,8 @@ session_start();
         <div class="nav">
           <a class="nav-item" href="home/home.php">Home</a>
           <a class="nav-item" href="about_us/about_us.php">About Us</a>
-          <div class="dropdown">
+          <a class="nav-item" href="about_us/about_us.php">Services</a>
+          <div id="dropdown-account" class="dropdown">
             <a class="nav-item" href="#" id="account-link">Account</a>
             <div class="dropdown-content" id="dropdown-menu">
               <!-- Show Log In and Register only if user is NOT logged in -->
@@ -45,6 +47,13 @@ session_start();
               <?php endif; ?>
             </div>
           </div>
+          <div id="dropdown-contact" class='dropdown'>
+            <a class="nav-item" href="#" id="contact-link">Contact</a>
+            <div class="dropdown-content" id="dropdown-menu">
+                <a href="support.html">Support</a>
+                <a href="faq.html">FAQs</a>
+            </div>
+          </div>
         </div>
         
       </header>
@@ -55,13 +64,13 @@ session_start();
           <h2 class="blob"> Book Your Hospital Visit, Anytime, Anywhere, <br> Just a Click Away.</h2>
           <div class="button-wrapper">
             <a href="#">
-              <div id="btn-how-work" class="button">How Booking works
+              <div id="btn-how-work" class="button">Getting Started
                   <i class="fa-solid fa-circle-chevron-down fa-bounce" style="--fa-bounce-start-scale-x: 1;--fa-bounce-start-scale-y: 1;--fa-bounce-jump-scale-x: 1;--fa-bounce-jump-scale-y: 1;--fa-bounce-land-scale-x: 1;--fa-bounce-land-scale-y: 1;--fa-bounce-rebound: 0; margin-left:5px"></i>
               </div>
             </a>
             
             <a href="clinic_details/SeeDetails.php">
-              <div id="btn-clinic-data" class="button">See Clinik Details</div>
+              <div id="btn-clinic-data" class="button">See Clinic Details</div>
             </a>
           </div>
         </div>
