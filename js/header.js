@@ -1,30 +1,58 @@
 const accountLink = document.getElementById('account-link');
+const contactLink = document.getElementById('contact-link');
 const dropdownMenu = document.getElementById('dropdown-menu');
-let isOpenDropdown = false;
+let isOpenDropdownAccount = false;
+let isOpenDropdownContact = false;
 
 
-// Toggle dropdown on click
+// Toggle account dropdown on click
 accountLink.addEventListener('click', (event) => {
   event.preventDefault(); // Prevent default anchor tag behavior
   const dropdown = accountLink.parentElement;
   dropdown.classList.toggle('show');
-  if(!isOpenDropdown){
+  if(!isOpenDropdownAccount){
     accountLink.classList.add('active');
-    isOpenDropdown = true;
+    isOpenDropdownAccount = true;
   }else{
     accountLink.classList.remove('active');
-    isOpenDropdown = false
+    isOpenDropdownAccount = false
   }
 });
 
-// Close the dropdown when clicking outside
+// Close the  account dropdown when clicking outside
 document.addEventListener('click', (event) => {
-  if (!event.target.closest('.dropdown')) {
-    document.querySelectorAll('.dropdown.show').forEach((dropdown) => {
+  if (!event.target.closest('#dropdown-account')) {
+    document.querySelectorAll('#dropdown-account.show').forEach((dropdown) => {
       dropdown.classList.remove('show');
     });
     accountLink.classList.remove('active');
-    isOpenDropdown = false
+    isOpenDropdownAccount = false
+  }
+});
+
+
+// Toggle contact dropdown on click
+contactLink.addEventListener('click', (event) => {
+  event.preventDefault(); // Prevent default anchor tag behavior
+  const dropdown = contactLink.parentElement;
+  dropdown.classList.toggle('show');
+  if(!isOpenDropdownContact){
+    contactLink.classList.add('active');
+    isOpenDropdownContact = true;
+  }else{
+    contactLink.classList.remove('active');
+    isOpenDropdownContact = false
+  }
+});
+
+// Close the  contact dropdown when clicking outside
+document.addEventListener('click', (event) => {
+  if (!event.target.closest('#dropdown-contact')) {
+    document.querySelectorAll('#dropdown-contact.show').forEach((dropdown) => {
+      dropdown.classList.remove('show');
+    });
+    contactLink.classList.remove('active');
+    isOpenDropdownContact = false
   }
 });
 
