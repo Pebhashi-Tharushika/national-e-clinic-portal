@@ -63,7 +63,7 @@ session_start();
     </div>
     <div id="content-and-carousel">
       <div id="content-wrapper">
-        <div id="content">
+        <div id="main-content">
           <h2 class="blob"> Book Your Hospital Visit, Anytime, Anywhere, <br> Just a Click Away.</h2>
           <div class="button-wrapper">
             <a href="#">

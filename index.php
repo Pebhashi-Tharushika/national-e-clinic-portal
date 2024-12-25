@@ -1,14 +1,13 @@
-<?php include_once 'header.php'
-?>
+<?php include_once 'header.php';?>
       
 <section id="getting-started">
   <div class="container">
 
     <div class="slogan">Take the First Step Toward a Healthier Life in Just a Minute</div><br>
     
-    <div class="title">Getting Started</div>
+    <div id="getting-started-title">Getting Started</div>
     
-    <div class="content">With just a few simple steps, you can unlock the convenience of our National E-Clinic Portal. Create an account, set up a patient profile, and access a world of seamless healthcare clinic services right at your fingertips.</div>
+    <div id="getting-started-content">With just a few simple steps, you can unlock the convenience of our National E-Clinic Portal. Create an account, set up a patient profile, and access a world of seamless healthcare clinic services right at your fingertips.</div>
     
     <div class="icon-wrapper">
 
@@ -17,7 +16,7 @@
           // Check if the user is logged in
           if (isset($_SESSION["username"])) {
               // User is logged in, create a link to the profile page
-              echo '<a href="profile/DetailsAprove page.php"><i class="fa-solid fa-user"></i></a>';
+              echo '<a href="profile/DetailsAprovepage.php"><i class="fa-solid fa-user"></i></a>';
           } else {
               // User is not logged in, create a link to the login page
               echo '<a href="login.php"><i class="fa-solid fa-user"></i></a>';
@@ -52,7 +51,7 @@
                 echo '<a href="login.php"><i class="fa-solid fa-eye"></i></a>';
             }
           ?>
-        <p>View My Appoinmnets</p>
+        <p>View My Appointmnets</p>
       </div>
 
     </div>
@@ -61,66 +60,66 @@
 </section>
 
 <section id="how-to-work">
-  <div class="title">How Does It Work?</div>
-  <div class="content">The National E-Clinic Portal, under the Ministry of Health Sri Lanka, is your trusted gateway to government clinics across the country.</div>
+  <div id="how-to-work-title">How Does It Work?</div>
+  <div id="how-to-work-content">The National E-Clinic Portal, under the Ministry of Health Sri Lanka, is your trusted gateway to government clinics across the country.</div>
   <div id="grid-wrapper">
     <div class="grid text-center">
         <div class="g-col-3">
           <div><i class="fa-solid fa-users-medical"></i></div>
-          <div id="title">Comprehensive Registration</div>
-          <div id="content">Anyone in Sri Lanka can register to maintain a clear and updated patient profile with essential medical details.</div>
-          <div id="learn-more"><a href="">Learn more</a></div>
+          <div class="title">Comprehensive Registration</div>
+          <div class="content">Anyone in Sri Lanka can register to maintain a clear and updated patient profile with essential medical details.</div>
+          <div class="learn-more"><a href="">Learn more</a></div>
         </div>
         <div class="g-col-3">
           <div><i class="fa-solid fa-hospital"></i></div>
-          <div id="title">Streamlined Clinic Coordination</div>
-          <div id="content">Our dedicated team ensures that clinics under mainstream hospitals in Sri Lanka are well-organized, accessible.</div>
-          <div id="learn-more"><a href="">Learn more</a></div>
+          <div class="title">Streamlined Clinic Coordination</div>
+          <div class="content">Our dedicated team ensures that clinics under mainstream hospitals in Sri Lanka are well-organized, accessible.</div>
+          <div class="learn-more"><a href="">Learn more</a></div>
         </div>
         <div class="g-col-3">
           <div><i class="fa-solid fa-hourglass-clock"></i></div>
-          <div id="title">Stay Updated on Schedules</div>
-          <div id="content">Effortlessly view clinic schedules and receive timely updates on upcoming appointments to stay informed.</div>
-          <div id="learn-more"><a href="">Learn more</a></div>
+          <div class="title">Stay Updated on Schedules</div>
+          <div class="content">Effortlessly view clinic schedules and receive timely updates on upcoming appointments to stay informed.</div>
+          <div class="learn-more"><a href="">Learn more</a></div>
         </div>
         <div class="g-col-3">
           <div><i class="fa-regular fa-calendar-days"></i></div>
-          <div id="title">Effortless Clinic Reservations</div>
-          <div id="content">Book your clinic visits digitally, saving time and eliminating the hassle of long queues and manual bookings.</div>
-          <div id="learn-more"><a href="">Learn more</a></div>
+          <div class="title">Effortless Clinic Reservations</div>
+          <div class="content">Book your clinic visits digitally, saving time and eliminating the hassle of long queues and manual bookings.</div>
+          <div class="learn-more"><a href="">Learn more</a></div>
         </div>
 
         <div class="g-col-3">
           <div><i class="fa-solid fa-hand-holding-medical"></i></div>
-          <div id="title">Reliable Healthcare Services</div>
-          <div id="content">high-quality healthcare services delivered by skilled professionals using state-of-the-art facilities at government clinics.</div>
-          <div id="learn-more"><a href="">Learn more</a></div>
+          <div class="title">Reliable Healthcare Services</div>
+          <div class="content">high-quality healthcare services delivered by skilled professionals using state-of-the-art facilities at government clinics.</div>
+          <div class="learn-more"><a href="">Learn more</a></div>
         </div>
         <div class="g-col-3">
           <div><i class="fa-solid fa-clipboard-medical"></i></div>
-          <div id="title">Seamless Medical Record Access</div>
-          <div id="content">Securely access and manage your medical records online, enabling continuity of care and easy information sharing with healthcare providers.</div>
-          <div id="learn-more"><a href="">Learn more</a></div>
+          <div class="title">Seamless Medical Record Access</div>
+          <div class="content">Securely access and manage your medical records online, enabling continuity of care and easy information sharing with healthcare providers.</div>
+          <div class="learn-more"><a href="">Learn more</a></div>
         </div>
         <div class="g-col-3">
           <div><i class="fas fa-user-headset"></i></div>
-          <div id="title">Personalized <br> Assistance</div>
-          <div id="content">Our dedicated staff provides prompt medical support, home treatment guidance, and addresses patient queries via call or email.</div>
-          <div id="learn-more"><a href="">Learn more</a></div>
+          <div class="title">Personalized <br> Assistance</div>
+          <div class="content">Our dedicated staff provides prompt medical support, home treatment guidance, and addresses patient queries via call or email.</div>
+          <div class="learn-more"><a href="">Learn more</a></div>
         </div>
         <div class="g-col-3">
           <div><i class="fa-solid fa-clock-rotate-left"></i></div>
-          <div id="title">Boundless <br> Accessibility</div>
-          <div id="content">Provide 24/7 access the portal, allowing you to Stay connected to your healthcare anytime, anywhere, from any device.</div>
-          <div id="learn-more"><a href="">Learn more</a></div>
+          <div class="title">Boundless <br> Accessibility</div>
+          <div class="content">Provide 24/7 access to the portal, allowing you to Stay connected to your healthcare anytime, anywhere, from any device.</div>
+          <div class="learn-more"><a href="">Learn more</a></div>
         </div>
       </div>
   </div>
 </section>
 
 <section id="why-choose">
-  <div class="title">Why Choose the National E-Clinic Portal?</div>
-  <div id="content">
+  <div id="why-choose-title">Why Choose the National E-Clinic Portal?</div>
+  <div id="why-choose-content">
     <ul class="accordion-group" id="accordion">
       <li class="accordion-item" >
         <div class="accordion-overlay">
@@ -178,5 +177,4 @@
   </div> 
 </section>
 
-<?php include_once 'footer.php'
-?>
+<?php include_once 'footer.php';?>
