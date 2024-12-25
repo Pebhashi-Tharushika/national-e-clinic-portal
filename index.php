@@ -11,14 +11,14 @@
     
     <div class="icon-wrapper">
 
+    <!-- Check if the user is logged in -->
+    <!-- User is logged in, create a link to the profile page -->
+    <!-- User is not logged in, create a link to the login page -->
       <div class="icon">
           <?php 
-          // Check if the user is logged in
           if (isset($_SESSION["username"])) {
-              // User is logged in, create a link to the profile page
               echo '<a href="profile/DetailsAprovepage.php"><i class="fa-solid fa-user"></i></a>';
           } else {
-              // User is not logged in, create a link to the login page
               echo '<a href="login.php"><i class="fa-solid fa-user"></i></a>';
           }
           ?>
@@ -27,12 +27,9 @@
      
       <div class="icon">
         <?php 
-          // Check if the user is logged in
           if (isset($_SESSION["username"])) {
-              // User is logged in, create a link to the profile page
               echo '<a href="Appointment/book_appointment.php"><i class="fa-solid fa-plus-large"></i></a>';
           } else {
-              // User is not logged in, create a link to the login page
               echo '<a href="login.php"><i class="fa-solid fa-plus-large"></i></a>';
           }
         ?>
@@ -42,12 +39,9 @@
 
       <div class="icon">
         <?php 
-            // Check if the user is logged in
             if (isset($_SESSION["username"])) {
-                // User is logged in, create a link to the profile page
                 echo '<a href="Appointment/view_appointment.php"><i class="fa-solid fa-eye"></i></a>';
             } else {
-                // User is not logged in, create a link to the login page
                 echo '<a href="login.php"><i class="fa-solid fa-eye"></i></a>';
             }
           ?>
