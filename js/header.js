@@ -26,10 +26,10 @@ accountLink.addEventListener('click', (event) => {
   event.preventDefault(); // Prevent default anchor tag behavior
   const dropdown = accountLink.parentElement;
   dropdown.classList.toggle('show');
-  if(!isOpenDropdownAccount){
+  if (!isOpenDropdownAccount) {
     accountLink.classList.add('active');
     isOpenDropdownAccount = true;
-  }else{
+  } else {
     accountLink.classList.remove('active');
     isOpenDropdownAccount = false
   }
@@ -52,10 +52,10 @@ contactLink.addEventListener('click', (event) => {
   event.preventDefault(); // Prevent default anchor tag behavior
   const dropdown = contactLink.parentElement;
   dropdown.classList.toggle('show');
-  if(!isOpenDropdownContact){
+  if (!isOpenDropdownContact) {
     contactLink.classList.add('active');
     isOpenDropdownContact = true;
-  }else{
+  } else {
     contactLink.classList.remove('active');
     isOpenDropdownContact = false
   }
