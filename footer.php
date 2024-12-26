@@ -55,6 +55,3 @@
   </div>
 
 </footer>
-
-</body>
-</html>
