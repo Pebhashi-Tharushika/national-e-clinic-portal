@@ -1,0 +1,132 @@
+/* ----------------------------- footer ------------------------ */
+
+footer {
+    padding: 3vh 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2vh;
+    background-color: var(--color-1);
+  }
+  
+  footer .container {
+    width: 80%;
+    padding: 1vh 0;
+  }
+  
+  footer .container .row #logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  footer .container .row #logo img {
+    width: 15vw;
+  }
+  
+  #quick-link,
+  #contact-info,
+  #help {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .col-3 ul li {
+    margin-bottom: 15px;
+  }
+  
+  .col-3 ul li i {
+    margin-right: 0.7vw;
+    color: var(--color-4);
+  }
+  
+  .col-3 ul li a {
+    font-size: 1rem;
+    color: var(--color-4);
+  }
+  
+  .col-3 ul li:hover a,
+  .col-3 ul li:hover i {
+    color: var(--color-3);
+  }
+  
+  .col-3 ul li:first-child {
+    color: var(--color-2);
+  }
+  
+  /* ---------------- social-media ---------------- */
+  
+  #social-media {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #social-media>.icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 15vw;
+  }
+  
+  #social-media>.icon-wrapper>i {
+    width: 4vh;
+    height: 4vh;
+    text-align: center;
+    line-height: 4vh;
+    font-size: 2vh;
+    color: var(--color-2);
+    cursor: pointer;
+    transition: all ease-in-out 0.3s;
+  }
+  
+  #social-media>.icon-wrapper>i:hover {
+    font-size: 3.2vh;
+  }
+  
+  #social-media>.icon-wrapper>#facebook:hover {
+    color: #1877F2;
+  }
+  
+  #social-media>.icon-wrapper>#twitter:hover {
+    color: var(--color-5);
+  }
+  
+  #social-media>.icon-wrapper>#instagram:hover {
+    background: linear-gradient(-135deg, #833ab4, #c13584, #fd1d1d, #f77737, #fcaf45);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  #social-media>.icon-wrapper>#youtube:hover {
+    color: #FF0000;
+  }
+  
+  #social-media>.icon-wrapper>#pinterest:hover {
+    color: #E60023;
+  }
+  
+  #social-media>.icon-wrapper>#linkedin:hover {
+    color: #0A66C2;
+  }
+  
+  /* ------------- copy-right ------------- */
+  
+  #copyright>div {
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--color-3);
+    letter-spacing: 0.1rem;
+    text-align: center;
+  }
+  
+  #copyright>div>a,
+  #copyright>div>a:visited {
+    color: var(--color-4);
+  }
+  
+  #copyright>div>a:hover {
+    color: var(--color-2);
+  }

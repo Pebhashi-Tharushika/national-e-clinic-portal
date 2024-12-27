@@ -5,9 +5,9 @@
       <img src="/national-e-clinic-portal/images/logo-h.png" alt="logo" />
     </div>
     <div id="nav">
-      <a class="nav-item" href="">Home</a>
-      <a class="nav-item" href="/national-e-clinic-portal/about-us/about-us.php">About Us</a>
-      <a class="nav-item" href="/national-e-clinic-portal/service/service.php">Services</a>
+      <a class="nav-item" href="?page=home">Home</a>
+      <a class="nav-item" href="?page=about-us">About Us</a>
+      <a class="nav-item" href="?page=services">Services</a>
       <div id="dropdown-account" class="dropdown">
         <a class="nav-item" href="#" id="account-link">Account</a>
         <div class="dropdown-content" id="dropdown-menu">
@@ -21,15 +21,15 @@
           <?php if (isset($_SESSION['username']) || isset($_SESSION['adminName'])): ?>
             <a href="/national-e-clinic-portal/profile/profile.html">Profile</a>
             <a href="/national-e-clinic-portal/setting/settings.html">Settings</a>
-            <a href="/national-e-clinic-portal/index.php">Logout</a>
+            <a href="/national-e-clinic-portal/logout.html">Logout</a>
           <?php endif; ?>
         </div>
       </div>
       <div id="dropdown-contact" class='dropdown'>
         <a class="nav-item" href="#" id="contact-link">Contact</a>
         <div class="dropdown-content" id="dropdown-menu">
-          <a href="/national-e-clinic-portal/support/support.html">Support</a>
-          <a href="/national-e-clinic-portal/faq/faq.html">FAQs</a>
+          <a href="?page=support">Support</a>
+          <a href="?page=faq">FAQs</a>
         </div>
       </div>
     </div>

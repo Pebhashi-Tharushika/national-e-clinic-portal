@@ -1,0 +1,138 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  :root{
+    --header-height: 10vh;
+    --color-1: #1025a1;
+    --color-2: #ffffff;
+    --color-3: #999999;
+    --color-4: #56aeff;
+    --color-5: #000000;
+    --color-6: #333333;
+    --color-7: #dddddd; 
+  }
+  
+  html,
+  body {
+    font-family: "Lato", sans-serif;
+  }
+  
+  a {
+    text-decoration: none;
+    color: var(--color-5);
+  }
+  
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  
+  /* --------------- logo & nav bar ------------- */
+  
+  header{
+    background-color: var(--color-1);
+    height: var(--header-height);
+  }
+  
+  #header-wrapper {
+    width: 90%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* flex-shrink: 0; */
+  }
+  
+  #header-wrapper #header-logo {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  
+  #header-wrapper #header-logo img {
+    height: 100%;
+    width: auto;
+  }
+  
+  #header-wrapper #nav {
+    display: flex;
+    align-items: center;
+  }
+  
+  #header-wrapper #nav .nav-item {
+    padding: 15px 5px;
+    margin: 0 25px;
+    color: var(--color-2);
+    font-weight: 600;
+    font-size: 0.8rem;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+  }
+  
+  #header-wrapper #nav .nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.1rem;
+    background: linear-gradient(60deg, var(--color-4), var(--color-2), var(--color-4));
+    background-size: 100%;
+    transition: all 0.3s ease-in-out;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  
+  #header-wrapper #nav .nav-item:hover::after,
+  #header-wrapper #nav .nav-item.active::after {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  
+  #header-wrapper #nav .nav-item:hover,
+  #header-wrapper #nav .nav-item.active {
+    color: var(--color-4);
+  }
+  
+  /* -------------- nav - dropdown ----------------- */
+  
+  .dropdown {
+    position: relative;
+    display: flex;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 97%;
+    left: 0;
+    background-color: var(--color-2);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    padding: 10px 0;
+    min-width: 150px;
+    border: 1px solid var(--color-7);
+    border-radius: 5px;
+  }
+  
+  .dropdown-content>a {
+    color: var(--color-6);
+    display: block;
+    padding: 10px;
+    font-size: 0.8rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  .dropdown-content>a:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  
+  .dropdown.show .dropdown-content {
+    display: block;
+  }
+  
