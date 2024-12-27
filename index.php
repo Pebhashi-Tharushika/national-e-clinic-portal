@@ -11,25 +11,97 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>National E Clinic Portal</title>
 
+  <!-- normalize.css for better cross-browser consistency (instead of reset styles) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  <!-- fontawesome for icons -->
   <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v6.7.2/css/pro.min.css">
 
+  <!-- Lato - googla font  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;900&display=swap" rel="stylesheet">
+
+  <!-- bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,900" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  <!-- favicon -->
+  <link rel="favicon" href="/national-e-clinic-portal/images/logo-v.png" type="image/png">
+
   <link rel="stylesheet" href="/national-e-clinic-portal/style/home-page.css">
+  <!-- <link rel="stylesheet" href="style/frontpage.css"> -->
 
-  <link rel="icon" href="/national-e-clinic-portal/images/logo-v.png" type="image/png">
 
-
+  <!-- bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
   <script defer src="/national-e-clinic-portal/js/home-page.js"></script>
 </head>
 
 <body>
 
+
+
+
   <?php include_once 'header.php';
   ?>
+
+  <section id="content-and-carousel">
+    <div id="content-and-carousel-container">
+      <div id="content-container">
+        <div id="main-content">
+          <h2 class="blob"> Book Your Hospital Visit, Anytime, Anywhere, <br> Just a Click Away.</h2>
+          <div class="button-wrapper">
+            <a href="#">
+              <div id="btn-gs" class="button">Getting Started
+                <i class="fa-solid fa-circle-chevron-down fa-bounce"
+                  style="--fa-bounce-start-scale-x: 1;--fa-bounce-start-scale-y: 1;--fa-bounce-jump-scale-x: 1;--fa-bounce-jump-scale-y: 1;--fa-bounce-land-scale-x: 1;--fa-bounce-land-scale-y: 1;--fa-bounce-rebound: 0; margin-left:5px"></i>
+              </div>
+            </a>
+
+            <a href="clinic_details/SeeDetails.php">
+              <div id="btn-clinic-data" class="button">See Clinic Details</div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div id="carousel-container" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carousel-container" data-bs-slide-to="0" class="active"
+            aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carousel-container" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carousel-container" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <button type="button" data-bs-target="#carousel-container" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="/national-e-clinic-portal/images/baby-patient.webp" class="d-block w-100" alt="image1">
+          </div>
+          <div class="carousel-item">
+            <img src="/national-e-clinic-portal/images/adult-patient.jpg" class="d-block w-100" alt="image2">
+          </div>
+          <div class="carousel-item">
+            <img src="/national-e-clinic-portal/images/consult-patient.jpg" class="d-block w-100" alt="image3">
+          </div>
+          <div class="carousel-item">
+            <img src="/national-e-clinic-portal/images/measuring-blood-pressure.jpg" class="d-block w-100" alt="image4">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel-container" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel-container" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+
+
+  </section>
 
   <section id="getting-started">
     <div class="container">
@@ -85,6 +157,14 @@ session_start();
               ?>
               <p>View My Appointmnets</p>
             </div>
+
+            <!-- <div class="icon">
+    <?php
+    echo '<a href="FAQ/FAQ.php"><i class="fa fa-comments"></i></a>';
+    ?>
+    <p>FAQs</p>
+  </div> -->
+
           </div>
         </div>
       </div>

@@ -2,6 +2,17 @@
   box-sizing: border-box;
 }
 
+:root{
+  --header-height: 10vh;
+  --color-1: #1025a1;
+  --color-2: #ffffff;
+  --color-3: #999999;
+  --color-4: #56aeff;
+  --color-5: #000000;
+  --color-6: #333333;
+  --color-7: #dddddd; 
+}
+
 html,
 body {
   font-family: "Lato", sans-serif;
@@ -9,7 +20,7 @@ body {
 
 a {
   text-decoration: none;
-  color: black;
+  color: var(--color-5);
 }
 
 ul {
@@ -18,47 +29,44 @@ ul {
   padding: 0;
 }
 
-#header-wrapper {
-  width: 90%;
-  margin: 0 auto;
-  flex-shrink: 0;
-}
 
 /* --------------- logo & nav bar ------------- */
 
-#header-container {
-  height: 100vh;
-  background-color: #1025a1;
-  padding: 0px 0px 30px 0px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
+header{
+  background-color: var(--color-1);
+  height: var(--header-height);
 }
 
-#header-wrapper header {
+#header-wrapper {
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* flex-shrink: 0; */
 }
 
-#header-wrapper header .logo {
+#header-wrapper #header-logo {
+  height: 100%;
   display: flex;
   align-items: center;
 }
 
-#header-wrapper header .logo img {
-  width: 150px;
+#header-wrapper #header-logo img {
+  height: 100%;
+  width: auto;
 }
 
-#header-wrapper header .nav {
+#header-wrapper #nav {
   display: flex;
   align-items: center;
 }
 
-#header-wrapper header .nav .nav-item {
+#header-wrapper #nav .nav-item {
   padding: 15px 5px;
   margin: 0 25px;
-  color: white;
+  color: var(--color-2);
   font-weight: 600;
   font-size: 0.8rem;
   position: relative;
@@ -66,54 +74,54 @@ ul {
   display: inline-block;
 }
 
-#header-wrapper header .nav .nav-item::after {
+#header-wrapper #nav .nav-item::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 0.1rem;
-  background: linear-gradient(60deg, #56aeff, #ffffff, #56aeff);
+  background: linear-gradient(60deg, var(--color-4), var(--color-2), var(--color-4));
   background-size: 100%;
   transition: all 0.3s ease-in-out;
   transform: scaleX(0);
   transform-origin: left;
 }
 
-#header-wrapper header .nav .nav-item:hover::after,
-#header-wrapper header .nav .nav-item.active::after {
+#header-wrapper #nav .nav-item:hover::after,
+#header-wrapper #nav .nav-item.active::after {
   transform: scaleX(1);
   transform-origin: right;
 }
 
-#header-wrapper header .nav .nav-item:hover,
-#header-wrapper header .nav .nav-item.active {
-  color: #56aeff;
+#header-wrapper #nav .nav-item:hover,
+#header-wrapper #nav .nav-item.active {
+  color: var(--color-4);
 }
 
 /* -------------- nav - dropdown ----------------- */
 
 .dropdown {
   position: relative;
-  display: inline-block;
+  display: flex;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
-  top: 100%;
+  top: 97%;
   left: 0;
-  background-color: #ffffff;
+  background-color: var(--color-2);
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1;
   padding: 10px 0;
   min-width: 150px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-7);
   border-radius: 5px;
 }
 
 .dropdown-content>a {
-  color: #333;
+  color: var(--color-6);
   display: block;
   padding: 10px;
   font-size: 0.8rem;
@@ -131,13 +139,21 @@ ul {
 
 /* -------------------  content-and-carousel ------------------ */
 
-#content-and-carousel {
+#content-and-carousel{
+  height: calc(100vh - var(--header-height));
+  background-color: var(--color-1);
+  padding: 0px 0px 30px 0px;
+}
+
+
+#content-and-carousel-container {
   flex-grow: 1;
-  background-color: #ffffff;
+  background-color: var(--color-2);
   overflow-y: hidden;
   position: relative;
   display: flex;
   align-items: center;
+  height: 100%;
 }
 
 #content-and-carousel #carousel-container {
@@ -163,16 +179,16 @@ ul {
 
 #content-and-carousel #carousel-container:hover .carousel-inner .carousel-item img {
   transform: scale(1.2);
-}
+} 
 
 /* ----------------   content ------------------ */
 
-#content-and-carousel #content-wrapper {
+#content-and-carousel #content-and-carousel-container #content-container {
   width: 50%;
   height: 100%;
 }
 
-#content-wrapper #main-content {
+#content-container #main-content {
   width: 80%;
   margin: auto;
   height: 100%;
@@ -181,28 +197,28 @@ ul {
   justify-content: center;
 }
 
-#content-wrapper #main-content .blob {
+#content-container #main-content .blob {
   font-size: 3rem;
   font-weight: 500;
   text-align: left;
-  color: #1025a1;
+  color: var(--color-1);
 }
 
-#content-wrapper #main-content .button-wrapper {
+#content-container #main-content .button-wrapper {
   display: flex;
   justify-content: flex-start;
   gap: 4%;
 }
 
-#content-wrapper #main-content .button-wrapper>a {
+#content-container #main-content .button-wrapper>a {
   width: 37%;
   text-align: center;
 }
 
-#content-wrapper #main-content .button-wrapper .button {
+#content-container #main-content .button-wrapper .button {
   padding: 25px 30px;
-  color: white;
-  background-color: #56aeff;
+  color: var(--color-2);
+  background-color: var(--color-4);
   border-radius: 50px;
   cursor: pointer;
   font-size: 0.8rem;
@@ -210,13 +226,13 @@ ul {
   letter-spacing: 1px;
 }
 
-#content-wrapper #main-content .button-wrapper .button:hover {
+#content-container #main-content .button-wrapper .button:hover {
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.5);
 }
 
-#content-wrapper #main-content .button-wrapper #btn-clinic-data {
+#content-container #main-content .button-wrapper #btn-clinic-data {
   background-color: rgba(0, 0, 0, 0.4);
-}
+} 
 
 
 /* --------------------  getting started ----------------- */
@@ -259,7 +275,7 @@ ul {
 #gs-step .slogan {
   text-transform: uppercase;
   text-align: center;
-  color: #999;
+  color: var(--color-3);
   letter-spacing: 2px;
 }
 
@@ -298,17 +314,17 @@ ul {
   margin-bottom: 15px;
   line-height: 75px;
   border-radius: 50%;
-  background: white;
+  background: var(--color-2);
   font-size: 30px;
   box-shadow: 0px 5px 10px 3px rgba(0, 0, 0, 0.2);
-  color: #1025a1;
+  color: var(--color-1);
   cursor: pointer;
   transition: all ease-in-out 300ms;
 }
 
 #getting-started #gs-step .icon-wrapper .icon i:hover {
-  background: #1025a1;
-  color: white;
+  background: var(--color-1);
+  color: var(--color-2);
 }
 
 #getting-started #gs-step .icon-wrapper .icon p {
@@ -327,7 +343,7 @@ ul {
   background-size: cover;
   position: relative;
   padding: 6.5vh 0;
-  color: white;
+  color: var(--color-2);
   z-index: 1;
   overflow: hidden;
 }
@@ -348,7 +364,7 @@ ul {
   font-weight: 500;
   text-align: center;
   margin-bottom: 20px;
-  color: white;
+  color: var(--color-2);
 }
 
 #how-to-work #how-to-work-content {
@@ -356,7 +372,7 @@ ul {
   line-height: 1.2;
   font-size: 1.25rem;
   margin-bottom: 30px;
-  color: white;
+  color: var(--color-2);
 }
 
 #grid-wrapper {
@@ -365,17 +381,17 @@ ul {
 }
 
 #grid-wrapper>div>div {
-  background-color: #fff;
+  background-color: var(--color-2);
   border-radius: 0.5rem;
   padding: 2rem;
   box-shadow: 0 0 10px rgb(0, 0, 0, 0.3);
-  color: #1025a1;
+  color: var(--color-1);
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
 #grid-wrapper>div>div:hover {
-  background-color: #1025a1;
-  color: #fff;
+  background-color: var(--color-1);
+  color: var(--color-2);
   transform: translateY(-8px);
 }
 
@@ -383,12 +399,12 @@ ul {
   display: inline-block;
   padding: 0.9rem;
   font-size: 2rem;
-  color: #1025a1;
+  color: var(--color-1);
   transition: color 0.3s ease;
 }
 
 #grid-wrapper>div>div:hover>div>i {
-  color: #fff;
+  color: var(--color-2);
 }
 
 #grid-wrapper>div>div>.title {
@@ -410,22 +426,22 @@ ul {
 }
 
 #grid-wrapper>div>div>.learn-more>a {
-  border-bottom: 1px solid #1025a1;
-  color: #1025a1;
+  border-bottom: 1px solid var(--color-1);
+  color: var(--color-1);
   padding-bottom: 0.3rem;
   transition: border-color 0.3s ease, color 0.3s ease;
 }
 
 #grid-wrapper>div>div:hover>.learn-more>a {
-  border-color: #fff;
-  color: #fff;
+  border-color: var(--color-2);
+  color: var(--color-2);
 }
 
 /* ---------------------- why choose ------------------------ */
 
 #why-choose {
   height: 100vh;
-  background-color: #fff;
+  background-color: var(--color-2);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -435,7 +451,7 @@ ul {
 
 #why-choose #why-choose-title {
   font-size: 3rem;
-  color: #1025a1;
+  color: var(--color-1);
 }
 
 #why-choose #why-choose-content {
@@ -461,7 +477,7 @@ ul {
   transition: flex 0.3s ease;
   cursor: pointer;
   border-radius: 0.5rem !important;
-  box-shadow: 0 0 10px 6px #999;
+  box-shadow: 0 0 10px 6px var(--color-3);
 }
 
 .accordion-item .accordion-overlay {
@@ -471,8 +487,8 @@ ul {
   width: 100%;
   height: 100%;
   padding: 1.5rem;
-  background-color: #fff;
-  color: #1025a1;
+  background-color: var(--color-2);
+  color: var(--color-1);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -538,7 +554,7 @@ ul {
   position: absolute;
   top: 50%;
   transform: translateY(-30%);
-  color: #1025a1;
+  color: var(--color-1);
   padding: 3rem;
   width: 100%;
   height: 100%;
@@ -578,7 +594,7 @@ footer {
   align-items: center;
   justify-content: center;
   gap: 2vh;
-  background-color: #1025a1;
+  background-color: var(--color-1);
 }
 
 footer .container {
@@ -609,23 +625,22 @@ footer .container .row #logo img {
 
 .col-3 ul li i {
   margin-right: 0.7vw;
-  color: #56aeff;
+  color: var(--color-4);
 }
 
 .col-3 ul li a {
   font-size: 1rem;
-  color: #56aeff;
+  color: var(--color-4);
 }
 
 .col-3 ul li:hover a,
 .col-3 ul li:hover i {
-  color: #999;
+  color: var(--color-3);
 }
 
 .col-3 ul li:first-child {
-  color: #fff;
+  color: var(--color-2);
 }
-
 
 /* ---------------- social-media ---------------- */
 
@@ -648,7 +663,7 @@ footer .container .row #logo img {
   text-align: center;
   line-height: 4vh;
   font-size: 2vh;
-  color: #fff;
+  color: var(--color-2);
   cursor: pointer;
   transition: all ease-in-out 0.3s;
 }
@@ -662,7 +677,7 @@ footer .container .row #logo img {
 }
 
 #social-media>.icon-wrapper>#twitter:hover {
-  color: #000000;
+  color: var(--color-5);
 }
 
 #social-media>.icon-wrapper>#instagram:hover {
@@ -689,17 +704,16 @@ footer .container .row #logo img {
   text-transform: uppercase;
   font-size: 0.6rem;
   font-weight: 700;
-  color: #999;
+  color: var(--color-3);
   letter-spacing: 0.1rem;
   text-align: center;
 }
 
 #copyright>div>a,
 #copyright>div>a:visited {
-  color: #56aeff;
+  color: var(--color-4);
 }
 
 #copyright>div>a:hover {
-  color: #fff;
+  color: var(--color-2);
 }
-
