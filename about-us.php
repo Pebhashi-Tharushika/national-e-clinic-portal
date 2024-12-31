@@ -57,6 +57,7 @@
                     <div class="flip-card-back">
                         <h3>Our Mission</h3>
                         <p>To be the leading healthcare provider in Sri Lanka, setting new standards in patient care by combining innovation, accessibility, and efficiency for a healthier nation.</p>
+                        <a>Learn More</a>
                     </div>
                 </div>
             </div>
@@ -70,6 +71,7 @@
                     <div class="flip-card-back">
                         <h3>Our Mission</h3>
                         <p>To ensure 24×7 access to high-quality healthcare services, enhance patient experiences by reducing hospital congestion, and contribute to Sri Lanka's health and socio-economic development.</p>
+                        <a>Learn More</a>
                     </div>
                 </div>
             </div>
@@ -83,6 +85,7 @@
                     <div class="flip-card-back">
                         <h3>Our Mission</h3>
                         <p>To expand the National E-Clinic Portal across all healthcare institutions, empowering patients and optimizing operations for universal access to affordable, quality healthcare.</p>
+                        <a>Learn More</a>
                     </div>
                 </div>
             </div>
@@ -91,4 +94,17 @@
 </section>
 
 
-<section id="our-journey"></section>
+<section id="our-journey">
+    <div id="our-journey-container">
+        <div id="our-journey-content-wrapper">
+            <div id="our-journey-content">
+                <h2 id="our-journey-title">Our Journey to Excellence</h2>
+                <p>The National E-Clinic Portal began its journey in 2002, initially serving nine main provincial general hospitals to provide widespread coverage and accessibility. Over the next five years, the platform expanded to include all General and National Hospitals. By 2011, it became a vital tool for over 400 government hospitals across Sri Lanka, including Base Hospitals, District General Hospitals, Divisional Hospitals, and Provincial General Hospitals. Today, the platform continues to grow, with plans to incorporate board-managed and specialized hospitals, further strengthening Sri Lanka’s healthcare infrastructure.</p>
+                <p>Through features like online appointment booking, doctor availability management, and secure patient records, the National E-Clinic Portal has redefined patient care, making it more efficient, accessible, and organized. This initiative remains a cornerstone in the evolution of Sri Lanka’s healthcare system, dedicated to serving the needs of every individual and community across the nation.</p>  
+            </div>  
+        </div>
+        <div id="our-journey-image">
+            <img src="/national-e-clinic-portal/images/about-us/our-journey.png" alt="img-journey">
+        </div>
+    </div>
+</section>

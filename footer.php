@@ -50,7 +50,7 @@
     <div>Copyright © 2024 National E Clinic Portal, All rights reserved | Powered by
       <a href="">Inova Digital</a> |
       <a href="">Privacy Policy</a> |
-      <a href="../national-e-clinic-portal/Terms and Condition/index.html">Terms and Conditions</a>
+      <a href="/national-e-clinic-portal/terms-and-conditions/index.html">Terms and Conditions</a>
     </div>
   </div>
 
