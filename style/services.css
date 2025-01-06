@@ -1,0 +1,86 @@
+#services-container{
+    width: 90%;
+    margin: auto;
+    padding: 6vh 0 9vh;
+}
+
+#services-title{
+    font-weight: 900;
+    font-size: 2.2rem;
+    text-align: center;
+    padding-bottom: 3rem;
+    margin: 0;
+    color: var(--color-4);
+}
+
+#service-content{
+    grid-template-rows: repeat(6, 40vh);
+    gap: 4rem;
+}
+
+#service-content .service-item{
+    box-shadow: 0px 3px 13px var(--color-6);
+    height: 100%;
+    border-bottom: 2px solid var(--color-4);
+    position:relative;
+    overflow: visible;
+}
+
+#service-content .service-item a{
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    color: var(--color-1);
+}
+
+
+#service-content .service-item a .inner-service-item{
+    display: flex;
+    flex-direction: column;
+height: 100%;
+}
+
+#service-content .service-item a .inner-service-item .service-image-container{
+    height: 100%;
+    overflow: hidden;
+    flex-grow: 1; /* Allow the image to take the remaining space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#service-content .service-item a .inner-service-item img{
+    object-fit: cover; /* Adjusts how the image is resized */
+    height: 100%; /* Make the image responsive */
+    transform: scale(1);
+    transition: transform 1s ease-in-out;
+}
+
+#service-content .service-item a .inner-service-item h3{
+    font-size: 1.2rem;
+    margin: 0;
+    padding: 2vh;
+    flex-grow: 0; /* Prevent the heading from growing */
+    flex-shrink: 0; /* Prevent the heading from shrinking */
+    text-align: center; 
+}
+
+#service-content .service-item::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-1);
+    z-index: 1;
+    transition: width 1s ease;
+}
+
+#service-content .service-item:hover::after {
+    width: 100%;
+}
+
+#service-content .service-item:hover a .inner-service-item img {
+    transform: scale(1.2); 
+}
