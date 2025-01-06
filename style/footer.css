@@ -129,4 +129,5 @@ footer {
   
   #copyright>div>a:hover {
     color: var(--color-2);
+    cursor: pointer;
   }

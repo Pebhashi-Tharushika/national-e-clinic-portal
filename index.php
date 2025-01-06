@@ -34,6 +34,7 @@ session_start();
   <link rel="stylesheet" href="/national-e-clinic-portal/style/home.css">
   <link rel="stylesheet" href="/national-e-clinic-portal/style/about-us.css">
   <link rel="stylesheet" href="/national-e-clinic-portal/style/services.css">
+  <link rel="stylesheet" href="/national-e-clinic-portal/style/tac.css">
 
   <!-- bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -46,7 +47,7 @@ session_start();
 
   <?php
   // Define an array of allowed pages to prevent unauthorized file access
-  $allowedPages = ['home', 'about-us', 'services', 'support', 'faq'];
+  $allowedPages = ['home', 'about-us', 'services', 'support', 'faq', 'tac'];
 
   // Get the 'page' parameter from the URL
   $page = $_GET['page'] ?? 'home';
