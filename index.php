@@ -17,7 +17,7 @@ session_start();
   <!-- fontawesome for icons -->
   <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v6.7.2/css/pro.min.css">
 
-  <!-- Lato - googla font  -->
+  <!-- Lato - google font  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;900&display=swap" rel="stylesheet">

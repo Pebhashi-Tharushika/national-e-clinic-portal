@@ -5,16 +5,16 @@
       <img src="/national-e-clinic-portal/images/logo-h.png" alt="logo" />
     </div>
     <div id="nav">
-      <a class="nav-item" href="?page=home">Home</a>
-      <a class="nav-item" href="?page=about-us">About Us</a>
-      <a class="nav-item" href="?page=services">Services</a>
+      <a class="nav-item" href="/national-e-clinic-portal/index.php?page=home">Home</a>
+      <a class="nav-item" href="/national-e-clinic-portal/index.php?page=about-us">About Us</a>
+      <a class="nav-item" href="/national-e-clinic-portal/index.php?page=services">Services</a>
       <div id="dropdown-account" class="dropdown">
         <a class="nav-item" href="#" id="account-link">Account</a>
         <div class="dropdown-content" id="dropdown-menu">
           <!-- Show Log In and Register only if user is NOT logged in -->
           <?php if (!isset($_SESSION['username']) && !isset($_SESSION['adminName'])): ?>
-            <a href="/national-e-clinic-portal/login/login.html">Log In</a>
-            <a href="/national-e-clinic-portal/register/register.html">Register</a>
+            <a href="/national-e-clinic-portal/login.php">Log In</a>
+            <a href="/national-e-clinic-portal/register.html">Register</a>
           <?php endif; ?>
 
           <!-- Show Profile, Settings, and Logout only if user IS logged in -->
@@ -28,8 +28,8 @@
       <div id="dropdown-contact" class='dropdown'>
         <a class="nav-item" href="#" id="contact-link">Contact</a>
         <div class="dropdown-content" id="dropdown-menu">
-          <a href="?page=support">Support</a>
-          <a href="?page=faq">FAQs</a>
+          <a href="/national-e-clinic-portal/index.php?page=support">Support</a>
+          <a href="/national-e-clinic-portal/index.php?page=faq">FAQs</a>
         </div>
       </div>
     </div>

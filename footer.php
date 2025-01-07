@@ -10,10 +10,10 @@
       <div class="col-3" id="quick-link">
         <ul>
           <li><b>Quick Links</b></li>
-          <li><a href="?page=home">Home</a></li>
-          <li><a href="?page=about-us">About Us</a></li>
-          <li><a href="?page=services">Services</a></li>
-          <li><a href="">Login</a></li>
+          <li><a href="/national-e-clinic-portal/index.php?page=home">Home</a></li>
+          <li><a href="/national-e-clinic-portal/index.php?page=about-us">About Us</a></li>
+          <li><a href="/national-e-clinic-portal/index.php?page=services">Services</a></li>
+          <li><a href="/national-e-clinic-portal/login.php">Login</a></li>
         </ul>
       </div>
       <div class="col-3" id="contact-info">
@@ -49,8 +49,8 @@
   <div id="copyright">
     <div>Copyright © 2024 National E Clinic Portal, All rights reserved | Powered by
       <a href="">Inova Digital</a> |
-      <a href="?page=privacy-policy">Privacy Policy</a> |
-      <a href="?page=tac">Terms and Conditions</a>
+      <a href="/national-e-clinic-portal/index.php?page=privacy-policy">Privacy Policy</a> |
+      <a href="/national-e-clinic-portal/index.php?page=tac">Terms and Conditions</a>
     </div>
   </div>
 
