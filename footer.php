@@ -49,7 +49,7 @@
   <div id="copyright">
     <div>Copyright © 2024 National E Clinic Portal, All rights reserved | Powered by
       <a href="">Inova Digital</a> |
-      <a href="">Privacy Policy</a> |
+      <a href="?page=privacy-policy">Privacy Policy</a> |
       <a href="?page=tac">Terms and Conditions</a>
     </div>
   </div>
