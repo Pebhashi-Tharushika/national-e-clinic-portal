@@ -13,7 +13,7 @@
           <li><a href="/national-e-clinic-portal/index.php?page=home">Home</a></li>
           <li><a href="/national-e-clinic-portal/index.php?page=about-us">About Us</a></li>
           <li><a href="/national-e-clinic-portal/index.php?page=services">Services</a></li>
-          <li><a href="/national-e-clinic-portal/login.php">Login</a></li>
+          <li><a href="/national-e-clinic-portal/register-and-login.php?action=login">Login</a></li>
         </ul>
       </div>
       <div class="col-3" id="contact-info">

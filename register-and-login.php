@@ -13,7 +13,7 @@
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
   <link rel="stylesheet" href="/national-e-clinic-portal/style/back-to-home.css">
-  <link rel="stylesheet" href="/national-e-clinic-portal/style/login.css">
+  <link rel="stylesheet" href="/national-e-clinic-portal/style/register-and-login.css">
 
   <script defer src="/national-e-clinic-portal/js/register-and-login.js"></script>
 
@@ -26,7 +26,10 @@
   ?>
 
   <div class="login-wrapper">
-    <div class="login-container">
+    <?php
+    $action = isset($_GET['action']) && $_GET['action'] === 'register' ? 'active' : '';
+    ?>
+    <div class="login-container <?php echo $action; ?>">
 
       <!-- to login -->
       <span class="bg-animate-login"></span>
@@ -47,8 +50,9 @@
             <i class='bx bxs-lock-alt'></i>
           </div>
 
-          <button type="submit" name="submit1" class="btn animation" style="--hidden-rate:3;--display-rate:24">Login</button>
-          
+          <button type="submit" name="submit1" class="btn animation"
+            style="--hidden-rate:3;--display-rate:24">Login</button>
+
           <div class="logreg-link animation" style="--hidden-rate:4;--display-rate:25">
             <p>Don't have and account? <a href="#" class="register-link">Sign up</a></p>
           </div>
@@ -100,8 +104,9 @@
           </div>
 
 
-          <button name="submit" type="submit" class="btn animation" style="--hidden-rate:22;--display-rate:5">Sign up</button>
-          
+          <button name="submit" type="submit" class="btn animation" style="--hidden-rate:22;--display-rate:5">Sign
+            up</button>
+
           <div class="logreg-link animation" style="--hidden-rate:23;--display-rate:6">
             <p>Already have and account? <a href="#" class="login-link ">Log in</a></p>
           </div>

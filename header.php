@@ -13,8 +13,8 @@
         <div class="dropdown-content" id="dropdown-menu">
           <!-- Show Log In and Register only if user is NOT logged in -->
           <?php if (!isset($_SESSION['username']) && !isset($_SESSION['adminName'])): ?>
-            <a href="/national-e-clinic-portal/login.php">Log In</a>
-            <a href="/national-e-clinic-portal/register.html">Register</a>
+            <a href="/national-e-clinic-portal/register-and-login.php?action=login">Log In</a>
+            <a href="/national-e-clinic-portal/register-and-login.php?action=register">Register</a>
           <?php endif; ?>
 
           <!-- Show Profile, Settings, and Logout only if user IS logged in -->
