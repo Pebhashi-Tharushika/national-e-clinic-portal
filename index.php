@@ -36,12 +36,14 @@ session_start();
   <link rel="stylesheet" href="/national-e-clinic-portal/style/services.css">
   <link rel="stylesheet" href="/national-e-clinic-portal/style/tac.css">
   <link rel="stylesheet" href="/national-e-clinic-portal/style/privacy-policy.css">
+  <link rel="stylesheet" href="/national-e-clinic-portal/style/faq.css">
 
   <!-- bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script defer src="/national-e-clinic-portal/js/header.js"></script>
   <script defer src="/national-e-clinic-portal/js/home.js"></script>
+  <script defer src="/national-e-clinic-portal/js/faq.js"></script>
 </head>
 
 <body>
