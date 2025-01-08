@@ -7,11 +7,11 @@
     padding: 5vh 0;
 }
 
-#faq-title{
+#faq-title {
     text-align: center;
     padding: 1.2rem 0;
     color: var(--color-4);
-  }
+}
 
 #faq-content .faq {
     margin-bottom: 3vh;
@@ -29,7 +29,7 @@
 }
 
 #faq-content .faq-question:hover,
-#faq-content .faq-question:hover h2{
+#faq-content .faq-question:hover h2 {
     color: var(--color-4);
 }
 
@@ -40,7 +40,7 @@
     font-weight: 600;
 }
 
-#faq-content .faq-question .collapse{
+#faq-content .faq-question .collapse {
     display: none;
 }
 
@@ -53,4 +53,4 @@
     margin: 0;
     font-size: 1rem;
     color: var(--color-5);
-} 
+}

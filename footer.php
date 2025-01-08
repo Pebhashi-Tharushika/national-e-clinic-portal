@@ -28,7 +28,7 @@
       <div class="col-3" id="help">
         <ul>
           <li><b>Help</b></li>
-          <li><a href="">User Support</a></li>
+          <li><a href="/national-e-clinic-portal/index.php?page=support">User Support</a></li>
           <li><a href="/national-e-clinic-portal/index.php?page=faq">Frequently asked Questions</a></li>
         </ul>
       </div>

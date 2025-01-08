@@ -1,7 +1,7 @@
 <section id="faq-container">
 
     <div id="faq-title">
-        <h1>Frequently Asked Questions?</h1>
+        <h1>Frequently Asked Questions</h1>
     </div>
 
     <div id="faq-content">
@@ -80,20 +80,3 @@
     </div>
 
 </section>
-
-<!-- <script>
-        function toggleAnswer(id) {
-    var plusSign = document.getElementById('expand'+id);
-    var minusSign = document.getElementById('collapse'+id);
-    var answer = document.getElementById('answer' + id);
-    if (answer.style.display === 'block') {
-        answer.style.display = 'none';
-        plusSign.style.display = 'block';
-        minusSign.style.display = 'none';
-    } else {
-        answer.style.display = 'block';
-        plusSign.style.display = 'none';
-        minusSign.style.display = 'block';
-    }
-}
-    </script> -->
