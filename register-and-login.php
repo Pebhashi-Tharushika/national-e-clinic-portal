@@ -34,7 +34,7 @@
       <!-- to login -->
       <span class="bg-animate-login"></span>
 
-      <div id="1" class="form-box login">
+      <div class="form-box login">
         <h2 class="animation" style="--hidden-rate:0;--display-rate:21">User Login</h2>
         <form action="includes/login.inc.php" method="post">
 
@@ -60,7 +60,7 @@
         </form>
       </div>
 
-      <div id="3" class="info-text login">
+      <div class="info-text login">
         <h2 class="animation" style="--hidden-rate:0;--display-rate:20">Welcome to National E-Clinic Portal</h2><br><br>
         <p class="animation" style="--hidden-rate:1;--display-rate:21">Heal at Hand</p>
       </div>
@@ -68,7 +68,7 @@
       <!-- to register -->
       <span class="bg-animate-register"></span>
 
-      <div id="2" class="form-box register">
+      <div class="form-box register">
         <h2 class="animation" style="--hidden-rate:17;--display-rate:0">Sign up</h2>
 
         <form action="includes/signup.inc.php" method="post">
@@ -91,13 +91,13 @@
             <i class='bx bxs-id-card'></i>
           </div>
 
-          <div id="4" class="input-box animation" style="--hidden-rate:21;--display-rate:4">
+          <div class="input-box animation" style="--hidden-rate:21;--display-rate:4">
             <input type="password" name="pwd" required>
             <label>Password</label>
             <i class='bx bxs-lock-alt'></i>
           </div>
 
-          <div id="4" class="input-box animation" style="--hidden-rate:21;--display-rate:4">
+          <div class="input-box animation" style="--hidden-rate:21;--display-rate:4">
             <input type="password" name="pwdrepeat" required>
             <label> Confirm Password</label>
             <i class='bx bxs-lock-alt'></i>

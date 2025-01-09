@@ -19,10 +19,10 @@
       <div class="col-3" id="contact-info">
         <ul>
           <li><b>Contact Info</b></li>
-          <li><i class="fas fa-map-marker-alt"></i><a href="">29 Almeida Road, Colombo 07</a></li>
-          <li><i class="fas fa-envelope"></i><a href="">neclinic.care@gmail.com</a></li>
-          <li><i class="fas fa-phone-alt"></i><a href="">011 234 5678</a></li>
-          <li><i class="fas fa-phone-alt"></i><a href="">011 234 5679</a></li>
+          <li><i class="fas fa-map-marker-alt"></i><a href="https://maps.app.goo.gl/SkcnLrY5RBm4waZz6" target="_blank">29 Almeida Road, Colombo 07</a></li>
+          <li><i class="fas fa-envelope"></i><a href="mailto:neclinic.care@gmail.com">neclinic.care@gmail.com</a></li>
+          <li><i class="fas fa-phone-alt"></i><a href="tel:+94112345678">011 234 5678</a></li>
+          <li><i class="fas fa-phone-alt"></i><a href="tel:+94112345679">011 234 5679</a></li>
         </ul>
       </div>
       <div class="col-3" id="help">

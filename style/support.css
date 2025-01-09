@@ -1,17 +1,164 @@
 #support-container {
+    width: 90%;
+    margin: 9vh auto;
+}
+
+#support-container > .row > div:first-child{
+    margin-top: 4rem;
+}
+
+#support-container > .row > div:nth-child(3),
+#support-container > .row > div:nth-child(4){
+    margin-top: 5rem;
+}
+
+/* ----------------- get-in-touch ----------------- */
+
+#get-in-touch{
+    height: 105%;
+    width: 110%;
+    display: flex;
+    flex-direction: column;
+}
+
+#get-in-touch #git-title p{
+    letter-spacing: 0.05rem;
+    font-size: 3.5rem;
+    margin: 0;
+    line-height: 3.5rem;
+    padding-bottom: 0.6rem;
+    font-weight: 600;
+    background: linear-gradient(-60deg,var(--color-1), var(--color-4));
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#get-in-touch #git-slogan p{
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    color: var(--color-3);
+    letter-spacing: 0.05rem;
+}
+
+#get-in-touch #connect-details{
+    width: 100%;
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+#get-in-touch #connect-details > .row{
+    height: 100%;
+    width: 100%;
+}
+
+#get-in-touch #connect-details #connect-l,
+#get-in-touch #connect-details #connect-m,
+#get-in-touch #connect-details #connect-r{
+    background-color: var(--color-7);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: 0.5rem;
+}
+
+#get-in-touch #connect-details .connect{
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--color-3);
+    background-color: var(--color-2);
+}
+
+#get-in-touch #connect-details .connect a{
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    border-radius: 50%;
+    font-size: 1rem;
+    color: var(--color-4);
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+#get-in-touch #connect-details .connect a:hover{
+    background-color: var(--color-4);
+    color: var(--color-2);
+}
+
+#get-in-touch #connect-details .connect a:hover i{
+    color: var(--color-2);
+}
+
+#get-in-touch #connect-details .connect a i{
+    font-size: 1.5rem;
+    color: var(--color-4);
+}
+
+#get-in-touch #connect-details .command{
+    font-size: 1rem;
+    color: var(--color-3);
+    font-weight: 500;
+}
+
+/* ----------------- image ------------------- */
+#image-container{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#image-container img{
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    z-index: -10;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 95%;
+    width: auto;
+}
+
+/* ---------------- request-submission ---------------- */
+
+#support-main-title{
+    color: var(--color-1);
+}
+#support-main-content{
+    font-size: 1.2rem;
+    color: var(--color-3);
+    letter-spacing: 0.05rem;
+}
+
+#request-submission{
     width: 60%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     color: var(--color-5);
-    padding: 5vh 0;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
+    box-shadow: 0 0 10px var(--color-3);
+    border-radius: 0.5rem;
 }
 
 #support-title {
     padding: 1.2rem 0;
-    color: var(--color-4);
+    color: var(--color-1);
 }
 
 
@@ -153,3 +300,22 @@
     background: linear-gradient(var(--color-1), var(--color-4));
 }
 
+/* ------------- map ------------------- */
+
+#map-title{
+    color: var(--color-1);
+    margin-bottom: 2rem;
+}
+
+#map-container{
+        box-shadow: 0 0 10px var(--color-3);
+        border-radius: 0.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+}
+
+#map-container > iframe {
+    width: 100%;
+}
