@@ -43,6 +43,7 @@ session_start();
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script defer src="/national-e-clinic-portal/js/header.js"></script>
+  <script defer src="/national-e-clinic-portal/js/footer.js"></script>
   <script defer src="/national-e-clinic-portal/js/home.js"></script>
   <script defer src="/national-e-clinic-portal/js/faq.js"></script>
   <script defer src="/national-e-clinic-portal/js/support.js"></script>

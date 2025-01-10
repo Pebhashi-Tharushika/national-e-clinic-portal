@@ -4,10 +4,9 @@
       <div id="main-content">
         <h2 class="blob"> Book Your Hospital Visit, Anytime, Anywhere, <br> Just a Click Away.</h2>
         <div class="button-wrapper">
-          <a href="#">
+          <a href="#getting-started">
             <div id="btn-gs" class="button">Getting Started
-              <i class="fa-solid fa-circle-chevron-down fa-bounce"
-                style="--fa-bounce-start-scale-x: 1;--fa-bounce-start-scale-y: 1;--fa-bounce-jump-scale-x: 1;--fa-bounce-jump-scale-y: 1;--fa-bounce-land-scale-x: 1;--fa-bounce-land-scale-y: 1;--fa-bounce-rebound: 0; margin-left:5px"></i>
+              <i class="fa-solid fa-circle-chevron-down fa-bounce"></i>
             </div>
           </a>
 

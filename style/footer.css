@@ -131,3 +131,39 @@ footer {
     color: var(--color-2);
     cursor: pointer;
   }
+
+  /* ----------- back to top button  ------------- */
+
+  #back-to-top {
+    position: fixed;
+    bottom: 3vh;
+    right: 1.5vw;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: none;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    z-index: 1000;
+    color: var(--color-4);
+  }
+
+  /* Pseudo-element for border progress effect */
+  #back-to-top::after {
+    content: '';
+    position: absolute;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    border: none;
+    z-index: -1;
+    background-color: var(--color-2);
+  }
+ 
+  #back-to-top:hover::after{
+    background-color: var(--color-7);
+  }

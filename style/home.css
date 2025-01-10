@@ -1,6 +1,6 @@
 /* -------------------  content-and-carousel ------------------ */
 
-#content-and-carousel{
+#content-and-carousel {
   height: calc(100vh - var(--header-height));
   background-color: var(--color-1);
   padding: 0px 0px 30px 0px;
@@ -40,7 +40,7 @@
 
 #content-and-carousel #carousel-container:hover .carousel-inner .carousel-item img {
   transform: scale(1.2);
-} 
+}
 
 /* ----------------   content ------------------ */
 
@@ -93,7 +93,18 @@
 
 #content-container #main-content .button-wrapper #btn-clinic-data {
   background-color: rgba(0, 0, 0, 0.4);
-} 
+}
+
+#content-container #main-content .button-wrapper #btn-gs > i {
+  --fa-bounce-start-scale-x: 1;
+  --fa-bounce-start-scale-y: 1;
+  --fa-bounce-jump-scale-x: 1;
+  --fa-bounce-jump-scale-y: 1;
+  --fa-bounce-land-scale-x: 1;
+  --fa-bounce-land-scale-y: 1;
+  --fa-bounce-rebound: 0;
+  margin-left: 5px;
+}
 
 
 /* --------------------  getting started ----------------- */
@@ -106,12 +117,13 @@
 
 }
 
-#getting-started .container{
+#getting-started .container {
   max-width: 90%;
   height: 100%;
   padding: 0;
   margin: 0;
 }
+
 #getting-started .container .row {
   width: 100%;
   height: 100%;
