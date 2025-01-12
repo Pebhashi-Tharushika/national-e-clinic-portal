@@ -10,7 +10,7 @@
             </div>
           </a>
 
-          <a href="clinic_details/SeeDetails.php">
+          <a href="/national-e-clinic-portal/see-clinic-details.php">
             <div id="btn-clinic-data" class="button">See Clinic Details</div>
           </a>
         </div>
