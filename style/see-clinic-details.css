@@ -1,0 +1,77 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    /* background-image: url('/national-e-clinic-portal/images/see-clinic-details/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; */
+    color: white;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7); /* Adds a dark overlay */
+    text-align: center;
+}
+
+.title {
+    margin-bottom: 20px;
+    font-size: 3em;
+    font-family: 'Arial', cursive; /* Stylish pattern for the title */
+    color: #FFDDC1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    width: 80%;
+    max-width: 600px;
+}
+
+.grid-item {
+    display: flex;
+    align-items: center;
+    margin-left:-40px;
+    justify-content: center;
+    padding: 30px;
+    font-size: 2em;
+    font-family: 'Georgia', serif; /* Stylish text for button numbers */
+    border-radius: 15px;
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Different background images for each grid item */
+#province1 { background-image: url('province1.jpg'); }
+#province2 { background-image: url('province2.jpg'); }
+#province3 { background-image: url('province3.jpg'); }
+#province4 { background-image: url('province4.jpg'); }
+#province5 { background-image: url('province5.jpg'); }
+#province6 { background-image: url('province6.jpg'); }
+#province7 { background-image: url('province7.jpg'); }
+#province8 { background-image: url('province8.jpg'); }
+#province9 { background-image: url('province9.jpg'); }
+
+.grid-item {
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: darken;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark gradient overlay */
+}
+
+.grid-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+.grid-item:active {
+    transform: translateY(-2px);
+}
