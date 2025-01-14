@@ -1,6 +1,6 @@
-
-// accordition of why choose section
 document.addEventListener('DOMContentLoaded', function () {
+
+  // accordition of why choose section
   const accordionItems = document.querySelectorAll('.accordion-item');
   if (accordionItems.length > 0) {
     accordionItems[0].classList.add('expanded');
@@ -12,14 +12,20 @@ document.addEventListener('DOMContentLoaded', function () {
       item.classList.add('expanded');
     });
   });
+
+  // Remove the hash when scrolled above the getting-started section
+  const gettingStartedSection = document.getElementById('getting-started');
+  if(gettingStartedSection)
+    window.addEventListener('scroll', handleScrollToGettingStarted(gettingStartedSection));
+
 });
 
 
-// Remove the hash when scrolled above the getting-started section
-let isClickedGettingStarted = false;
-const gettingStartedSection = document.getElementById('getting-started');
 
-window.addEventListener('scroll', function () {
+let isClickedGettingStarted = false;
+
+
+function handleScrollToGettingStarted(gettingStartedSection) {
 
   const topOffset = gettingStartedSection.getBoundingClientRect().top;
   
@@ -37,5 +43,5 @@ window.addEventListener('scroll', function () {
     }
   }
 
-});
+};
 

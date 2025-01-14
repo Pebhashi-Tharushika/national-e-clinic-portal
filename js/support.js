@@ -1,9 +1,16 @@
 const maxFileSize = 5 * 1024 * 1024; // 5MB
-const uploadInput = document.getElementById('attachments');
+
 const uploadError = document.getElementById('upload-error');
 const uploadPool = document.getElementById('upload-pool');
 
-uploadInput.addEventListener('change', handleFileUpload);
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const uploadInput = document.getElementById('attachments');
+    if (uploadInput) {
+        uploadInput.addEventListener('change', handleFileUpload);
+    }
+});
 
 function handleFileUpload(event) {
     const files = event.target.files;
