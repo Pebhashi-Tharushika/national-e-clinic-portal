@@ -28,9 +28,8 @@
     line-height: 3.5rem;
     padding-bottom: 0.6rem;
     font-weight: 600;
-    background: linear-gradient(-60deg,var(--color-1), var(--color-4));
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--color-1);
+    text-shadow: 3px -3px 3px var(--color-3);
 }
 
 #get-in-touch #git-slogan p{

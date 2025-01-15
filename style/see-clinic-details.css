@@ -1,47 +1,109 @@
-body {
+* {
     margin: 0;
-    font-family: 'Arial', sans-serif;
-    /* background-image: url('/national-e-clinic-portal/images/see-clinic-details/background.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed; */
-    color: white;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
 }
 
-.container {
+:root {
+    --header-height: 10vh;
+    --color-1: #1025a1;
+    --color-2: #ffffff;
+    --color-3: #999999;
+    --color-4: #56aeff;
+    --color-5: #000000;
+    --color-6: #333333;
+    --color-7: #dddddd;
+}
+
+body {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
+}
+
+#clinic-details-container {
+    display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.7); /* Adds a dark overlay */
-    text-align: center;
+    width: 100%;
+    height: calc(100vh - var(--header-height));
+    background-color: var(--color-2);
 }
 
-.title {
-    margin-bottom: 20px;
-    font-size: 3em;
-    font-family: 'Arial', cursive; /* Stylish pattern for the title */
-    color: #FFDDC1;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+#clinic-details-title {
+    display: flex;
+    color: var(--color-1);
+    text-shadow: 3px -3px 3px var(--color-3);
+    align-items: center;
+    gap: 1rem;
 }
 
-.grid-container {
+#clinic-details-title>h1 {
+    font-size: 2.7rem;
+    margin: 0;
+    padding: 0;
+}
+
+#clinic-details-title>i {
+    color: var(--color-1);
+    font-size: 2.7rem;
+}
+
+#sl-map {
+    height: 108%;
+
+}
+
+#sl-map>svg {
+    height: 100%;
+    width: auto;
+    filter: drop-shadow(0px 0px 15px var(--color-4));
+}
+
+svg #Sri_Lanka path {
+    fill: var(--color-7);
+    stroke: var(--color-6);
+    stroke-width: 0.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+svg #Sri_Lanka path:hover {
+    fill: var(--color-1);
+    stroke: var(--color-2);
+}
+
+svg #Sri_Lanka text {
+    font-size: 0.8rem;
+    fill: var(--color-6);
+    pointer-events: none;
+    transition: fill 0.3s;
+}
+
+svg #Sri_Lanka path:hover+text {
+    fill: var(--color-2);
+}
+
+
+/* #clinic-details-content {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 50px;
     width: 80%;
-    max-width: 600px;
 }
 
 .grid-item {
     display: flex;
     align-items: center;
-    margin-left:-40px;
+    margin-left: -40px;
     justify-content: center;
     padding: 30px;
     font-size: 2em;
-    font-family: 'Georgia', serif; /* Stylish text for button numbers */
+    font-family: 'Georgia', serif;
+
     border-radius: 15px;
     color: white;
     text-decoration: none;
@@ -49,22 +111,47 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Different background images for each grid item */
-#province1 { background-image: url('province1.jpg'); }
-#province2 { background-image: url('province2.jpg'); }
-#province3 { background-image: url('province3.jpg'); }
-#province4 { background-image: url('province4.jpg'); }
-#province5 { background-image: url('province5.jpg'); }
-#province6 { background-image: url('province6.jpg'); }
-#province7 { background-image: url('province7.jpg'); }
-#province8 { background-image: url('province8.jpg'); }
-#province9 { background-image: url('province9.jpg'); }
+#province1 {
+    background-image: url('province1.jpg');
+}
+
+#province2 {
+    background-image: url('province2.jpg');
+}
+
+#province3 {
+    background-image: url('province3.jpg');
+}
+
+#province4 {
+    background-image: url('province4.jpg');
+}
+
+#province5 {
+    background-image: url('province5.jpg');
+}
+
+#province6 {
+    background-image: url('province6.jpg');
+}
+
+#province7 {
+    background-image: url('province7.jpg');
+}
+
+#province8 {
+    background-image: url('province8.jpg');
+}
+
+#province9 {
+    background-image: url('province9.jpg');
+}
 
 .grid-item {
     background-size: cover;
     background-position: center;
     background-blend-mode: darken;
-    background-color: rgba(0, 0, 0, 0.5); /* Dark gradient overlay */
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .grid-item:hover {
@@ -74,4 +161,4 @@ body {
 
 .grid-item:active {
     transform: translateY(-2px);
-}
+} */
