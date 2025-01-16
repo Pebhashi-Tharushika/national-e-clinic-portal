@@ -1,0 +1,97 @@
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0px;
+}
+
+/* Container for Table */
+.container {
+  max-width: 90vw;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Heading Styles */
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 12px;
+}
+
+th {
+  background-color: #07d5e4;
+  color: #333;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+/* Zebra Stripes */
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+  table, thead, tbody, th, td, tr {
+      display: block;
+  }
+
+  table {
+      border: 0;
+  }
+
+  thead {
+      display: none;
+  }
+
+  tr {
+      margin-bottom: 15px;
+      border-bottom: 2px solid #0ab3dd;
+  }
+
+  td {
+      padding: 10px;
+      text-align: right;
+      position: relative;
+  }
+
+  td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+  }
+}
+
+.heading{
+  font-weight: bold;
+  text-align: center;
+  color: #07d5e4;
+}

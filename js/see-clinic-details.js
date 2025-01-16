@@ -1,41 +1,20 @@
+const provinceMap = {
+    'Eastern Province': 'eastern',
+    'Northern Province': 'northern',
+    'North Western Province': 'north-western',
+    'Western Province': 'western',
+    'Southern Province': 'southern',
+    'Sabaragamuwa Province': 'sabaragamuwa',
+    'Uva Province': 'uva',
+    'Central Province': 'central',
+    'North Central Province': 'north-central'
+};
+
 document.querySelectorAll('svg path').forEach(path => {
     path.addEventListener('click', () => {
-        let pathSegment = "";
-        let province = path.getAttribute('title');  
+        const province = path.getAttribute('title');
+        const valueOfQueryString = provinceMap[province];
 
-        switch (province) {
-            case 'Eastern Province':
-                pathSegment = "eastern";
-                break;
-            case 'Northern Province':  
-                pathSegment = "northern";
-                break;
-            case 'North Western Province':
-                pathSegment = "north-western";  
-                break;
-            case 'Western Province':
-                pathSegment = "western";
-                break;
-            case 'Southern Province':
-                pathSegment = "southern";
-                break;
-            case 'Sabaragamuwa Province':
-                pathSegment = "sabaragamuwa";
-                break;
-            case 'Uva Province':  
-                pathSegment = "uva";
-                break;
-            case 'Central Province':
-                pathSegment = "central";
-                break;
-            case 'North Central Province':
-                pathSegment = "north-central";
-                break;
-            default:
-                pathSegment = "home";  
-        }
-
-        // Redirect to the PHP file
-        window.location.href = "/national-e-clinic-portal/provinces/" + pathSegment + "-province.php";
+        window.location.href = "/national-e-clinic-portal/province.php?province=" + encodeURIComponent(valueOfQueryString);
     });
 });
