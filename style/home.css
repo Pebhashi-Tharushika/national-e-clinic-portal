@@ -95,7 +95,7 @@
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-#content-container #main-content .button-wrapper #btn-gs > i {
+#content-container #main-content .button-wrapper #btn-gs>i {
   --fa-bounce-start-scale-x: 1;
   --fa-bounce-start-scale-y: 1;
   --fa-bounce-jump-scale-x: 1;
@@ -313,23 +313,25 @@
 /* ---------------------- why choose ------------------------ */
 
 #why-choose {
-  height: 100vh;
+  height: 130vh;
   background-color: var(--color-2);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1.2rem;
+  gap: 2.5rem;
 }
 
 #why-choose #why-choose-title {
+  margin: 0;
   font-size: 3rem;
+  line-height: 3rem;
   color: var(--color-1);
 }
 
 #why-choose #why-choose-content {
   width: 80%;
-  height: 70%;
+  height: 70vh;
   padding: 1rem;
 }
 
@@ -457,6 +459,45 @@
 .accordion-item.expanded .article p {
   display: block;
   max-width: 100%;
+}
+
+#why-choose-percentage {
+  width: 80%;
+  height: 20vh;
+}
+
+#why-choose-percentage>div {
+  background-color: var(--color-7);
+  width: 48%;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0.5rem;
+}
+
+#why-choose-percentage>div .percentage-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+#why-choose-percentage>div .percentage-content .percentage-counter {
+  font-size: 3rem;
+  line-height: 3.5rem;
+}
+
+#why-choose-percentage>div .percentage-content .percentage-counter-title {
+  font-size: 1rem;
+}
+
+#why-choose-percentage>div .text-content>p {
+  margin: 0;
+  font-size: 0.85rem;
 }
 
 

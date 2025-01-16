@@ -193,7 +193,8 @@
 </section>
 
 <section id="why-choose">
-  <div id="why-choose-title">Why Choose the National E-Clinic Portal?</div>
+    <h1 id="why-choose-title">Why Choose the National E-Clinic Portal?</h1> 
+  
   <div id="why-choose-content">
     <ul class="accordion-group" id="accordion">
       <li class="accordion-item">
@@ -259,5 +260,31 @@
         </div>
       </li>
     </ul>
+  </div>
+  <div id="why-choose-percentage" class="row justify-content-evenly">
+    <div class="col-4">
+      <div class="percentage-content">
+        <div class="percentage-counter">
+          <span class="percentage">0</span>
+          <span>%</span>
+        </div>
+        <div class="percentage-counter-title">Quality Ensured</div>
+      </div>
+      <div class="text-content">
+        <p>Our commitment to 100% assurance in healthcare excellence ensures consistency in quality.</p>
+      </div>
+    </div>
+    <div class="col-4">
+    <div class="percentage-content">
+        <div class="percentage-counter">
+          <span class="percentage">0</span>
+          <span>%</span>
+        </div>
+        <div class="percentage-counter-title">Patient Satisfaction</div>
+      </div>
+      <div class="text-content">
+        <p>We strive for patients’ happiness by ensuring their convenience, comfort and well-being.</p>
+      </div>
+    </div>
   </div>
 </section>

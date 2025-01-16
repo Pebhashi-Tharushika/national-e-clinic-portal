@@ -36,6 +36,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
   });
 
+
+// dynamic percentage increment 
+const percentageElements = document.querySelectorAll('.percentage');
+    if (percentageElements.length === 0) {
+      console.error("error");
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+          if (entry.isIntersecting && !entry.target.hasAnimated) {
+              entry.target.hasAnimated = true; // Flag to prevent re-animation
+              incrementPercentage(entry.target);
+          }
+      });
+  }, { threshold: 0.5 });
+
+  percentageElements.forEach(element => observer.observe(element));
+
+
+  function incrementPercentage(element) {
+    let count = 0;
+    const duration = 2000; // total time duration
+    const incrementTime = duration / 100;
+
+    const interval = setInterval(() => {
+        if (count < 100) {
+            count++;
+            element.textContent = count;
+        } else {
+            clearInterval(interval);
+        }
+    }, incrementTime);
+}
+
 });
 
 
