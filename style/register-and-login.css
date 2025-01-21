@@ -17,6 +17,7 @@
   --color-7: #dddddd;
   --color-8: #0ef;
   --color-9: #081b29;
+  --color-10:#f4f4f4
 }
 
 body {
@@ -35,8 +36,8 @@ body {
 }
 
 .login-container {
-  width: 50%;
-  height: 80vh;
+  width: 60%;
+  height: 83vh;
   border-radius: 0.5rem;
   background: transparent;
   border: 1px solid var(--color-4);
@@ -115,7 +116,7 @@ body {
   color: var(--color-4);
 }
 
-.input-box i {
+.input-box > i {
   position: absolute;
   top: 50%;
   right: 0;
@@ -123,7 +124,6 @@ body {
   font-size: 1rem;
   color: var(--color-1);
   transition: .5s;
-  cursor: pointer;
 }
 
 .input-box input:focus~i,
@@ -219,9 +219,58 @@ body {
   transition-delay: calc(.1s * var(--hidden-rate));
 }
 
+#signupForm{
+  height: 85%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#scroll-container{
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 85%;
+  width: 100%;
+  margin-bottom: 1.6rem;
+  padding: 0 1rem 0 0;
+  transition: all 1s ease; /* Smooth transition */
+}
+
+#scroll-container::-webkit-scrollbar {
+  display: none; /* For WebKit browsers */
+}
 
 
+/* Webkit-based browsers */
+#scroll-container:hover::-webkit-scrollbar {
+  display: block; /* Show scrollbar on hover */
+  width: 10px;
+}
 
+#scroll-container::-webkit-scrollbar-track {
+  background: var(--color-10);
+  border-radius: 8px;
+}
+
+#scroll-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, var(--color-4),var(--color-9));
+  border-radius: 8px;
+  border: 2px solid var(--color-10);
+}
+
+#scroll-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg,var(--color-1), var(--color-4));
+}
+
+
+.invisible-scrollbar::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Edge */
+}
+
+.invisible-scrollbar{
+  scrollbar-width: none; /* For Firefox */
+}
 
 /* -------------------- form - button ------------------- */
 
@@ -411,14 +460,49 @@ text-align: center;
 }
 
 .login-wrapper .login-container.active .bg-animate-register {
-  transform: rotate(-8deg) skewY(-50deg);
+  transform: rotate(-8deg) skewY(-51deg);
   transition-delay: 2s;
 }
 
 
 /* ------------ form validation error --------------- */
 .error-message {
+  display: none;
   color: red;
   font-size: 0.8rem;
   /* margin-top: 5px; */
 }
+
+
+
+/* --------------- password information -------------------- */
+#password-info{
+  font-size: 0.75rem;
+  padding-top: 0.1rem;
+  color: var(--color-6);
+  opacity: 0.75;
+  display: flex;
+  gap: 0.2rem;
+}
+
+#password-info > p{
+  margin-bottom: 0;
+}
+
+#password-info > i{
+  font-size: 1rem;
+}
+
+
+
+/* ------------------- admin-code-modal ---------------- */
+/* .modal-title{
+  font-weight: 600;
+} */
+
+#adminCodeDiv{
+  display: none;
+}
+
+
+
