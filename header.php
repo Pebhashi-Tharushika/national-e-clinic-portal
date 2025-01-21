@@ -12,16 +12,16 @@
         <a class="nav-item" href="#" id="account-link">Account</a>
         <div class="dropdown-content" id="dropdown-menu">
           <!-- Show Log In and Register only if user is NOT logged in -->
-          <?php if (!isset($_SESSION['username']) && !isset($_SESSION['adminName'])): ?>
+          <?php if (!isset($_SESSION['username'])): ?>
             <a href="/national-e-clinic-portal/register-and-login.php?action=login">Log In</a>
             <a href="/national-e-clinic-portal/register-and-login.php?action=register">Register</a>
           <?php endif; ?>
 
           <!-- Show Profile, Settings, and Logout only if user IS logged in -->
-          <?php if (isset($_SESSION['username']) || isset($_SESSION['adminName'])): ?>
+          <?php if (isset($_SESSION['username'])): ?>
             <a href="/national-e-clinic-portal/profile/profile.html">Profile</a>
             <a href="/national-e-clinic-portal/setting/settings.html">Settings</a>
-            <a href="/national-e-clinic-portal/logout.html">Logout</a>
+            <a href="/national-e-clinic-portal/includes/logout.inc.php">Logout</a>
           <?php endif; ?>
         </div>
       </div>

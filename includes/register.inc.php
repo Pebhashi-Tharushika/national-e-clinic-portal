@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['email'] = 'Email is required';
     }elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors['email'] = 'Invalid email.';
-    } else if (isExistEmail( $email,$isAdminUser)) {
+    } else if (isExistEmail( $email,$isAdminUser, true)) {
         $errors['email'] = 'Already exists.';
     }
 

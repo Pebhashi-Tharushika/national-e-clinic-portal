@@ -3,20 +3,22 @@ require_once 'dbh.inc.php';
 
 
 // Function to check if the username or email already exists in the system
-function isExistEmail($email, $isAdminUser)
+function isExistEmail($email, $isAdminUser, $isRegister)
 {
     global $conn;
-    $sql = $isAdminUser ? "SELECT * FROM admins WHERE email = ?;" : 
-    "SELECT * FROM clinic_users WHERE email = ?;";
+    $sql = "SELECT * FROM " . ($isAdminUser ? "admins" : "clinic_users") . " WHERE email = ?;";
 
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location:../register-and-login.php?action=register");
+        echo json_encode([
+            'status' => 'error',
+            'message' => $isRegister ? 'Error during registration.' : 'Error during login.',
+        ]);
         exit();
     }
 
-    mysqli_stmt_bind_param($stmt, "s",  $email);
+    mysqli_stmt_bind_param($stmt, "s", $email);
     mysqli_stmt_execute($stmt);
     $resultData = mysqli_stmt_get_result($stmt);
 
@@ -33,8 +35,9 @@ function isExistEmail($email, $isAdminUser)
 function createUser($name, $email, $pwd, $isAdminUser)
 {
     global $conn;
-    $sql = $isAdminUser ? "INSERT INTO admins (name, email, password) VALUES (?, ?, ?);" :
-        "INSERT INTO clinic_users (name, email, password) VALUES (?, ?, ?);";
+    $table = $isAdminUser ? "admins" : "clinic_users";
+    $sql = "INSERT INTO $table (name, email, password) VALUES (?, ?, ?);";
+
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -45,15 +48,16 @@ function createUser($name, $email, $pwd, $isAdminUser)
     mysqli_stmt_bind_param($stmt, "sss", $name, $email, $hashedPwd);
     $executeResult = mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
-    
+
     return $executeResult;
 }
 
 
 // Function to verify admin code
-function isCorrectAdminCode($adminCode) {
+function isCorrectAdminCode($adminCode)
+{
     $storedHash = fetchAdminCode();
-    
+
     if ($storedHash !== false) {
         return password_verify($adminCode, $storedHash);
     }
@@ -62,14 +66,18 @@ function isCorrectAdminCode($adminCode) {
 }
 
 
-function fetchAdminCode(){
+function fetchAdminCode()
+{
     global $conn;
     $sql = "SELECT admin_code FROM admin_codes ORDER BY create_date DESC LIMIT 1";
 
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location:../register-and-login.php?action=register");
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Error during registration.',
+        ]);
         exit();
     }
 
@@ -85,38 +93,61 @@ function fetchAdminCode(){
     }
 }
 
-// Function to check if login inputs are empty
-function emptyInputLogin($username, $pwd)
+
+// function to check if username exists in db
+function ExistUser($email)
 {
-    $result = empty($username) || empty($pwd);
-    return $result;
+    $adminRow = isExistEmail($email, true, false);
+    if ($adminRow !== false) {
+        return ['role' => 'admin', 'email' => $adminRow['email']];
+    }
+
+    $userRow = isExistEmail($email, false, false);
+    if ($userRow !== false) {
+        return ['role' => 'user', 'email' => $userRow['email']];
+    }
+
+    return [];
 }
 
-// Function to log in the user
-function loginUser($email, $pwd, $isAdminUser)
+
+// Function to check if password is correct
+function isCorrectPassword($pwd, $username, $isAdminUser)
+{
+    $fetchedPassword = fetchPassword($username, $isAdminUser);
+    if ($fetchedPassword !== false) {
+        return password_verify($pwd, $fetchedPassword);
+    }
+
+    return false;
+}
+
+function fetchPassword($username, $isAdminUser)
 {
     global $conn;
-    $isUsernameExist = isExistEmail( $email,$isAdminUser);
+    $sql = "SELECT `password` FROM " . ($isAdminUser ? "admins" : "clinic_users") . " WHERE email = ?;";
 
-    if ($isUsernameExist === false) {
-        header("location:../register-and-login.php?error=wronglogin");
+    $stmt = mysqli_stmt_init($conn);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Error during login.',
+        ]);
         exit();
     }
 
-    $pwdHashed = $isUsernameExist["password"];
-    $checkPwd = password_verify($pwd, $pwdHashed);
+    mysqli_stmt_bind_param($stmt, "s", $username);
+    mysqli_stmt_execute($stmt);
+    $resultData = mysqli_stmt_get_result($stmt);
 
-    if ($checkPwd === false) {
-        header("location:../register-and-login.php?error=wronglogin");
-        exit();
+    if ($row = mysqli_fetch_assoc($resultData)) {
+        mysqli_stmt_close($stmt);
+        return $row['password'];
     } else {
-        session_start();
-        $_SESSION["userid"] = $isUsernameExist["user_id"];
-        $_SESSION["useruid"] = $isUsernameExist["username"];
-        $_SESSION["username"] = $isUsernameExist["name"];
-        $_SESSION['isAdmin'] = $isAdminUser;
-        header("location:../index.php");
-        exit();
+        mysqli_stmt_close($stmt);
+        return false;
     }
 }
+
 ?>

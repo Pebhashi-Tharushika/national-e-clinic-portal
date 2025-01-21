@@ -44,18 +44,22 @@
 
       <div class="form-box login">
         <h2 class="animation" style="--hidden-rate:0;--display-rate:22">User Login</h2>
-        <form action="/national-e-clinic-portal/includes/login.inc.php" method="post">
+        <form id="loginForm" novalidate>
+
+        <span id="nameAndPwdError" class="error-message"></span>
 
           <div class="input-box animation" style="--hidden-rate:1;--display-rate:23">
-            <input type="text" id="fname" name="username" required>
-            <label>Username</label>
+            <input type="text" id="username" name="username" required>
+            <label for="username">Username</label>
             <i class='bx bxs-user'></i>
+            <span id="usernameError" class="error-message"></span>
           </div>
 
           <div class="input-box animation" style="--hidden-rate:2;--display-rate:24">
             <input type="password" id="pwd" name="pwd" required>
-            <label>Password</label>
+            <label for="pwd">Password</label>
             <i class='bx bxs-lock-alt'></i>
+            <span id="pwdError" class="error-message"></span>
           </div>
 
           <div class="pwd-forgot-remember animation" style="--hidden-rate:3;--display-rate:25">
@@ -72,9 +76,7 @@
           </div>
 
 
-
-          <button type="submit" name="submit1" class="btn animation"
-            style="--hidden-rate:3;--display-rate:25">Login</button>
+       <button type="submit" class="btn animation" style="--hidden-rate:3;--display-rate:25">Login</button>
 
           <div class="logreg-link animation" style="--hidden-rate:4;--display-rate:26">
             <p>Don't have an account? <a href="#" class="register-link">Sign up</a></p>
@@ -121,8 +123,7 @@
                 <i class='bx bx-info-circle'></i>
                 <p>
                   Password must be at least 12 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1
-                  special
-                  character.
+                  special character (@$!%*?&).
                 </p>
               </div>
 

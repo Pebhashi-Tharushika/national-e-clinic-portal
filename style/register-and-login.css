@@ -189,6 +189,10 @@ body {
   text-decoration: underline;
 }
 
+#nameAndPwdError{
+  text-align: center;
+}
+
 
 /* register form */
 .login-wrapper .login-container .form-box.register {

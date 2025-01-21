@@ -31,11 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
         updateQueryParam('action', 'login');  // Set action=login
     });
 
-    
-    // const adminCodeModal = new bootstrap.Modal(document.getElementById('admin-code-modal'));
 
-
-    /* ---------------------------------- client side form validation ------------------------------------ */
+    /* ---------------------------------- signup form - client side form validation ------------------------------------ */
 
     document.getElementById("signupForm").addEventListener("submit", async function (event) {
         event.preventDefault();
@@ -50,13 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const role = document.getElementById("role").value;
         const adminCode = document.getElementById("adminCode").value.trim();
 
-        console.log(adminCode === '');
-        // if (role === 'admin') {
-        //     adminCodeModal.show();
-        //     return;
-        // } else {
-        //     adminCodeModal.hide();
-        // }
 
         const formData = { name, email, password, confirmPassword, role, adminCode };
 
@@ -111,12 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         adminCodeDiv.style.display = 'none'; // Hide Admin Code input
     }
-        
-        // if (this.value === 'admin') {
-        //     adminCodeModal.show(); // Show the Admin Code modal
-        // } else {
-        //     adminCodeModal.hide(); // This ensures it is hidden if open
-        // }
+
     });
 
 
@@ -137,6 +122,53 @@ document.addEventListener("DOMContentLoaded", () => {
     function clearForm() {
         document.getElementById("signupForm").reset();
     }
+
+
+    /* ---------------------------------- login form - client side form validation ------------------------------------ */
+
+    document.getElementById("loginForm").addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        // Clear previous error messages
+        clearAllErrorMessage();
+
+        const username = document.getElementById("username").value.trim();
+        const pwd = document.getElementById("pwd").value.trim();
+
+
+        const formData = { username, pwd};
+
+        try {
+            // Send data to server for validation
+            const response = await fetch('/national-e-clinic-portal/includes/login.inc.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            const result = await response.json();
+
+            if (result.status === 'error') {
+
+                if (result.errors && Object.keys(result.errors).length > 0) {
+
+                    // Display validation errors
+                    Object.keys(result.errors).forEach((field) => {
+                        const errorElement = document.getElementById(`${field}Error`);
+                        console.log(result.errors[field]);
+                        errorElement.textContent = result.errors[field];
+                        errorElement.style.display = "block";
+                    });
+                }
+
+            } else if (result.status === 'success') {
+                alert(result.message);
+                window.location.href = "/national-e-clinic-portal/index.php?page=home"; // Redirect to the Home page
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
 
 
 });
