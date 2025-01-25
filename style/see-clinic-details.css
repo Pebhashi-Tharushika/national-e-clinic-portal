@@ -22,7 +22,80 @@ body {
     min-height: 100vh;
 }
 
-#clinic-details-container {
+#clinic-details-container{
+    width: 100%;
+    height: calc(100vh - var(--header-height));
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-image: url(/national-e-clinic-portal/images/see-clinic-details/search.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#clinic-details-title-and-intro{
+    width: 90%;
+    height: 80%;
+    margin: auto;
+}
+
+#title-intro-container{
+    display: flex;
+    flex-direction: column;
+    row-gap: 4.2rem;
+    border-top-left-radius: 8rem;
+    border-bottom-right-radius: 8rem;
+    max-width: 50%;
+    min-height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+#clinic-details-title{
+    color: var(--color-1);
+    text-shadow: 3px -3px 3px var(--color-3);
+    font-size: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    width: 100%;
+    padding: 0 2vw;
+    
+}
+
+#clinic-details-title > h1:first-child{
+    text-align: start;
+}
+
+#clinic-details-title > h1:last-child{
+    text-align: end;
+}
+
+#clinic-details-intro{
+        padding: 0 2vw 0 2vw;
+        text-align: justify;
+        color: #1025a1;
+    }
+
+    #clinic-details-intro > ul{
+        list-style-type: none;
+    }
+    #clinic-details-intro > ul >li{
+        padding-bottom: 4vh;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+    }
+
+    #clinic-details-intro > ul >li > i{
+        margin-right: 0.5rem;
+        font-size: 1.5rem;
+        vertical-align: middle;
+    }
+
+
+/* #clinic-details-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -85,80 +158,6 @@ svg #Sri_Lanka text {
 
 svg #Sri_Lanka path:hover+text {
     fill: var(--color-2);
-}
-
-
-/* #clinic-details-content {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 50px;
-    width: 80%;
-}
-
-.grid-item {
-    display: flex;
-    align-items: center;
-    margin-left: -40px;
-    justify-content: center;
-    padding: 30px;
-    font-size: 2em;
-    font-family: 'Georgia', serif;
-
-    border-radius: 15px;
-    color: white;
-    text-decoration: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-#province1 {
-    background-image: url('province1.jpg');
-}
-
-#province2 {
-    background-image: url('province2.jpg');
-}
-
-#province3 {
-    background-image: url('province3.jpg');
-}
-
-#province4 {
-    background-image: url('province4.jpg');
-}
-
-#province5 {
-    background-image: url('province5.jpg');
-}
-
-#province6 {
-    background-image: url('province6.jpg');
-}
-
-#province7 {
-    background-image: url('province7.jpg');
-}
-
-#province8 {
-    background-image: url('province8.jpg');
-}
-
-#province9 {
-    background-image: url('province9.jpg');
-}
-
-.grid-item {
-    background-size: cover;
-    background-position: center;
-    background-blend-mode: darken;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.grid-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-}
-
-.grid-item:active {
-    transform: translateY(-2px);
 } */
+
+

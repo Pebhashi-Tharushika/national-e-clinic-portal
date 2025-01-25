@@ -24,7 +24,29 @@
 	<?php
 	include_once 'back-to-home.php';
 	?>
-	<div id="clinic-details-container">
+
+	<section id="clinic-details-container">
+		<div id="clinic-details-title-and-intro">
+		<div id="title-intro-container">
+			<div id="clinic-details-title">
+				<h1>Explore Clinics </h1>
+				<h1>The Way You Want</h1>
+			</div>
+			<div id="clinic-details-intro">
+				<ul>
+					<li><i class='bx bx-check' ></i>Find clinics that fit your needs anywhere in Sri Lanka.</li>
+					<li><i class='bx bx-check'></i>Search specialized clinics by disease.</li>
+					<li><i class='bx bx-check'></i>Discover nearby options for easy access.</li>
+					<li><i class='bx bx-check'></i>Manage your schedule with suitable dates and times.</li>
+					<li><i class='bx bx-check'></i>Stay updated with real-time information on locations, dates and times.</li>
+				</ul>
+			</div>
+		</div>
+		</div>
+		
+		
+	</section>
+	<!-- <div id="clinic-details-container">
 		<div id="clinic-details-title">
 			<h1>Select Your Province</h1>
 			<i class='bx bxs-chevrons-right bx-fade-right'></i>
@@ -84,7 +106,7 @@
 			</svg>
 		</div>
 
-	</div>
+	</div> -->
 </body>
 
 </html>

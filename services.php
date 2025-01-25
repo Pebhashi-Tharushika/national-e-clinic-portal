@@ -1,6 +1,6 @@
 <section id="services-container-wrapper">
     <div id="services-container">
-        <h2 id="services-title">Services We Offer</h2>
+        <h2 id="services-title">Our Clinic Services and Specializations</h2>
 
         <div class="grid text-center" id="service-content">
             <div class="g-col-3 service-item">
