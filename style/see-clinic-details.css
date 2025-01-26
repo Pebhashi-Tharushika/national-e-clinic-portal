@@ -22,7 +22,9 @@ body {
     min-height: 100vh;
 }
 
-#clinic-details-container{
+/* -------------------------- title and intro section --------------- */
+
+#clinic-details-container {
     width: 100%;
     height: calc(100vh - var(--header-height));
     display: flex;
@@ -34,13 +36,13 @@ body {
     background-size: cover;
 }
 
-#clinic-details-title-and-intro{
+#clinic-details-title-and-intro {
     width: 90%;
     height: 80%;
     margin: auto;
 }
 
-#title-intro-container{
+#title-intro-container {
     display: flex;
     flex-direction: column;
     row-gap: 4.2rem;
@@ -52,7 +54,7 @@ body {
     justify-content: center;
 }
 
-#clinic-details-title{
+#clinic-details-title {
     color: var(--color-1);
     text-shadow: 3px -3px 3px var(--color-3);
     font-size: 2.5rem;
@@ -61,50 +63,66 @@ body {
     row-gap: 0.5rem;
     width: 100%;
     padding: 0 2vw;
-    
+
 }
 
-#clinic-details-title > h1:first-child{
+#clinic-details-title>h1:first-child {
     text-align: start;
 }
 
-#clinic-details-title > h1:last-child{
+#clinic-details-title>h1:last-child {
     text-align: end;
 }
 
-#clinic-details-intro{
-        padding: 0 2vw 0 2vw;
-        text-align: justify;
-        color: #1025a1;
-    }
+#clinic-details-intro {
+    padding: 0 2vw 0 2vw;
+    text-align: justify;
+    color: #1025a1;
+}
 
-    #clinic-details-intro > ul{
-        list-style-type: none;
-    }
-    #clinic-details-intro > ul >li{
-        padding-bottom: 4vh;
-        font-size: 1rem;
-        display: flex;
-        align-items: center;
-    }
+#clinic-details-intro>ul {
+    list-style-type: none;
+}
 
-    #clinic-details-intro > ul >li > i{
-        margin-right: 0.5rem;
-        font-size: 1.5rem;
-        vertical-align: middle;
-    }
+#clinic-details-intro>ul>li {
+    padding-bottom: 4vh;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
 
+#clinic-details-intro>ul>li>i {
+    margin-right: 0.5rem;
+    font-size: 1.8rem;
+    vertical-align: middle;
+    font-weight: 600;
+}
 
-/* #clinic-details-container {
+/* ------------- selection criteria section ------------- */
+
+#clinic-detail-selections {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: calc(100vh - var(--header-height));
+    width: 90%;
+    height: 100vh;
+    margin: 0 auto;
     background-color: var(--color-2);
 }
 
-#clinic-details-title {
+#province-selection {
+    max-width: 60%;
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5vh 0 0;
+}
+
+#province-selection>#select-province-title {
     display: flex;
     color: var(--color-1);
     text-shadow: 3px -3px 3px var(--color-3);
@@ -112,23 +130,47 @@ body {
     gap: 1rem;
 }
 
-#clinic-details-title>h1 {
-    font-size: 2.7rem;
+#province-selection>#select-province-title>h1 {
+    font-size: 2.2rem;
     margin: 0;
     padding: 0;
 }
 
-#clinic-details-title>i {
+#province-selection>#select-province-title>i {
     color: var(--color-1);
-    font-size: 2.7rem;
+    font-size: 2.2rem;
 }
 
-#sl-map {
+.fade-down {
+    animation: fade-down 1.5s infinite linear;
+}
+
+@keyframes fade-down {
+    0% {
+        transform: translateY(-5px);
+        opacity: 1;
+    }
+
+    33.3%{
+        transform: translateY(0px);
+    }
+    66.6%{
+        transform: translateY(5px);
+    }
+    100%{
+        transform: translateY(-5px);
+        opacity: 0;
+    }
+}
+
+
+
+#province-selection>#sl-map {
     height: 108%;
 
 }
 
-#sl-map>svg {
+#province-selection>#sl-map>svg {
     height: 100%;
     width: auto;
     filter: drop-shadow(0px 0px 15px var(--color-4));
@@ -158,6 +200,32 @@ svg #Sri_Lanka text {
 
 svg #Sri_Lanka path:hover+text {
     fill: var(--color-2);
-} */
+}
 
 
+#other-selection {
+    max-width: 50%;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#other-selection>form {
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    width: 85%;
+    justify-content: center;
+    row-gap: 2rem;
+}
+
+#other-selection>form > label,
+#other-selection>form > option{
+font-size: 1rem;
+}
+
+#other-selection>form > select{
+    outline: none;
+}
