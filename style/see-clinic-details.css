@@ -119,7 +119,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 5vh 0 0;
+    padding: 7vh 0 0;
 }
 
 #province-selection>#select-province-title {
@@ -131,14 +131,13 @@ body {
 }
 
 #province-selection>#select-province-title>h1 {
-    font-size: 2.2rem;
     margin: 0;
     padding: 0;
 }
 
 #province-selection>#select-province-title>i {
     color: var(--color-1);
-    font-size: 2.2rem;
+    font-size: 1.5rem;
 }
 
 .fade-down {
@@ -151,13 +150,15 @@ body {
         opacity: 1;
     }
 
-    33.3%{
+    33.3% {
         transform: translateY(0px);
     }
-    66.6%{
+
+    66.6% {
         transform: translateY(5px);
     }
-    100%{
+
+    100% {
         transform: translateY(-5px);
         opacity: 0;
     }
@@ -166,14 +167,14 @@ body {
 
 
 #province-selection>#sl-map {
-    height: 108%;
-
+    height: 100%;
+    padding-top: 2vh;
 }
 
 #province-selection>#sl-map>svg {
     height: 100%;
     width: auto;
-    filter: drop-shadow(0px 0px 15px var(--color-4));
+    filter: drop-shadow(0px 0px 10px var(--color-4));
 }
 
 svg #Sri_Lanka path {
@@ -208,24 +209,74 @@ svg #Sri_Lanka path:hover+text {
     width: 50%;
     height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-#other-selection>form {
+#other-selection>#search-heading-and-form {
     display: flex;
     flex-direction: column;
-    height: 50%;
+    height: 80%;
     width: 85%;
     justify-content: center;
-    row-gap: 2rem;
+    align-items: center;
+    background-color: var(--color-7);
+    border-radius: 1rem;
 }
 
-#other-selection>form > label,
-#other-selection>form > option{
-font-size: 1rem;
+#other-selection>#search-heading-and-form>h1 {
+    color: var(--color-1);
 }
 
-#other-selection>form > select{
+#other-selection>#search-heading-and-form>form {
+    width: 90%;
+}
+
+#other-selection>#search-heading-and-form>form>.form-field {
+    margin: 4.5vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vh;
+}
+
+#other-selection>#search-heading-and-form>form>.form-field>label {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+#other-selection>#search-heading-and-form>form>.form-field>select>option {
+    font-size: 0.9rem;
+}
+
+#other-selection form select {
     outline: none;
+    border: none;
+    background-color: var(--color-2);
+    font-size: 0.9rem;
+    height: 1.75rem;
+    border-radius: 0.2rem;
+}
+
+#other-selection>#search-heading-and-form>form>.form-field:last-child>#button-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+#other-selection>#search-heading-and-form>form>.form-field:last-child>#button-wrapper>button {
+    padding: 0.5rem 0.5rem;
+    width: 6vw;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    border-radius: 1rem;
+    background-color: var(--color-1);
+    color: var(--color-2);
+}
+
+#other-selection>#search-heading-and-form>form>.form-field:last-child>#button-wrapper>button:hover {
+    cursor: pointer;
+    color: var(--color-1);
+    background-color: var(--color-2);
 }

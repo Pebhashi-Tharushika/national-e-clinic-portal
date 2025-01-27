@@ -34,11 +34,13 @@
 				</div>
 				<div id="clinic-details-intro">
 					<ul>
-						<li><i class='bx bx-check'></i>Find clinics that fit your needs anywhere in Sri Lanka.</li>
-						<li><i class='bx bx-check'></i>Search specialized clinics by disease.</li>
-						<li><i class='bx bx-check'></i>Discover nearby options for easy access.</li>
-						<li><i class='bx bx-check'></i>Manage your schedule with suitable dates and times.</li>
-						<li><i class='bx bx-check'></i>Stay updated with real-time information on locations, dates and
+						<li><i class='bx bxs-check-circle'></i>Find clinics that fit your needs anywhere in Sri Lanka.
+						</li>
+						<li><i class='bx bxs-check-circle'></i>Search specialized clinics by disease.</li>
+						<li><i class='bx bxs-check-circle'></i>Discover nearby options for easy access.</li>
+						<li><i class='bx bxs-check-circle'></i>Manage your schedule with suitable dates and times.</li>
+						<li><i class='bx bxs-check-circle'></i>Stay updated with real-time information on locations,
+							dates and
 							times.</li>
 					</ul>
 				</div>
@@ -113,42 +115,58 @@
 
 		<div id="other-selection">
 
-			<form action="">
+			<div id="search-heading-and-form">
+				<h1 class="heading"> Uva Province</h1>
 
-			<label for="district">District</label>
-				<select type="text" name="district">
-					<option value="" selected hidden>Select Your District</option>
-				<option value="">Anuradhapura</option>
-				<option value="">Polonnaruwa</option>
-				</select>
+				<form id="search-form" action="search-clinic.php" method="post">
 
-				<label for="hospital_category">Hospital Category</label>
-				<select type="text" name="hospital_category">
-				<option value="" selected hidden>Select Hospital</option>
-				<option value="">Anuradhapura District General Hospital</option>
-				<option value="">Nuwara Eliya</option>
-				</select>
-				
+					<div class="form-field">
+						<label for="district">District</label>
+						<select type="text" name="district">
+							<option value="" selected hidden>Select Your District</option>
+							<option value="">Anuradhapura</option>
+							<option value="">Polonnaruwa</option>
+						</select>
+					</div>
 
-				<label for="hospital">Hospital</label>
-				<select type="text" name="hospital">
-				<option value="" selected hidden>Select Hospital</option>
-				<option value="">Anuradhapura District General Hospital</option>
-				<option value="">Nuwara Eliya</option>
-				</select>
-				
+					<div class="form-field">
+						<label for="hospital_category">Hospital Category</label>
+						<select type="text" name="hospital_category">
+							<option value="" selected hidden>Select Hospital</option>
+							<option value="">Anuradhapura District General Hospital</option>
+							<option value="">Nuwara Eliya</option>
+						</select>
+					</div>
 
-				<label for="clinic_category">Clinic</label>
-				<select type="text" name="clinic_category">
-				<option value="" selected hidden>Select Clinic</option>
-				<option value="">Allergy and Immunology, Cell Biology</option>
-				<option value="">Polonnaruwa</option>
-				</select>
-				
+					<div class="form-field">
+						<label for="hospital">Hospital</label>
+						<select type="text" name="hospital">
+							<option value="" selected hidden>Select Hospital</option>
+							<option value="">Anuradhapura District General Hospital</option>
+							<option value="">Nuwara Eliya</option>
+						</select>
+					</div>
 
-				<button type="submit">Search</button>
+					<div class="form-field">
+						<label for="clinic_category">Clinic</label>
+						<select type="text" name="clinic_category">
+							<option value="" selected hidden>Select Clinic</option>
+							<option value="">Allergy and Immunology, Cell Biology</option>
+							<option value="">Polonnaruwa</option>
+						</select>
+					</div>
 
-			</form>
+					<div class="form-field">
+						<div id="button-wrapper">
+							<button type="reset">Clear</button>
+							<button type="submit">Search</button>
+						</div>
+
+					</div>
+
+
+				</form>
+			</div>
 
 		</div>
 
