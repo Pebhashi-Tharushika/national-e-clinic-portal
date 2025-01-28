@@ -185,9 +185,11 @@ svg #Sri_Lanka path {
     stroke-linejoin: round;
     transition: all 0.3s;
     cursor: pointer;
+    transition: fill 0.3s, stroke 0.3s;
 }
 
-svg #Sri_Lanka path:hover {
+svg #Sri_Lanka path:hover,
+svg #Sri_Lanka path.selected {
     fill: var(--color-1);
     stroke: var(--color-2);
 }
@@ -199,7 +201,8 @@ svg #Sri_Lanka text {
     transition: fill 0.3s;
 }
 
-svg #Sri_Lanka path:hover+text {
+svg #Sri_Lanka path:hover+text,
+svg #Sri_Lanka path.selected+text {
     fill: var(--color-2);
 }
 
@@ -227,6 +230,8 @@ svg #Sri_Lanka path:hover+text {
 
 #other-selection>#search-heading-and-form>h1 {
     color: var(--color-1);
+    width: 90%;
+    text-align: center;
 }
 
 #other-selection>#search-heading-and-form>form {
@@ -251,7 +256,6 @@ svg #Sri_Lanka path:hover+text {
 
 #other-selection form select {
     outline: none;
-    border: none;
     background-color: var(--color-2);
     font-size: 0.9rem;
     height: 1.75rem;
@@ -275,8 +279,17 @@ svg #Sri_Lanka path:hover+text {
     color: var(--color-2);
 }
 
-#other-selection>#search-heading-and-form>form>.form-field:last-child>#button-wrapper>button:hover {
+#other-selection>#search-heading-and-form>form>.form-field:last-child>#button-wrapper>button:not(:disabled):hover {
     cursor: pointer;
     color: var(--color-1);
     background-color: var(--color-2);
+}
+
+#other-selection>#search-heading-and-form>form>.form-field:last-child>#button-wrapper>button:disabled{
+    opacity: 0.7;
+}
+
+
+#selected-clinic-info{
+    height: 100vh;
 }

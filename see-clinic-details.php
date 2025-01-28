@@ -59,7 +59,7 @@
 			</div>
 
 			<div id="sl-map">
-				<svg xml:space="preserve" viewBox="138.5643178410795 0 504.9403298350825 599.8812" y="0px" x="0px"
+				<svg id="sri-lanka" xml:space="preserve" viewBox="138.5643178410795 0 504.9403298350825 599.8812" y="0px" x="0px"
 					xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1"
 					width="504.9403298350825" height="599.8812">
 					<g id="Sri_Lanka">
@@ -116,25 +116,21 @@
 		<div id="other-selection">
 
 			<div id="search-heading-and-form">
-				<h1 class="heading"> Uva Province</h1>
+				<h1 class="heading">Find Clinic Details</h1>
 
 				<form id="search-form" action="search-clinic.php" method="post">
 
 					<div class="form-field">
 						<label for="district">District</label>
-						<select type="text" name="district">
+						<select type="text" name="district" id="district-dropdown">
 							<option value="" selected hidden>Select Your District</option>
-							<option value="">Anuradhapura</option>
-							<option value="">Polonnaruwa</option>
 						</select>
 					</div>
 
 					<div class="form-field">
 						<label for="hospital_category">Hospital Category</label>
-						<select type="text" name="hospital_category">
+						<select type="text" name="hospital_category" id="hospital-category-dropdown">
 							<option value="" selected hidden>Select Hospital</option>
-							<option value="">Anuradhapura District General Hospital</option>
-							<option value="">Nuwara Eliya</option>
 						</select>
 					</div>
 
@@ -158,7 +154,7 @@
 
 					<div class="form-field">
 						<div id="button-wrapper">
-							<button type="reset">Clear</button>
+							<button type="reset" id="btn-clear">Clear</button>
 							<button type="submit">Search</button>
 						</div>
 
@@ -170,6 +166,16 @@
 
 		</div>
 
+
+	</section>
+
+	<section id="selected-clinic-info">
+		<div id="selected-clinic-info-title">
+			<h1>Clinic Details</h1>
+		</div>
+		<div id="selected-clinic-info-content">
+			<table></table>
+		</div>
 
 	</section>
 

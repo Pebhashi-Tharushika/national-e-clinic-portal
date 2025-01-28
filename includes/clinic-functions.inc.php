@@ -23,8 +23,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 }
 
+function isExistProvince($province)
+{
+    global $conn;
 
-// Function to get all clinic details
+    $query = "SELECT id FROM provinces WHERE province_name = ?";
+    $stmt = mysqli_prepare($conn, $query);
+
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "s", $province);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+    
+        $exists = mysqli_num_rows($result) > 0; // Boolean check
+        mysqli_stmt_close($stmt);
+        return $exists;
+    } else {
+        return [
+            'status' => 'error',
+            'message' => 'Error during preparing query.'
+        ];
+        
+    }
+    
+}
+
+
+// Function to get all districts in a province
+
+function getDistrictsByProvince($province)
+{
+    global $conn;
+
+    $query = "SELECT d.`district_name` FROM `districts` d JOIN `provinces` p ON d.`province_id` = p.`id` WHERE p.`province_name` = ?";
+    $stmt = mysqli_prepare($conn, $query);
+
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "s", $province);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        $districts = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $districts[] = $row; // Store each row in the array
+        }
+
+        mysqli_stmt_close($stmt); // Close statement
+        
+        return !empty($districts) ? 
+    ['status' => 'success', 'data' => $districts, 'message' => 'Districts fetched successfully.'] : 
+    ['status' => 'error', 'message' => 'No districts found.'];
+
+        
+    } else {
+        return [
+            'status' => 'error',
+            'message' => 'Error during preparing query.'
+        ];
+        
+    }
+}
+
 function getClinicDetails($province)
 {
     global $conn, $allowedProvinces;
