@@ -34,7 +34,7 @@ function isExistProvince($province)
         mysqli_stmt_bind_param($stmt, "s", $province);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
-    
+
         $exists = mysqli_num_rows($result) > 0; // Boolean check
         mysqli_stmt_close($stmt);
         return $exists;
@@ -43,9 +43,9 @@ function isExistProvince($province)
             'status' => 'error',
             'message' => 'Error during preparing query.'
         ];
-        
+
     }
-    
+
 }
 
 
@@ -69,20 +69,58 @@ function getDistrictsByProvince($province)
         }
 
         mysqli_stmt_close($stmt); // Close statement
-        
-        return !empty($districts) ? 
-    ['status' => 'success', 'data' => $districts, 'message' => 'Districts fetched successfully.'] : 
-    ['status' => 'error', 'message' => 'No districts found.'];
 
-        
+        return !empty($districts) ?
+            ['status' => 'success', 'data' => $districts, 'message' => 'Districts fetched successfully.'] :
+            ['status' => 'error', 'message' => 'No districts found.'];
+
+
     } else {
         return [
             'status' => 'error',
             'message' => 'Error during preparing query.'
         ];
-        
+
     }
 }
+
+function getInstituteType($district)
+{
+    global $conn;
+
+    $query = "SELECT DISTINCT i.institute_type
+                FROM districts d
+                JOIN hospitals h ON d.id = h.district_id
+                JOIN institutes i ON h.institute_type_id = i.id
+                WHERE d.district_name = ?";
+    $stmt = mysqli_prepare($conn, $query);
+
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "s", $district);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        $instituteTypes = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $instituteTypes[] = $row; // Store each row in the array
+        }
+
+        mysqli_stmt_close($stmt);
+
+        return !empty($instituteTypes) ?
+            ['status' => 'success', 'data' => $instituteTypes, 'message' => 'Hospital categories fetched successfully.'] :
+            ['status' => 'error', 'message' => 'No hospital categories found.'];
+
+
+    } else {
+        return [
+            'status' => 'error',
+            'message' => 'Error during preparing query.'
+        ];
+
+    }
+}
+
 
 function getClinicDetails($province)
 {

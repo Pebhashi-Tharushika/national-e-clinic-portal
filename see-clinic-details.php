@@ -122,21 +122,21 @@
 
 					<div class="form-field">
 						<label for="district">District</label>
-						<select type="text" name="district" id="district-dropdown">
+						<select type="text" name="district" id="district-dropdown" disabled>
 							<option value="" selected hidden>Select Your District</option>
 						</select>
 					</div>
 
 					<div class="form-field">
 						<label for="hospital_category">Hospital Category</label>
-						<select type="text" name="hospital_category" id="hospital-category-dropdown">
+						<select type="text" name="hospital_category" id="hospital-category-dropdown" disabled>
 							<option value="" selected hidden>Select Hospital</option>
 						</select>
 					</div>
 
 					<div class="form-field">
 						<label for="hospital">Hospital</label>
-						<select type="text" name="hospital">
+						<select type="text" name="hospital" disabled>
 							<option value="" selected hidden>Select Hospital</option>
 							<option value="">Anuradhapura District General Hospital</option>
 							<option value="">Nuwara Eliya</option>
@@ -145,7 +145,7 @@
 
 					<div class="form-field">
 						<label for="clinic_category">Clinic</label>
-						<select type="text" name="clinic_category">
+						<select type="text" name="clinic_category" disabled>
 							<option value="" selected hidden>Select Clinic</option>
 							<option value="">Allergy and Immunology, Cell Biology</option>
 							<option value="">Polonnaruwa</option>

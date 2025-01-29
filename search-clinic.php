@@ -1,10 +1,11 @@
 <?php
 session_start();
 
+require_once 'includes/clinic-functions.inc.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['province'])) {
         $province = $_POST['province'];
-        include_once 'includes/clinic-functions.inc.php';
 
         // Validate the province
         $response = isExistProvince($province);
@@ -23,6 +24,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $districts = getDistrictsByProvince($province); // Fetch Districts.
 
         sendResponse($districts);
+    }
+
+    if(isset($_POST['district'])){
+        $district = $_POST['district'];
+
+       $instituteType = getInstituteType($district);
+sendResponse($instituteType);
     }
 }
 
