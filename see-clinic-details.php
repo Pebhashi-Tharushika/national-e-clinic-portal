@@ -150,8 +150,8 @@
 
 					<div class="form-field">
 						<div id="button-wrapper">
-							<button type="reset" id="btn-clear">Clear</button>
-							<button type="submit">Search</button>
+							<button type="reset" id="btn-clear" disabled>Clear</button>
+							<button type="submit" id="btn-search" disabled>Search</button>
 						</div>
 
 					</div>

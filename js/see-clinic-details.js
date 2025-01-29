@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const searchFormHeading = document.querySelector("#search-heading-and-form h1");
     const btnClear = document.getElementById('btn-clear');
+    const btnSearch = document.getElementById('btn-search');
 
     let isDistrictDropdownDisable = true;
     let isHospitalCategoryDropdownDisable = true;
@@ -39,7 +40,15 @@ document.addEventListener("DOMContentLoaded", () => {
             const provinceTitle = province.getAttribute("title");
             searchFormHeading.textContent = `Find ${provinceTitle} Clinic Details`;
             removeAllSelection(provinces);
+
+            selectedDistrict = "";
+            resetHospitalCategoryDropdown();
+            resetHospitalDropdown();
+            resetClinicCategoryDropdown();
+
             disableForm();
+            
+
             event.target.classList.add("selected");
 
             if (isDistrictDropdownDisable) {
@@ -48,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             selectedProvince = provinceTitle.replace("Province", "").trim();
+
 
             // Fetch districts for the selected province
             try {
@@ -59,10 +69,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (response.ok) {
                     const districts = await response.json();
-                    if(districts.status === 'success') {
+                    if (districts.status === 'success') {
                         populateDistricts(districts.data);
+                        enableButtons();
                     }
-                    
+
                 } else {
                     console.error("Error fetching districts:", response.statusText);
                 }
@@ -79,8 +90,11 @@ document.addEventListener("DOMContentLoaded", () => {
             isHospitalCategoryDropdownDisable = false;
         }
 
+        selectedHospitalCategory = "";
+        disableButtons();
+
         selectedDistrict = event.target.value.trim();
-        resethospitalDropdown();
+        resetHospitalDropdown();
         resetClinicCategoryDropdown();
 
         // Fetch hospital categories for the selected district
@@ -93,10 +107,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (response.ok) {
                 const hospitalCategory = await response.json();
-                if(hospitalCategory.status === 'success') {
+                if (hospitalCategory.status === 'success') {
                     populateHospitalCategory(hospitalCategory.data);
+                    enableButtons();
                 }
-                
+
             } else {
                 console.error("Error fetching hospital categories:", response.statusText);
             }
@@ -112,6 +127,9 @@ document.addEventListener("DOMContentLoaded", () => {
             isHospitalDropdownDisable = false;
         }
 
+        selectedHospital = "";
+        disableButtons();
+
         selectedHospitalCategory = event.target.value.trim();
         resetClinicCategoryDropdown();
 
@@ -120,19 +138,20 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch('search-clinic.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({ 
-                    province: selectedProvince, 
-                    district: selectedDistrict, 
-                    hospital_category: selectedHospitalCategory 
+                body: new URLSearchParams({
+                    province: selectedProvince,
+                    district: selectedDistrict,
+                    hospital_category: selectedHospitalCategory
                 })
             });
 
             if (response.ok) {
                 const hospitals = await response.json();
-                if(hospitals.status === 'success') {
+                if (hospitals.status === 'success') {
                     populateHospital(hospitals.data);
+                    enableButtons();
                 }
-                
+
             } else {
                 console.error("Error fetching hospitals:", response.statusText);
             }
@@ -148,22 +167,26 @@ document.addEventListener("DOMContentLoaded", () => {
             isClinicCategoryDropdownDisable = false;
         }
 
+        selectedClinicCategory = "";
+        disableButtons();
+
         selectedHospital = event.target.value.trim();
 
         try {
             const response = await fetch('search-clinic.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({ 
+                body: new URLSearchParams({
                     hospital: selectedHospital,
                     province: selectedProvince
-                 })
+                })
             });
 
             if (response.ok) {
                 const clinicCategory = await response.json();
-                if(clinicCategory.status === 'success') {
+                if (clinicCategory.status === 'success') {
                     populateClinicCategory(clinicCategory.data);
+                    enableButtons();
                 }
             } else {
                 console.error("Error fetching clinic categories:", response.statusText);
@@ -174,8 +197,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     clinicCategoryDropdown.addEventListener("change", event => {
-
         selectedClinicCategory = event.target.value.trim();
+        enableButtons();
     });
 
 
@@ -184,6 +207,9 @@ document.addEventListener("DOMContentLoaded", () => {
         searchFormHeading.textContent = 'Find Clinic Details';
         disableForm();
     });
+
+
+
 
     function disableForm() {
         const elements = searchForm.querySelectorAll("select, button");
@@ -234,7 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    function populateClinicCategory(clinicCategory){
+    function populateClinicCategory(clinicCategory) {
         clinicCategoryDropdown.innerHTML = '<option value="" selected hidden>Select Clinic Category</option>';
 
         clinicCategory.forEach(category => {
@@ -245,26 +271,57 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    function resethospitalDropdown(){
-        if(!isHospitalDropdownDisable){
-            if(selectedHospital !== "") {
+    function resetHospitalCategoryDropdown() {
+        if (!isHospitalCategoryDropdownDisable) {
+            if (selectedHospitalCategory !== "") {
+                populateHospitalCategory([]);
+                selectedHospitalCategory = "";
+            }
+            hospitalCategoryDropdown.disabled = true;
+            isHospitalCategoryDropdownDisable = true;
+        }
+    }
+
+    function resetHospitalDropdown() {
+        if (!isHospitalDropdownDisable) {
+            if (selectedHospital !== "") {
                 populateHospital([]);
+                selectedHospital = "";
             }
             hospitalDropdown.disabled = true;
             isHospitalDropdownDisable = true;
         }
     }
 
-    function resetClinicCategoryDropdown(){
-        if(!isClinicCategoryDropdownDisable){
-            if(selectedClinicCategory !== ""){
+    function resetClinicCategoryDropdown() {
+        if (!isClinicCategoryDropdownDisable) {
+            if (selectedClinicCategory !== "") {
                 populateClinicCategory([]);
+                selectedClinicCategory = "";
             }
             clinicCategoryDropdown.disabled = true;
             isClinicCategoryDropdownDisable = true;
         }
     }
 
+    function enableButtons() {
+
+        if (selectedProvince !== "" &&
+            selectedDistrict !== "" &&
+            selectedHospitalCategory !== "" &&
+            selectedHospital !== "" &&
+            selectedClinicCategory !== "") {
+            btnClear.disabled = false;
+            btnSearch.disabled = false;
+        }
+
+
+    }
+
+    function disableButtons(){
+        btnClear.disabled = true;
+            btnSearch.disabled = true;
+    }
 
 });
 
