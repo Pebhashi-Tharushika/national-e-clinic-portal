@@ -293,3 +293,7 @@ svg #Sri_Lanka path.selected+text {
 #selected-clinic-info{
     height: 100vh;
 }
+
+#clinicTable{
+    display: none;
+}

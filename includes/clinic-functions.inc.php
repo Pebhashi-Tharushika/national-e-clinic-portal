@@ -7,21 +7,21 @@ $allowedProvinces = ['central_province', 'eastern_province', 'northern_province'
 
 
 // Handle AJAX delete request
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteClinic') {
-    if (isset($_POST['id'], $_POST['province'])) {
-        $clinicId = intval($_POST['id']); // Sanitize ID
-        $province = $_POST['province'];
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteClinic') {
+//     if (isset($_POST['id'], $_POST['province'])) {
+//         $clinicId = intval($_POST['id']); // Sanitize ID
+//         $province = $_POST['province'];
 
-        // Validate province name
-        if (in_array($province, $allowedProvinces)) {
-            deleteClinic($clinicId, $province);
-        } else {
-            echo 'invalid_province';
-        }
-    } else {
-        echo 'invalid_request';
-    }
-}
+//         // Validate province name
+//         if (in_array($province, $allowedProvinces)) {
+//             deleteClinic($clinicId, $province);
+//         } else {
+//             echo 'invalid_province';
+//         }
+//     } else {
+//         echo 'invalid_request';
+//     }
+// }
 
 function isExistProvince($province)
 {
@@ -158,21 +158,59 @@ function getHospitalsByProvinceAndDistrictAndCategory($hospital_category, $distr
     }
 }
 
-function getClinicCategoriesByHospital($hospitalName, $provinceName)
-{
-    global $conn, $allowedProvinces;
+// function getClinicCategoriesByHospital($hospitalName, $provinceName)
+// {
+//     global $conn, $allowedProvinces;
 
-    if (in_array($provinceName, $allowedProvinces)) {
-        $provinceTable = 'clinic_' . $provinceName;
-        $query = "SELECT c.clinic_name FROM clinics_categories c
-                  JOIN $provinceTable p ON p.clinic_category_id = c.id
-                  JOIN hospitals h ON p.hospital_Id = h.id
-                  WHERE h.hospital_name = ?";
+//     if (in_array($provinceName, $allowedProvinces)) {
+//         $provinceTable = 'clinic_' . $provinceName;
+//         $query = "SELECT DISTINCT c.clinic_name FROM clinics_categories c
+//                   JOIN $provinceTable p ON p.clinic_category_id = c.id
+//                   JOIN hospitals h ON p.hospital_Id = h.id
+//                   WHERE h.hospital_name = ?";
+
+//         $stmt = mysqli_prepare($conn, $query);
+
+//         if ($stmt) {
+//             mysqli_stmt_bind_param($stmt, "s", $hospitalName);
+//             mysqli_stmt_execute($stmt);
+//             $result = mysqli_stmt_get_result($stmt);
+
+//             $clinicCategories = [];
+//             while ($row = mysqli_fetch_assoc($result)) {
+//                 $clinicCategories[] = $row;
+//             }
+
+//             mysqli_stmt_close($stmt);
+
+//             return !empty($clinicCategories) ?
+//                 ['status' => 'success', 'data' => $clinicCategories, 'message' => 'Clinic categories fetched successfully.'] :
+//                 ['status' => 'error', 'message' => 'No clinic categories found.'];
+
+
+//         } else {
+//             return [
+//                 'status' => 'error',
+//                 'message' => 'Error during preparing query.'
+//             ];
+
+//         }
+//     } else {
+//         die("Invalid province name.");
+//     }
+// }
+
+function getAllClinicCategories()
+{
+    global $conn;
+
+    
+        
+        $query = "SELECT clinic_name FROM clinics_categories";
 
         $stmt = mysqli_prepare($conn, $query);
 
         if ($stmt) {
-            mysqli_stmt_bind_param($stmt, "s", $hospitalName);
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);
 
@@ -195,36 +233,50 @@ function getClinicCategoriesByHospital($hospitalName, $provinceName)
             ];
 
         }
-    } else {
-        die("Invalid province name.");
-    }
+
 }
 
-function getClinicDetails($province)
+function getClinicDetails($provinceName,$hospital,$clinicCategory)
 {
     global $conn, $allowedProvinces;
 
-    if (!in_array($province, $allowedProvinces)) {
-        return false; // Invalid province input
+    if (!in_array($provinceName, $allowedProvinces)) {
+        return [
+            'status' => 'error',
+            'message' => 'Invalid province.'
+        ];
     }
 
-    // Safely build the query after validation
-    $clinicQuery = "SELECT Clinic_Id, Clinic_Name, Clinic_Place, Clinic_Date, Clinic_Time FROM `$province`";
-    $stmt = mysqli_prepare($conn, $clinicQuery);
+    $provinceTable = 'clinic_' . $provinceName;
+
+    $query = "SELECT clinic_place, clinic_date, clinic_time FROM $provinceTable p
+                JOIN clinics_categories c ON p.clinic_category_id = c.id
+                JOIN hospitals h ON p.hospital_id = h.id
+                WHERE h.hospital_name = ? AND c.clinic_name = ?";
+
+    $stmt = mysqli_prepare($conn, $query);
 
     if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "ss", $hospital,$clinicCategory);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
 
         $clinics = [];
         while ($row = mysqli_fetch_assoc($result)) {
-            $clinics[] = $row; // Store each row in the array
+            $clinics[] = $row; 
         }
 
-        mysqli_stmt_close($stmt); // Close statement
-        return $clinics; // Return the array of clinic details
+        mysqli_stmt_close($stmt); 
+
+        return !empty($clinics) ?
+                ['status' => 'success', 'data' => $clinics, 'message' => 'Clinic deatils fetched successfully.'] :
+                ['status' => 'error', 'message' => 'No clinic details found.'];
+  
     } else {
-        return false; // Query failed
+        return [
+            'status' => 'error',
+            'message' => 'Error during preparing query.'
+        ];
     }
 }
 

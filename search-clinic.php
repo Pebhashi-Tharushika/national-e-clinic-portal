@@ -18,6 +18,17 @@ $provinceMap = [
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    if (isset($_POST['clinic_category']) && isset($_POST['province']) && isset($_POST['hospital'])) {
+        $province = $_POST['province'];
+        $hospital = $_POST['hospital'];
+        $clinicCategory = $_POST['clinic_category'];
+
+        $provinceName = $provinceMap[$province];
+
+        $clinicDetails = getClinicDetails($provinceName, $hospital, $clinicCategory);
+        sendResponse($clinicDetails);
+    }
+
     if (isset($_POST['hospital_category']) && isset($_POST['district']) && isset($_POST['province'])) {
         $hospital_category = $_POST['hospital_category'];
         $district = $_POST['district'];
@@ -27,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         sendResponse($hospitals);
     }
 
-    if(isset($_POST['hospital']) && isset($_POST['province'])){
+    if (isset($_POST['hospital']) && isset($_POST['province'])) {
         $hospitalName = $_POST['hospital'];
         $province = $_POST['province'];
         $provinceName = $provinceMap[$province];
@@ -65,6 +76,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $instituteType = getInstituteTypeByDistrict($district);
         sendResponse($instituteType);
     }
+}
+
+If($_SERVER['REQUEST_METHOD'] === 'GET'){
+    sendResponse(getAllClinicCategories());
 }
 
 function sendResponse($response)

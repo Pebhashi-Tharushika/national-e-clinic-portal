@@ -35,6 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
     let selectedHospital = "";
     let selectedClinicCategory = "";
 
+    let clinicCategoryArray = []; 
+    
+    fetchAllClinicCategories();
+
     provinces.forEach(province => {
         province.addEventListener("click", async (event) => {
             const provinceTitle = province.getAttribute("title");
@@ -47,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
             resetClinicCategoryDropdown();
 
             disableForm();
-            
+
 
             event.target.classList.add("selected");
 
@@ -162,43 +166,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     hospitalDropdown.addEventListener("change", async event => {
 
+
         if (isClinicCategoryDropdownDisable) {
             clinicCategoryDropdown.disabled = false;
             isClinicCategoryDropdownDisable = false;
+        }else{
+            
+            if (selectedClinicCategory !== "") {
+                console.log(selectedClinicCategory);
+                populateClinicCategory(clinicCategoryArray);
+                selectedClinicCategory = "";
+            }
         }
 
-        selectedClinicCategory = "";
         disableButtons();
 
         selectedHospital = event.target.value.trim();
-
-        try {
-            const response = await fetch('search-clinic.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({
-                    hospital: selectedHospital,
-                    province: selectedProvince
-                })
-            });
-
-            if (response.ok) {
-                const clinicCategory = await response.json();
-                if (clinicCategory.status === 'success') {
-                    populateClinicCategory(clinicCategory.data);
-                    enableButtons();
-                }
-            } else {
-                console.error("Error fetching clinic categories:", response.statusText);
-            }
-        } catch (error) {
-            console.error("Fetch error:", error);
-        }
+        enableButtons();
+        
     });
 
     clinicCategoryDropdown.addEventListener("change", event => {
         selectedClinicCategory = event.target.value.trim();
         enableButtons();
+        console.log('change: ',selectedClinicCategory);
     });
 
 
@@ -206,10 +197,62 @@ document.addEventListener("DOMContentLoaded", () => {
         removeAllSelection(provinces);
         searchFormHeading.textContent = 'Find Clinic Details';
         disableForm();
+        document.getElementById('clinicTable').style.display = 'none';
     });
 
 
+    btnSearch.addEventListener("click", async event => {
+        event.preventDefault(); // Prevent form submission and page reload
 
+        console.log('search');
+        try {
+            const response = await fetch('search-clinic.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    province: selectedProvince,
+                    hospital: selectedHospital,
+                    clinic_category: selectedClinicCategory
+                })
+            });
+
+            if (response.ok) {
+                const clinic = await response.json();
+                if (clinic.status === 'success') {
+                    displayClinicDetails(clinic.data);
+                } else if(clinic.status === 'error'){
+                    displayClinicDetails(null);
+                }
+            } else {
+                console.error("Error fetching clinic details:", response.statusText);
+            }
+        } catch (error) {
+            console.error("Fetch error:", error);
+        }
+    });
+
+
+    async function fetchAllClinicCategories(){
+        try {
+            const response = await fetch('search-clinic.php', {
+                method: 'GET',
+                headers: {'Accept': 'application/json'}
+            });
+
+            if (response.ok) {
+                const clinicCategory = await response.json();
+                if (clinicCategory.status === 'success') {
+                    clinicCategoryArray = clinicCategory.data;
+                    populateClinicCategory(clinicCategory.data); 
+                }
+            } else {
+                console.error("Error fetching clinic categories:", response.statusText);
+            }
+        } catch (error) {
+            console.error("Fetch error:", error);
+        }
+
+    }
 
     function disableForm() {
         const elements = searchForm.querySelectorAll("select, button");
@@ -296,7 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function resetClinicCategoryDropdown() {
         if (!isClinicCategoryDropdownDisable) {
             if (selectedClinicCategory !== "") {
-                populateClinicCategory([]);
+                populateClinicCategory(clinicCategoryArray);
                 selectedClinicCategory = "";
             }
             clinicCategoryDropdown.disabled = true;
@@ -318,13 +361,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-    function disableButtons(){
+    function disableButtons() {
         btnClear.disabled = true;
-            btnSearch.disabled = true;
+        btnSearch.disabled = true;
     }
+
+    function displayClinicDetails(clinicInfo = null) {
+        console.log(clinicInfo);
+        const table = document.getElementById('clinicTable');
+        const tableBody = document.querySelector("#clinicTable tbody");
+        const tableFooter = document.querySelector("#clinicTable tfoot");
+    
+        tableBody.innerHTML = "";
+
+        table.style.display = 'block'; 
+
+        if(tableFooter)table.removeChild(tableFooter);
+
+        if (clinicInfo && clinicInfo.length > 0) {
+    
+            clinicInfo.forEach(clinic => {
+                let row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${clinic.clinic_place}</td>
+                    <td>${clinic.clinic_date}</td>
+                    <td>${clinic.clinic_time}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+    
+        } else {
+    
+            let tableFooter = document.createElement("tfoot");
+            tableFooter.innerHTML = `
+                <tr>
+                    <td colspan="3" style="text-align: center;">Not Found</td>
+                </tr>
+            `;
+            table.appendChild(tableFooter);
+        }
+    }
+    
 
 });
 
 
 
-// window.location.href = "/national-e-clinic-portal/search-clinic.php?province=" + encodeURIComponent(valueOfQueryString);
