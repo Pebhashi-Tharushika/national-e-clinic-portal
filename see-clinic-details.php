@@ -121,28 +121,28 @@
 				<form id="search-form" action="search-clinic.php" method="post">
 
 					<div class="form-field">
-						<label for="district">District</label>
+						<label for="district-dropdown">District</label>
 						<select type="text" name="district" id="district-dropdown" disabled>
 							<option value="" selected hidden>Select Your District</option>
 						</select>
 					</div>
 
 					<div class="form-field">
-						<label for="hospital_category">Hospital Category</label>
+						<label for="hospital-category-dropdown">Hospital Category</label>
 						<select type="text" name="hospital_category" id="hospital-category-dropdown" disabled>
 							<option value="" selected hidden>Select Hospital Category</option>
 						</select>
 					</div>
 
 					<div class="form-field">
-						<label for="hospital">Hospital</label>
+						<label for="hospital-dropdown">Hospital</label>
 						<select type="text" name="hospital" id="hospital-dropdown" disabled>
 							<option value="" selected hidden>Select Hospital</option>
 						</select>
 					</div>
 
 					<div class="form-field">
-						<label for="clinic_category">Clinic</label>
+						<label for="clinic-category-dropdown">Clinic</label>
 						<select type="text" name="clinic_category" id="clinic-category-dropdown" disabled>
 							<option value="" selected hidden>Select Clinic Category</option>
 						</select>
@@ -166,22 +166,32 @@
 	</section>
 
 	<section id="selected-clinic-info">
-		<div id="selected-clinic-info-title">
-			<h1>Clinic Details</h1>
-		</div>
-		<div id="selected-clinic-info-content">
-			<table id="clinicTable">
-				<thead>
-					<tr>
-						<th>Clinic Place</th>
-						<th>Clinic Day</th>
-						<th>Clinic Time</th>
-					</tr>
-				</thead>
-				<tbody></tbody>
-			</table>
+		<div id="selected-clinic-info-container">
+			<div id="selected-clinic-info-title">
+				<h1>Clinic Details</h1>
+			</div>
+			<div id="selected-clinic-info-content">
+				<div id="selection-criteria">
+					<h1 id="province">Province: </h1>
+					<h1 id="district">District: </h1>
+					<h1 id="hospital">Hospital: </h1>
+				</div>
+				<div id="table-container">
+					<table id="clinicTable">
+						<thead>
+							<tr>
+								<th>Clinic Place</th>
+								<th>Clinic Day</th>
+								<th>Clinic Time</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
 
+			</div>
 		</div>
+
 
 	</section>
 

@@ -371,6 +371,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const table = document.getElementById('clinicTable');
         const tableBody = document.querySelector("#clinicTable tbody");
         const tableFooter = document.querySelector("#clinicTable tfoot");
+        
     
         tableBody.innerHTML = "";
 
@@ -378,6 +379,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if(tableFooter)table.removeChild(tableFooter);
 
+        document.querySelector('#selection-criteria > #province').innerHTML = `Province: ${selectedProvince}`;
+        document.querySelector('#selection-criteria > #district').innerHTML = `District: ${selectedDistrict}`;
+        document.querySelector('#selection-criteria > #hospital').innerHTML = `Hospital: ${selectedHospital} ${selectedHospitalCategory}`;
+        
         if (clinicInfo && clinicInfo.length > 0) {
     
             clinicInfo.forEach(clinic => {
