@@ -3,7 +3,16 @@
 require_once __DIR__ . '/../includes/dbh.inc.php';
 
 // Whitelist valid province names to prevent SQL injection
-$allowedProvinces = ['central_province', 'eastern_province', 'northern_province', 'north_western_province', 'western_province', 'southern_province', 'sabaragamuwa_province', 'uva_province', 'north_central_province'];
+$allowedProvinces = ['central_province', 
+                        'eastern_province', 
+                        'northern_province',
+                        'north_central_province', 
+                        'north_western_province', 
+                        'sabaragamuwa_province', 
+                        'southern_province', 
+                        'uva_province', 
+                        'western_province'
+                    ];
 
 
 // Handle AJAX delete request
@@ -47,9 +56,6 @@ function isExistProvince($province)
     }
 
 }
-
-
-// Function to get all districts in a province
 
 function getDistrictsByProvince($province)
 {

@@ -171,10 +171,14 @@
 				<h1>Clinic Details</h1>
 			</div>
 			<div id="selected-clinic-info-content">
+				<div id="not-selected-msg">
+					<h1>No clinic selected yet.</h1>
+				</div>
 				<div id="selection-criteria">
 					<h1 id="province">Province: </h1>
 					<h1 id="district">District: </h1>
 					<h1 id="hospital">Hospital: </h1>
+					<h1 id="clinic-category">Clinic: </h1>
 				</div>
 				<div id="table-container">
 					<table id="clinicTable">

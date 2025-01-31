@@ -1,15 +1,3 @@
-// const provinceMap = {
-//     'Eastern Province': 'eastern',
-//     'Northern Province': 'northern',
-//     'North Western Province': 'north-western',
-//     'Western Province': 'western',
-//     'Southern Province': 'southern',
-//     'Sabaragamuwa Province': 'sabaragamuwa',
-//     'Uva Province': 'uva',
-//     'Central Province': 'central',
-//     'North Central Province': 'north-central'
-// };
-
 document.addEventListener("DOMContentLoaded", () => {
 
     const provinces = document.querySelectorAll('svg path');
@@ -173,7 +161,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }else{
             
             if (selectedClinicCategory !== "") {
-                console.log(selectedClinicCategory);
                 populateClinicCategory(clinicCategoryArray);
                 selectedClinicCategory = "";
             }
@@ -189,22 +176,25 @@ document.addEventListener("DOMContentLoaded", () => {
     clinicCategoryDropdown.addEventListener("change", event => {
         selectedClinicCategory = event.target.value.trim();
         enableButtons();
-        console.log('change: ',selectedClinicCategory);
     });
 
 
     btnClear.addEventListener("click", (event) => {
         removeAllSelection(provinces);
+
         searchFormHeading.textContent = 'Find Clinic Details';
+
         disableForm();
-        document.getElementById('clinicTable').style.display = 'none';
+
+        document.getElementById('table-container').style.display = 'none';
+        document.getElementById('selection-criteria').style.display = 'none';
+        document.getElementById('not-selected-msg').style.display = 'block';
     });
 
 
     btnSearch.addEventListener("click", async event => {
         event.preventDefault(); // Prevent form submission and page reload
-
-        console.log('search');
+        
         try {
             const response = await fetch('search-clinic.php', {
                 method: 'POST',
@@ -223,6 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else if(clinic.status === 'error'){
                     displayClinicDetails(null);
                 }
+                scrollToClinicInfoSection();
             } else {
                 console.error("Error fetching clinic details:", response.statusText);
             }
@@ -367,7 +358,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function displayClinicDetails(clinicInfo = null) {
-        console.log(clinicInfo);
+
+        const tableContainer = document.getElementById('table-container');
+        const selectionCriteria = document.getElementById('selection-criteria');
+        const noSelectionMsg = document.getElementById('not-selected-msg');
+
         const table = document.getElementById('clinicTable');
         const tableBody = document.querySelector("#clinicTable tbody");
         const tableFooter = document.querySelector("#clinicTable tfoot");
@@ -375,14 +370,17 @@ document.addEventListener("DOMContentLoaded", () => {
     
         tableBody.innerHTML = "";
 
-        table.style.display = 'block'; 
+        selectionCriteria.style.display = 'flex';
+        tableContainer.style.display = 'block'; 
+        noSelectionMsg.style.display = 'none';
 
         if(tableFooter)table.removeChild(tableFooter);
 
         document.querySelector('#selection-criteria > #province').innerHTML = `Province: ${selectedProvince}`;
         document.querySelector('#selection-criteria > #district').innerHTML = `District: ${selectedDistrict}`;
         document.querySelector('#selection-criteria > #hospital').innerHTML = `Hospital: ${selectedHospital} ${selectedHospitalCategory}`;
-        
+        document.querySelector('#selection-criteria > #clinic-category').innerHTML = `Clinic: ${selectedClinicCategory}`;
+
         if (clinicInfo && clinicInfo.length > 0) {
     
             clinicInfo.forEach(clinic => {
@@ -400,10 +398,32 @@ document.addEventListener("DOMContentLoaded", () => {
             let tableFooter = document.createElement("tfoot");
             tableFooter.innerHTML = `
                 <tr>
-                    <td colspan="3" style="text-align: center;">Not Found</td>
+                    <td colspan="3" style="text-align: center;">No clinic found</td>
                 </tr>
             `;
             table.appendChild(tableFooter);
+        }
+    }
+
+    function scrollToClinicInfoSection(){
+        const clinicInfoSection = document.getElementById("selected-clinic-info");
+        const sectionHeight = clinicInfoSection.offsetHeight;
+        const viewportHeight = window.innerHeight;
+        
+        if (sectionHeight < viewportHeight) {
+            // If section is smaller than viewport, align it to the bottom
+            window.scrollTo({
+                /*
+                * clinicInfoSection.getBoundingClientRect().top --> distance from the top of the viewport to the top of the element
+                * window.scrollY --> current scroll position of the page from the top of the document (how far down the page has already been scrolled)
+                * (viewportHeight - sectionHeight) --> space remaining at the bottom of the viewport after the section is fully displayed
+                */
+                top: clinicInfoSection.getBoundingClientRect().top + window.scrollY - (viewportHeight - sectionHeight),
+                behavior: "smooth"
+            });
+        } else {
+            // If section is larger, align it to the top
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
         }
     }
     

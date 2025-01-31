@@ -320,10 +320,17 @@ svg #Sri_Lanka path.selected+text {
     left: 0;
 }
 
+#not-selected-msg{
+    font-size: 1rem;
+    text-align: center;
+    display: block;
+    padding-top: 5vh;
+    color: var(--color-3);
+}
 
 #selection-criteria{
+    display: none;
     font-size: 0.85rem;
-    display: flex;
     flex-direction: column;
     gap: 2vh;
     padding: 5vh 0 2vh;
@@ -331,12 +338,12 @@ svg #Sri_Lanka path.selected+text {
 }
 
 #table-container{
+    display: none;
     max-width: 80%;
     margin: 5vh auto;
 }
 
 #clinicTable{
-    display: none;
     color: var(--color-7);
     background-color: var(--color-1);
     border-collapse: collapse;
