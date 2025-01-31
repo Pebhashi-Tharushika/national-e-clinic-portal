@@ -38,14 +38,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         sendResponse($hospitals);
     }
 
-    if (isset($_POST['hospital']) && isset($_POST['province'])) {
-        $hospitalName = $_POST['hospital'];
-        $province = $_POST['province'];
-        $provinceName = $provinceMap[$province];
+    // if (isset($_POST['hospital']) && isset($_POST['province'])) {
+    //     $hospitalName = $_POST['hospital'];
+    //     $province = $_POST['province'];
+    //     $provinceName = $provinceMap[$province];
 
-        $clinicCategories = getClinicCategoriesByHospital($hospitalName, $provinceName);
-        sendResponse($clinicCategories);
-    }
+    //     $clinicCategories = getClinicCategoriesByHospital($hospitalName, $provinceName);
+    //     sendResponse($clinicCategories);
+    // }
 
 
     if (isset($_POST['province'])) {
