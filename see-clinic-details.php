@@ -118,7 +118,7 @@
 			<div id="search-heading-and-form">
 				<h1 class="heading">Find Clinic Details</h1>
 
-				<form id="search-form" action="search-clinic.php" method="post">
+				<form id="search-form" method="post">
 
 					<div class="form-field">
 						<label for="district-dropdown">District</label>

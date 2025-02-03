@@ -1,151 +1,8 @@
 <?php
 session_start();
-
-// Initialize form step and values
-$errors = [];
-$step = 1;
-$fname = $lname = $email = $nic = $phone = $bdate = $address1 = $address2 = $address3 = $province = ""; // Default values
-$step1_values = [
-    'fname' => '',
-    'lname' => '',
-    'email' => '',
-    'nic' => '',
-    'phone' => ''
-];
-
-$step2_values = [
-    'bdate' => '',
-    'address' => '',
-    'address1' => '',
-    'address2' => '',
-    'province' => ''
-];
-
-
-// Check which button was clicked and adjust the step accordingly
-if (isset($_POST['next'])) {
-
-    // Collect form data
-    $fname = $_POST['step1']['fname'] ?? '';
-    $lname = $_POST['step1']['lname'] ?? '';
-    $email = $_POST['step1']['email'] ?? '';
-    $nic = $_POST['step1']['nic'] ?? '';
-    $phone = $_POST['step1']['phone'] ?? '';
-
-    // Validate Step 1 fields 
-    if (empty($fname)) {
-        $errors['fname'] = "First name is required";
-    } elseif (!preg_match("/^[a-zA-Z ]+$/", $fname)) {
-        $errors['fname'] = "Invalid First name";
-    }
-
-    if (empty($lname)) {
-        $errors['lname'] = "Last name is required";
-    } elseif (!preg_match("/^[a-zA-Z ]+$/", $lname)) {
-        $errors['lname'] = "Invalid Last name";
-    }
-
-    if (empty($email)) {
-        $errors['email'] = "Email is required";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors['email'] = "Invalid email";
-    }
-
-    if (empty($nic)) {
-        $errors['nic'] = "NIC is required";
-    } elseif (!preg_match("/^(?:19|20)?\d{2}[0-9]{10}|[0-9]{9}[x|X|v|V]$/", $nic)) {
-        $errors['nic'] = "Invalid NIC";
-    }
-
-    if (empty($phone)) {
-        $errors['phone'] = "Phone number is required";
-    } elseif (!preg_match("/^(0\d{9}|\+94\s\d{9})$/", $phone)) {
-        $errors['phone'] = "Invalid phone number";
-    }
-
-    $_SESSION['step1'] = $_POST['step1']; // Store step1 values in session
-
-    // If no errors, proceed to Step 2
-    if (empty($errors)) {
-
-        $step = 2; // Move to Step 2
-    } else {
-        $step = 1; // Stay on Step 1 if there are validation errors
-    }
-
-} elseif (isset($_POST['back'])) {
-
-    $bdate = $_POST['step2']['bdate'] ?? '';
-    $address1 = $_POST['step2']['address'] ?? '';
-    $address2 = $_POST['step2']['address1'] ?? '';
-    $address3 = $_POST['step2']['address2'] ?? '';
-    $province = $_POST['step2']['province'] ?? '';
-
-    $_SESSION['step2'] = $_POST['step2']; // Store step2 values in session
-
-    $step = 1; // Move back to Step 1
-
-} elseif (isset($_POST['submit'])) {
-
-    // Collect form data
-    $bdate = $_POST['step2']['bdate'] ?? '';
-    $address1 = $_POST['step2']['address'] ?? '';
-    $address2 = $_POST['step2']['address1'] ?? '';
-    $address3 = $_POST['step2']['address2'] ?? '';
-    $province = $_POST['step2']['province'] ?? '';
-
-    // Validate Step 2 fields 
-    if (empty($bdate)) {
-        $errors['bdate'] = "Date of birth is required";
-    } elseif (new DateTime($bdate) >= new DateTime()) {
-        $errors['bdate'] = "Invalid date of birth";
-    }
-
-    if (empty($address1)) {
-        $errors['address'] = "Address is required";
-    }
-
-    if (empty($province)) {
-        $errors['province'] = "Province is required";
-    }
-
-    $_SESSION['step2'] = $_POST['step2']; // Store step2 values in session
-
-    // If no errors, proceed 
-    if (empty($errors)) {
-        require_once 'dbh.inc.php';
-        require_once 'functions.profile.php';
-
-        // Retrieve values from session for Step 1
-        if (isset($_SESSION['step1'])) {
-            $fname = $_SESSION['step1']['fname'] ?? '';
-            $lname = $_SESSION['step1']['lname'] ?? '';
-            $email = $_SESSION['step1']['email'] ?? '';
-            $nic = $_SESSION['step1']['nic'] ?? '';
-            $phone = $_SESSION['step1']['phone'] ?? '';
-        }
-
-        // Save the profile data to the database
-        createPatientProfile($conn, $fname, $lname, $email, $nic, $phone, $bdate, $address1, $address2, $address3, $province);
-
-
-    } else {
-        $step = 2; // Stay on Step 2 if there are validation errors
-    }
-
-}
-
-// Retrieve saved values from session if available (for pre-filling the form)
-if (isset($_SESSION['step1'])) {
-    $step1_values = $_SESSION['step1'];
-}
-
-if (isset($_SESSION['step2'])) {
-    $step2_values = $_SESSION['step2'];
-}
+require_once "./includes/profile-functions.inc.php";
 
 ?>
-
 
 
 <!DOCTYPE html>
@@ -160,7 +17,7 @@ if (isset($_SESSION['step2'])) {
     <link rel="icon" href="/national-e-clinic-portal/images/logo-v.png" type="image/png">
 
     <!-- to add icons from boxicons -->
-	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <link rel="stylesheet" href="/national-e-clinic-portal/style/back-to-home.css">
     <link rel="stylesheet" href="/national-e-clinic-portal/style/create-profile.css">
@@ -176,6 +33,7 @@ if (isset($_SESSION['step2'])) {
     ?>
 
     <section id="create-profile">
+
         <div id="form-wrapper">
             <div id="image-container"></div>
             <div id="form-container">
@@ -183,7 +41,7 @@ if (isset($_SESSION['step2'])) {
 
                 <?php if ($step == 1): ?>
                     <!-- Step 1 Form -->
-                    <form id="step1Form" method="POST" action="save_profile.php" novalidate>
+                    <form id="step1Form" method="POST" novalidate>
                         <div id="step1" class="form-step">
                             <input type="hidden" name="step" value="1"> <!-- Ensure step 1 is identified -->
 
@@ -229,7 +87,7 @@ if (isset($_SESSION['step2'])) {
 
                 <?php if ($step == 2): ?>
                     <!-- Step 2 Form -->
-                    <form id="step2Form" method="POST" action="save_profile.php" novalidate>
+                    <form id="step2Form" method="POST" novalidate>
                         <div id="step2" class="form-step">
                             <input type="hidden" name="step" value="2"> <!-- Ensure step 2 is identified -->
 
@@ -281,19 +139,6 @@ if (isset($_SESSION['step2'])) {
         </div>
 
     </section>
-
-
-
-    <!-- <script>
-        window.onload = function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('status') && urlParams.get('status') === 'success') {
-                // Clear local form data
-                document.getElementById('step1Form').reset();
-                document.getElementById('step2Form').reset();
-            }
-        };
-    </script> -->
 
 </body>
 

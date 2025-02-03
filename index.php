@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (isset($_GET['reset']) && $_GET['reset'] === 'true') {
+  unset($_SESSION['step1'], $_SESSION['step2']);
+}
 ?>
 <!DOCTYPE html>
 

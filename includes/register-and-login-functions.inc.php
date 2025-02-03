@@ -104,7 +104,7 @@ function ExistUser($email)
 
     $userRow = isExistEmail($email, false, false);
     if ($userRow !== false) {
-        return ['role' => 'user', 'email' => $userRow['email']];
+        return ['role' => 'user', 'email' => $userRow['email'], 'user_id' => $userRow['user_id']];
     }
 
     return [];
