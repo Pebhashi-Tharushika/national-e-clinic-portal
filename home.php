@@ -88,9 +88,9 @@
           <div class="icon">
             <?php
             if (isset($_SESSION["username"])) {
-              echo '<a href="Appointment/book_appointment.php"><i class="fa-solid fa-plus-large"></i></a>';
+              echo '<a href="/national-e-clinic-portal/book-appointment.php"><i class="fa-solid fa-plus-large"></i></a>';
             } else {
-              echo '<a href="login.php"><i class="fa-solid fa-plus-large"></i></a>';
+              echo '<a href="/national-e-clinic-portal/register-and-login.php?action=login"><i class="fa-solid fa-plus-large"></i></a>';
             }
             ?>
 

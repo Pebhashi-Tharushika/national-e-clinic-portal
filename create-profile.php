@@ -114,7 +114,7 @@ require_once "./includes/profile-functions.inc.php";
 
                             <label for="province">Select a Province</label>
                             <select id="province" name="step2[province]" required>
-                                <option value="">Please select your province</option>
+                                <option value="" hidden selected>Please select your province</option>
                                 <option value="northern" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'northern' ? 'selected' : ''; ?>>Northern</option>
                                 <option value="north-western" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'north-western' ? 'selected' : ''; ?>>North Western</option>
                                 <option value="western" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'western' ? 'selected' : ''; ?>>Western</option>

@@ -1,0 +1,126 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'poppins', sans-serif;
+}
+
+:root {
+  --header-height: 10vh;
+  --color-1: #1025a1;
+  --color-2: #ffffff;
+  --color-3: #999999;
+  --color-4: #56aeff;
+  --color-5: #000000;
+  --color-6: #333333;
+  --color-7: #dddddd;
+  --color-8: #1025a152;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#book-appointment{
+  width: 70%;
+    min-height: calc(90vh - var(--header-height));
+    margin: 4.3vh auto;
+    background-color: var(--color-2);
+}
+
+#form-wrapper {
+  width: 100%;
+  border-radius: 0.7rem;
+  padding: 2.5rem;
+  box-shadow: inset 0px 0px 13px var(--color-1);
+  background-color: var(--color-3);
+  display: flex;
+  gap: 2.5rem;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#image-container {
+  width: 60%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(var(--color-8), var(--color-8)), url(/national-e-clinic-portal/images/book-appointment/health_side.jpg);
+}
+
+#form-container {
+  width: 50%;
+  padding: 1rem;
+}
+
+#form-container h1 {
+  text-align: center;
+  margin-bottom: 1.25rem;
+  color: var(--color-2);
+}
+
+#form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+#form-container label {
+  color: var(--color-1);
+  padding: 0.625rem 0;
+}
+
+#form-container input[type="text"], 
+#form-container input[type="date"], 
+#form-container select {
+  width: 100%;
+    padding: 0.625rem;
+    margin-bottom: 1.25rem;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--color-1);
+    color: var(--color-2);
+    font-size: 1.1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#form-container input:focus,
+#form-container select:focus {
+    border-bottom-color: var(--color-7);
+}
+
+input::placeholder {
+  color: var(--color-7);
+  opacity: 0.75;
+  font-size: 0.85rem;
+}
+
+input[type="submit"] {
+  background-color:#0bccda;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: blue;
+}
+
+#error_message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* select {
+  padding: 10px;
+  background-color: transparent;
+  color: red;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+} */
+
