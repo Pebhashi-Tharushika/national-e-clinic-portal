@@ -1,5 +1,5 @@
 <div id="support-container">
-
+    <div id="triangle"></div>
     <div class="row gx-3 gy-5">
         <div class="col-6">
             <div class="p-3" id="get-in-touch">
@@ -25,7 +25,8 @@
                         <div class="col-4">
                             <div class="p-3" id="connect-m">
                                 <div class="connect">
-                                    <a href="mailto:neclinic.care@gmail.com"><i class="fa-solid fa-envelope"></i>neclinic.care@gmail.com</a>
+                                    <a href="mailto:neclinic.care@gmail.com"><i
+                                            class="fa-solid fa-envelope"></i>neclinic.care@gmail.com</a>
                                 </div>
                                 <div class="command">Mail Us 24/7</div>
                             </div>
@@ -33,7 +34,8 @@
                         <div class="col-4">
                             <div class="p-3" id="connect-r">
                                 <div class="connect">
-                                    <a href="https://maps.app.goo.gl/SkcnLrY5RBm4waZz6" target="_blank"><i class="fa-solid fa-location-dot"></i>29 Almeida Road, Colombo 07</a>
+                                    <a href="https://maps.app.goo.gl/SkcnLrY5RBm4waZz6" target="_blank"><i
+                                            class="fa-solid fa-location-dot"></i>29 Almeida Road, Colombo 07</a>
                                 </div>
                                 <div class="command">Our Location</div>
                             </div>
@@ -48,13 +50,14 @@
 
         <div class="col-6">
             <div class="p-3" id="image-container">
-                <img src="/national-e-clinic-portal/images/support/contact-us.jpg" alt="contact-us">
+                <img src="/national-e-clinic-portal/images/support/contact-us.png" alt="contact-us">
             </div>
         </div>
 
         <div class="col-12">
             <h1 id="support-main-title">We are here for you!</h1>
-            <p id="support-main-content">For any queries or information regarding our services or for booking an advanced consultation, feel free to fill out this convenient form or drop us an email.</p>
+            <p id="support-main-content">For any queries or information regarding our services or for booking an
+                advanced consultation, feel free to fill out this convenient form or drop us an email.</p>
             <div class="p-3" id="request-submission">
                 <div id="support-title">
                     <h2>Submit a Request</h2>
@@ -119,11 +122,14 @@
             <div class="p-3">
                 <h1 id="map-title">Our Location</h1>
                 <div id="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.6472989063304!2d79.86312417499717!3d6.932691118273018!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae259cdb0f21c3d%3A0x582f1a05267cf2c5!2sMinistry%20of%20Health!5e0!3m2!1sen!2slk!4v1736414862571!5m2!1sen!2slk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.6472989063304!2d79.86312417499717!3d6.932691118273018!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae259cdb0f21c3d%3A0x582f1a05267cf2c5!2sMinistry%20of%20Health!5e0!3m2!1sen!2slk!4v1736414862571!5m2!1sen!2slk"
+                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
-       
+
     </div>
 
 </div>

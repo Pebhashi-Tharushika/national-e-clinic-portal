@@ -18,6 +18,9 @@
     <!-- favicon -->
     <link rel="icon" href="/national-e-clinic-portal/images/logo-v.png" type="image/png">
 
+    <!-- to add icons from boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
     <link rel="stylesheet" href="/national-e-clinic-portal/style/back-to-home.css">
     <link rel="stylesheet" href="/national-e-clinic-portal/style/book-appointment.css">
 
@@ -50,7 +53,6 @@
                         }
                         ?>
                     </select>
-                    <br>
 
                     <!-- Select Hospital -->
                     <label for="hospital_name">Select Hospital:</label>
@@ -65,24 +67,21 @@
                         }
                         ?>
                     </select>
-                    <br>
 
                     <!-- Select Clinic (Dynamically Populated) -->
                     <label for="clinic_name">Select Clinic:</label>
                     <select id="clinic_name" name="clinic_name" required>
                         <option value="">Select Clinic</option>
                     </select>
-                    <br>
 
-                    <div>
-                        <h2 id="available_days" style="color: #0bccda;">Available Days: </h2>
-                        <!-- Display available clinic days here -->
-                    </div>
+                    <!-- Display available clinic days here -->
+                    <!-- <div>
+                        <h2 id="available_days" style="color: #0bccda;">Available Days: </h2> 
+                    </div> -->
 
                     <!-- Appointment Date -->
                     <label for="appointment_date">Appointment Date:</label>
                     <input type="date" id="appointment_date" name="appointment_date" required>
-                    <br>
 
                     <!-- Appointment Time -->
                     <label for="appointment_time">Appointment Time:</label>
@@ -90,7 +89,6 @@
                         <option value="">Select Time</option>
                         <!-- Time slots will be dynamically populated -->
                     </select>
-                    <br>
 
                     <!-- Submit Button -->
                     <Button name="submit" type="submit">Book Appointment</Button>

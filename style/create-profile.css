@@ -97,9 +97,9 @@ body {
     border-bottom-color: var(--color-7);
 }
 
-input::placeholder ,
+input::placeholder,
 #form-container select:invalid,
-input[type="date"]:invalid::-webkit-datetime-edit{
+input[type="date"]:invalid::-webkit-datetime-edit {
     color: var(--color-7);
     opacity: 0.75;
     font-size: 0.85rem;
@@ -110,16 +110,16 @@ select option {
     color: #0ef;
     font-size: 1.1rem;
 }
-  
-  input[type="date"]::-webkit-calendar-picker-indicator {
+
+input[type="date"]::-webkit-calendar-picker-indicator {
     padding: 5px;
     cursor: pointer;
     filter: invert(0.8);
 }
 
 input[type="date"].date-selected::-webkit-calendar-picker-indicator {
-filter: invert(1);
-  }
+    filter: invert(1);
+}
 
 
 #form-container button {
@@ -159,15 +159,8 @@ filter: invert(1);
     top: 0;
 }
 
-#confirmation-message {
-    margin-top: 20px;
-    text-align: center;
-    color: #28a745;
-}
-
 .error {
     margin: 0;
     color: red;
     font-size: 0.6rem;
 }
-

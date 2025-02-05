@@ -23,11 +23,11 @@ body {
   min-height: 100vh;
 }
 
-#book-appointment{
+#book-appointment {
   width: 70%;
-    min-height: calc(90vh - var(--header-height));
-    margin: 4.3vh auto;
-    background-color: var(--color-2);
+  min-height: calc(90vh - var(--header-height));
+  margin: 4.3vh auto;
+  background-color: var(--color-2);
 }
 
 #form-wrapper {
@@ -47,7 +47,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: linear-gradient(var(--color-8), var(--color-8)), url(/national-e-clinic-portal/images/book-appointment/health_side.jpg);
+  background-image: linear-gradient(var(--color-8), var(--color-8)), url(/national-e-clinic-portal/images/book-appointment/appointment.jpg);
 }
 
 #form-container {
@@ -71,56 +71,96 @@ body {
   padding: 0.625rem 0;
 }
 
-#form-container input[type="text"], 
-#form-container input[type="date"], 
+#form-container input[type="date"],
 #form-container select {
   width: 100%;
-    padding: 0.625rem;
-    margin-bottom: 1.25rem;
-    background: transparent;
-    border: none;
-    border-bottom: 2px solid var(--color-1);
-    color: var(--color-2);
-    font-size: 1.1rem;
-    outline: none;
-    transition: border-color 0.3s;
+  padding: 0.625rem;
+  margin-bottom: 1.25rem;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--color-1);
+  color: var(--color-2);
+  font-size: 1.1rem;
+  outline: none;
+  transition: border-color 0.3s;
 }
 
-#form-container input:focus,
+#form-container input[type="date"]:focus,
 #form-container select:focus {
-    border-bottom-color: var(--color-7);
+  border-bottom-color: var(--color-7);
 }
 
-input::placeholder {
+#form-container input[type="date"],
+#form-container select:valid {
+  color: var(--color-2);
+}
+
+
+#form-container select:invalid,
+input[type="date"]:invalid::-webkit-datetime-edit {
   color: var(--color-7);
   opacity: 0.75;
   font-size: 0.85rem;
 }
 
-input[type="submit"] {
-  background-color:#0bccda;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
+#form-container select option {
+  background-color: #081b29;
+  color: #0ef;
+  font-size: 1.1rem;
 }
 
-input[type="submit"]:hover {
-  background-color: blue;
+input[type="date"]::-webkit-calendar-picker-indicator {
+  padding: 5px;
+  cursor: pointer;
+  filter: invert(0.8);
+}
+
+input[type="date"].date-selected::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+#form-container button {
+  width: 100%;
+  height: 2.8rem;
+  background: transparent;
+  border: 0.5px solid var(--color-1);
+  border-radius: 2.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--color-2);
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: background-color 0.3s, color 0.3s;
+  margin: 1.25rem 0 0;
+}
+
+#form-container button:hover {
+  background-color: var(--color-1);
+}
+
+#form-container button::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 300%;
+  background: linear-gradient(var(--color-1), var(--color-3), var(--color-1), var(--color-3));
+  z-index: -1;
+  transition: top 0.5s;
+}
+
+#form-container button:hover::before {
+  top: 0;
 }
 
 #error_message {
   color: red;
   text-align: center;
   margin-top: 10px;
-}
-
-/* select {
-  padding: 10px;
-  background-color: transparent;
+  /* margin: 0;
   color: red;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-} */
-
+  font-size: 0.6rem; */
+}

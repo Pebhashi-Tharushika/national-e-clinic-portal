@@ -4,12 +4,11 @@
 }
 
 #support-container > .row > div:first-child{
-    margin-top: 4rem;
+    margin-top: 2rem;
 }
 
-#support-container > .row > div:nth-child(3),
-#support-container > .row > div:nth-child(4){
-    margin-top: 5rem;
+#support-container > .row > div:nth-child(3){
+    margin-top: 8rem;
 }
 
 /* ----------------- get-in-touch ----------------- */
@@ -115,20 +114,13 @@
 }
 
 /* ----------------- image ------------------- */
-#image-container{
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
 
 #image-container img{
-    border-top-right-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
     z-index: -10;
     position: absolute;
-    top: 0;
+    top: 10vh;
     right: 0;
-    height: 95%;
+    height: 85vh;
     width: auto;
 }
 
@@ -317,4 +309,16 @@
 
 #map-container > iframe {
     width: 100%;
+}
+
+
+
+#triangle{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 44.2vw;
+    height: 5vh;
+    background: linear-gradient(-45deg,#004aad, #5de0e6);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%,20% 100%);
 }
