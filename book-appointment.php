@@ -1,12 +1,3 @@
-<?php
-// require_once 'fetch_hospitals.php';
-// require_once 'fetch_profiles.php';
-
-// $hospitals = getHospitals();
-// $profiles = getProfiles();
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,14 +35,6 @@
                     <label for="profile_name">Select Profile:</label>
                     <select id="profile_name" name="profile_name" required>
                         <option value="">Select Profile</option>
-                        <?php
-                        // Fetch and display profiles
-                        if (!empty($profiles)) {
-                            foreach ($profiles as $profile) {
-                                echo "<option value='" . $profile['id'] . "'>" . $profile['fname'] . " " . $profile['lname'] . "</option>";
-                            }
-                        }
-                        ?>
                     </select>
 
                     <!-- Select Hospital -->
