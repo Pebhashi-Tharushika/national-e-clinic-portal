@@ -1,149 +1,185 @@
 $(document).ready(function () {
 
+    patients = [];
+    selectedProfileId = '';
+
     // fetch profiles
     $.ajax({
         type: 'GET',
-        url: '/national-e-clinic-portal/includes/book-appointment.inc.php',
+        url: '/national-e-clinic-portal/includes/book-appointment.inc.php?request=profile',
         dataType: "json", // Ensure response is JSON
         success: function (response) {
-            populateProfiles(response.data);
+            if (response.status === "success") {
+                patients = response.data;
+                populateDropdown("profile_name", response.data, "id", "first_name", "last_name", "Select Profile");
+            } else if (response.status === "error") {
+                alert(response.message);
+            }
         },
         error: function (xhr, status, error) {
             $('#error_message').text('Error fetching profiles: ' + error).show();
         }
     });
 
+    // fetch cinics
+    $.ajax({
+        type: 'GET',
+        url: '/national-e-clinic-portal/includes/book-appointment.inc.php?request=clinic',
+        dataType: "json",
+        success: function (response) {
+            if (response.status === "success") {
+                populateDropdown("clinic_name", response.data, "id", "clinic_name", null, "Select Clinic");
+            }
+            else if (response.status === "error") {
+                alert(response.message);
+            }
+        },
+        error: function (xhr, status, error) {
+            $('#error_message').text('Error fetching clinics: ' + error).show();
+        }
+    });
 
 
-    // When hospital is selected, fetch related clinics
+    $('#profile_name').change(function(){
+        selectedProfileId = $(this).val();
+    });
 
-    $('#hospital_name').change(function () {
-        var hospitalId = $(this).val();
+    // When clinic is selected, fetch available hospitals 
 
-        var hospitalId = $('#hospital_name').val();
+    $('#clinic_name').change(function () {
+        var clinicId = $(this).val();
 
-        // Reset clinic name
-        document.getElementById('clinic_name').value = '';
+        // var clinicId = $('#clinic_name').val();
+
+        // Reset hospital name
+        $('#hospital_name').val('');
 
         // Reset available days display
-        document.getElementById('available_days').textContent = 'Available Days: ';
+        // document.getElementById('available_days').textContent = 'Available Days: ';
 
         // Reset appointment date
-        document.getElementById('appointment_date').value = '';
+        $('#appointment_date').val('');
 
         // Reset appointment time
         var timeSelect = $('#appointment_time');
-        timeSelect.empty(); // Clear previous options
-        timeSelect.append($('<option></option>').attr('value', '').text('Select Time'))
-        timeSelect.val('');
+        timeSelect.empty().append('<option value="" hidden>Select Time</option>'); // Clear & add default option
 
 
-        if (hospitalId) {
+
+        if (clinicId) {
+            var patientProvince = patients.find(p => p.id == selectedProfileId)?.province || null;
+            console.log(patients);
+            console.log(selectedProfileId);
+            console.log(patientProvince);
             $.ajax({
                 type: 'POST',
-                url: 'fetch_clinics.php',
-                data: { hospital_Id: hospitalId },
+                url: '/national-e-clinic-portal/includes/book-appointment.inc.php',
+                data: { province: patientProvince.trim(), clinic_id: clinicId.trim() },
                 success: function (response) {
-
-                    $('#clinic_name').html(response); // Populate the clinics dropdown
+                    console.log(response);
+                    if (response.status === "success") {
+                        populateDropdown("hospital_name", response.data, "id", "hospital_name", null, "Select Hospital");
+                    } else if (response.status === "error") {
+                        alert(response.message);
+                    }
                 },
                 error: function (xhr, status, error) {
                     $('#error_message').text('Error fetching clinics: ' + error).show();
                 }
             });
         } else {
-            $('#clinic_name').html('<option value="">Select Clinic</option>');
+            $('#clinic_name').html('<option value="" hidden>Select Clinic</option>');
         }
     });
 
 
     // When clinic is selected, fetch available days
-    $('#clinic_name').change(function () {
-        var clinicId = $(this).val();
-        var hospitalId = $('#hospital_name').val();
+    // $('#clinic_name').change(function () {
+    //     var clinicId = $(this).val();
+    //     var hospitalId = $('#hospital_name').val();
 
 
-        // Reset available days display
-        document.getElementById('available_days').textContent = 'Available Days: ';
+    //     // Reset available days display
+    //     document.getElementById('available_days').textContent = 'Available Days: ';
 
-        // Reset appointment date
-        document.getElementById('appointment_date').value = '';
+    //     // Reset appointment date
+    //     document.getElementById('appointment_date').value = '';
 
-        // Reset appointment time
-        var timeSelect = $('#appointment_time');
-        timeSelect.empty(); // Clear previous options
-        timeSelect.append($('<option></option>').attr('value', '').text('Select Time'))
-        timeSelect.val('');
+    //     // Reset appointment time
+    //     var timeSelect = $('#appointment_time');
+    //     timeSelect.empty(); // Clear previous options
+    //     timeSelect.append($('<option></option>').attr('value', '').text('Select Time'))
+    //     timeSelect.val('');
 
 
-        if (clinicId) {
+    //     if (clinicId) {
 
-            // Fetch available days
-            $.ajax({
-                type: 'POST',
-                url: 'fetch_clinic_days.php',
-                data: { clinic_id: clinicId, hospital_Id: hospitalId },
-                success: function (response) {
-                    $('#available_days').text("Available Days: " + response);
-                    restrictDatePickerToTodayAndAfter(response);
-                },
-                error: function (xhr, status, error) {
-                    $('#error_message').text('Error fetching available days: ' + error).show();
-                }
-            });
-        }
-    });
+    //         // Fetch available days
+    //         $.ajax({
+    //             type: 'POST',
+    //             url: 'fetch_clinic_days.php',
+    //             data: { clinic_id: clinicId, hospital_Id: hospitalId },
+    //             success: function (response) {
+    //                 $('#available_days').text("Available Days: " + response);
+    //                 restrictDatePickerToTodayAndAfter(response);
+    //             },
+    //             error: function (xhr, status, error) {
+    //                 $('#error_message').text('Error fetching available days: ' + error).show();
+    //             }
+    //         });
+    //     }
+    // });
 
 
     // Fetch booked times when an appointment date is selected
-    $('#appointment_date').change(function () {
-        var appointmentDate = $(this).val();
-        var clinicId = $('#clinic_name').val();
-        var hospitalId = $('#hospital_name').val();
+    // $('#appointment_date').change(function () {
+    //     var appointmentDate = $(this).val();
+    //     var clinicId = $('#clinic_name').val();
+    //     var hospitalId = $('#hospital_name').val();
 
-        // Reset appointment time
-        var timeSelect = $('#appointment_time');
-        timeSelect.empty(); // Clear previous options
-        timeSelect.append($('<option></option>').attr('value', '').text('Select Time'))
-        timeSelect.val('');
+    //     // Reset appointment time
+    //     var timeSelect = $('#appointment_time');
+    //     timeSelect.empty(); // Clear previous options
+    //     timeSelect.append($('<option></option>').attr('value', '').text('Select Time'))
+    //     timeSelect.val('');
 
-        if (!hospitalId) {
-            alert("Please choose hospital.");
-            document.getElementById('appointment_date').value = '';
-            return;
-        }
+    //     if (!hospitalId) {
+    //         alert("Please choose hospital.");
+    //         document.getElementById('appointment_date').value = '';
+    //         return;
+    //     }
 
-        if (!clinicId) {
-            alert("Please choose clinic.");
-            document.getElementById('appointment_date').value = '';
-            return;
-        }
+    //     if (!clinicId) {
+    //         alert("Please choose clinic.");
+    //         document.getElementById('appointment_date').value = '';
+    //         return;
+    //     }
 
-        if (appointmentDate) {
+    //     if (appointmentDate) {
 
-            $.ajax({
-                type: 'POST',
-                url: 'fetch_clinic_days.php',
-                data: { clinic_id: clinicId, hospital_Id: hospitalId },
-                success: function (response) {
-                    var selectedDay = new Date(appointmentDate).toLocaleString('en-US', { weekday: 'long' });
+    //         $.ajax({
+    //             type: 'POST',
+    //             url: 'fetch_clinic_days.php',
+    //             data: { clinic_id: clinicId, hospital_Id: hospitalId },
+    //             success: function (response) {
+    //                 var selectedDay = new Date(appointmentDate).toLocaleString('en-US', { weekday: 'long' });
 
-                    if (!isValidDay(response, selectedDay)) {
-                        alert("Selected date is not available for this clinic. Please choose another date.");
-                        // If the date is not valid, reset the appointment date
-                        timeSelect.empty(); // Clear time
-                        timeSelect.append($('<option></option>').attr('value', '').text('Select Time'))
-                    } else {
-                        populateTimeSlots(response, appointmentDate, clinicId, hospitalId);
-                    }
+    //                 if (!isValidDay(response, selectedDay)) {
+    //                     alert("Selected date is not available for this clinic. Please choose another date.");
+    //                     // If the date is not valid, reset the appointment date
+    //                     timeSelect.empty(); // Clear time
+    //                     timeSelect.append($('<option></option>').attr('value', '').text('Select Time'))
+    //                 } else {
+    //                     populateTimeSlots(response, appointmentDate, clinicId, hospitalId);
+    //                 }
 
-                },
-                error: function (xhr, status, error) {
-                    $('#error_message').text('Error fetching booked times: ' + error).show();
-                }
-            });
-        }
-    });
+    //             },
+    //             error: function (xhr, status, error) {
+    //                 $('#error_message').text('Error fetching booked times: ' + error).show();
+    //             }
+    //         });
+    //     }
+    // });
 
     // Function to restrict date picker to available days
     function restrictDatePickerToTodayAndAfter() {
@@ -271,18 +307,21 @@ $(document).ready(function () {
     }
 
 
-    function populateProfiles(profiles) {
+    // show options in dropdown
+    function populateDropdown(dropdownId, data, valueKey, textKey1, textKey2, defaultText) {
+        let dropdown = $("#" + dropdownId);
+        dropdown.empty().append(`<option value="" hidden>${defaultText}</option>`); // Clear & add default option
 
-        let dropdown = $("#profile_name");
-        dropdown.empty().append('<option value="">Select Profile</option>'); // Clear & add default option
+        $.each(data, function (index, item) {
+            let text = item[textKey1];
+            if (textKey2 && item[textKey2]) {
+                text += " " + item[textKey2];
+            }
 
-
-        $.each(profiles, function (index, profile) {
             dropdown.append($('<option></option>')
-                .attr("value", profile.id)
-                .text(profile.first_name + " " + profile.last_name));
+                .attr("value", item[valueKey])
+                .text(text));
         });
     }
-
 
 });

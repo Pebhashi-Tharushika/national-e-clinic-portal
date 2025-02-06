@@ -3,15 +3,15 @@
 require_once __DIR__ . '/../includes/dbh.inc.php';
 
 // Whitelist valid province names to prevent SQL injection
-$allowedProvinces = ['central_province', 
-                        'eastern_province', 
-                        'northern_province',
-                        'north_central_province', 
-                        'north_western_province', 
-                        'sabaragamuwa_province', 
-                        'southern_province', 
-                        'uva_province', 
-                        'western_province'
+$allowedProvinces = ['Central', 
+                        'Eastern', 
+                        'Northern',
+                        'North Central', 
+                        'North Western', 
+                        'Sabaragamuwa', 
+                        'Southern', 
+                        'Uva', 
+                        'Western'
                     ];
 
 
@@ -212,7 +212,7 @@ function getAllClinicCategories()
 
     
         
-        $query = "SELECT clinic_name FROM clinics_categories";
+        $query = "SELECT * FROM clinics_categories";
 
         $stmt = mysqli_prepare($conn, $query);
 
@@ -242,7 +242,7 @@ function getAllClinicCategories()
 
 }
 
-function getClinicDetails($provinceName,$hospital,$clinicCategory)
+function getClinicDetails($provinceTable,$provinceName,$hospital,$clinicCategory)
 {
     global $conn, $allowedProvinces;
 
@@ -253,7 +253,6 @@ function getClinicDetails($provinceName,$hospital,$clinicCategory)
         ];
     }
 
-    $provinceTable = 'clinic_' . $provinceName;
 
     $query = "SELECT clinic_place, clinic_date, clinic_time FROM $provinceTable p
                 JOIN clinics_categories c ON p.clinic_category_id = c.id

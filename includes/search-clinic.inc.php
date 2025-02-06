@@ -2,19 +2,7 @@
 session_start();
 
 require_once 'clinic-functions.inc.php';
-
-// Map province_name to database value
-$provinceMap = [
-    'Central' => 'central_province',
-    'Eastern' => 'eastern_province',
-    'Northern' => 'northern_province',
-    'North Western' => 'north_western_province',
-    'Western' => 'western_province',
-    'Southern' => 'southern_province',
-    'Sabaragamuwa' => 'sabaragamuwa_province',
-    'Uva' => 'uva_province',
-    'North Central' => 'north_central_province'
-];
+require_once 'utility-functions.inc.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -23,9 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $hospital = $_POST['hospital'];
         $clinicCategory = $_POST['clinic_category'];
 
-        $provinceName = $provinceMap[$province];
+        // $provinceName = $provinceMap[$province];
+        $provinceTable = convertProvinceNameToTable($province);
 
-        $clinicDetails = getClinicDetails($provinceName, $hospital, $clinicCategory);
+        $clinicDetails = getClinicDetails($provinceTable, $province,$hospital, $clinicCategory);
         sendResponse($clinicDetails);
     }
 
@@ -81,14 +70,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
     sendResponse(getAllClinicCategories());
 }
-
-function sendResponse($response)
-{
-    header('Content-Type: application/json');
-    echo json_encode($response);
-    exit();
-}
-
 
 
 ?>

@@ -23,8 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let selectedHospital = "";
     let selectedClinicCategory = "";
 
-    let clinicCategoryArray = []; 
-    
+    let clinicCategoryArray = [];
+
     fetchAllClinicCategories();
 
     provinces.forEach(province => {
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (response.ok) {
                     const districts = await response.json();
                     if (districts.status === 'success') {
-                        populateDistricts(districts.data);
+                        populateDropdown(districtDropdown, districts.data, "district_name", "district_name", "Select Your District");
                         enableButtons();
                     }
 
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (response.ok) {
                 const hospitalCategory = await response.json();
                 if (hospitalCategory.status === 'success') {
-                    populateHospitalCategory(hospitalCategory.data);
+                    populateDropdown(hospitalCategoryDropdown, hospitalCategory.data, "institute_type", "institute_type", "Select Hospital Category");
                     enableButtons();
                 }
 
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (response.ok) {
                 const hospitals = await response.json();
                 if (hospitals.status === 'success') {
-                    populateHospital(hospitals.data);
+                    populateDropdown(hospitalDropdown, hospitals.data, "hospital_name", "hospital_name", "Select Hospital");
                     enableButtons();
                 }
 
@@ -158,10 +158,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (isClinicCategoryDropdownDisable) {
             clinicCategoryDropdown.disabled = false;
             isClinicCategoryDropdownDisable = false;
-        }else{
-            
+        } else {
+
             if (selectedClinicCategory !== "") {
-                populateClinicCategory(clinicCategoryArray);
+                populateDropdown(clinicCategoryDropdown, clinicCategoryArray, "clinic_name", "clinic_name", "Select Clinic Category");
                 selectedClinicCategory = "";
             }
         }
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         selectedHospital = event.target.value.trim();
         enableButtons();
-        
+
     });
 
     clinicCategoryDropdown.addEventListener("change", event => {
@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     btnSearch.addEventListener("click", async event => {
         event.preventDefault(); // Prevent form submission and page reload
-        
+
         try {
             const response = await fetch('/national-e-clinic-portal/includes/search-clinic.inc.php', {
                 method: 'POST',
@@ -210,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const clinic = await response.json();
                 if (clinic.status === 'success') {
                     displayClinicDetails(clinic.data);
-                } else if(clinic.status === 'error'){
+                } else if (clinic.status === 'error') {
                     displayClinicDetails(null);
                 }
                 scrollToClinicInfoSection();
@@ -223,18 +223,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    async function fetchAllClinicCategories(){
+    async function fetchAllClinicCategories() {
         try {
             const response = await fetch('/national-e-clinic-portal/includes/search-clinic.inc.php', {
                 method: 'GET',
-                headers: {'Accept': 'application/json'}
+                headers: { 'Accept': 'application/json' }
             });
 
             if (response.ok) {
                 const clinicCategory = await response.json();
                 if (clinicCategory.status === 'success') {
                     clinicCategoryArray = clinicCategory.data;
-                    populateClinicCategory(clinicCategory.data); 
+                    populateDropdown(clinicCategoryDropdown, clinicCategory.data, "clinic_name", "clinic_name", "Select Clinic Category");
                 }
             } else {
                 console.error("Error fetching clinic categories:", response.statusText);
@@ -261,54 +261,23 @@ document.addEventListener("DOMContentLoaded", () => {
         provinces.forEach((p) => p.classList.remove("selected"));
     }
 
-    // Show districs in dropdown
-    function populateDistricts(districts) {
-        districtDropdown.innerHTML = '<option value="" selected hidden>Select Your District</option>'; // Reset and add the default option
+    // Show in dropdown
+    function populateDropdown(dropdown, data, valueKey, textKey, defaultText) {
+        dropdown.innerHTML = `<option value="" selected hidden>${defaultText}</option>`; // Reset and add the default option
 
-        districts.forEach(district => {
+        data.forEach(item => {
             const option = document.createElement("option");
-            option.value = district.district_name;
-            option.textContent = district.district_name;
-            districtDropdown.appendChild(option);
+            option.value = item[valueKey];
+            option.textContent = item[textKey];
+            dropdown.appendChild(option);
         });
     }
 
-    function populateHospitalCategory(hospitalCategory) {
-        hospitalCategoryDropdown.innerHTML = '<option value="" selected hidden>Select Hospital Category</option>';
-
-        hospitalCategory.forEach(category => {
-            const option = document.createElement('option');
-            option.value = category.institute_type;
-            option.textContent = category.institute_type;
-            hospitalCategoryDropdown.appendChild(option);
-        });
-    }
-
-    function populateHospital(hospitals) {
-        hospitalDropdown.innerHTML = '<option value="" selected hidden>Select Hospital</option>';
-        hospitals.forEach(hospital => {
-            const option = document.createElement('option');
-            option.value = hospital.hospital_name;
-            option.textContent = hospital.hospital_name;
-            hospitalDropdown.appendChild(option);
-        });
-    }
-
-    function populateClinicCategory(clinicCategory) {
-        clinicCategoryDropdown.innerHTML = '<option value="" selected hidden>Select Clinic Category</option>';
-
-        clinicCategory.forEach(category => {
-            const option = document.createElement('option');
-            option.value = category.clinic_name;
-            option.textContent = category.clinic_name;
-            clinicCategoryDropdown.appendChild(option);
-        });
-    }
 
     function resetHospitalCategoryDropdown() {
         if (!isHospitalCategoryDropdownDisable) {
             if (selectedHospitalCategory !== "") {
-                populateHospitalCategory([]);
+                populateDropdown(hospitalCategoryDropdown, [], "institute_type", "institute_type", "Select Hospital Category");
                 selectedHospitalCategory = "";
             }
             hospitalCategoryDropdown.disabled = true;
@@ -319,7 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function resetHospitalDropdown() {
         if (!isHospitalDropdownDisable) {
             if (selectedHospital !== "") {
-                populateHospital([]);
+                populateDropdown(hospitalDropdown, [], "hospital_name", "hospital_name", "Select Hospital");
                 selectedHospital = "";
             }
             hospitalDropdown.disabled = true;
@@ -330,7 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function resetClinicCategoryDropdown() {
         if (!isClinicCategoryDropdownDisable) {
             if (selectedClinicCategory !== "") {
-                populateClinicCategory(clinicCategoryArray);
+                populateDropdown(clinicCategoryDropdown, clinicCategoryArray, "clinic_name", "clinic_name", "Select Clinic Category");
                 selectedClinicCategory = "";
             }
             clinicCategoryDropdown.disabled = true;
@@ -366,15 +335,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const table = document.getElementById('clinicTable');
         const tableBody = document.querySelector("#clinicTable tbody");
         const tableFooter = document.querySelector("#clinicTable tfoot");
-        
-    
+
+
         tableBody.innerHTML = "";
 
         selectionCriteria.style.display = 'flex';
-        tableContainer.style.display = 'block'; 
+        tableContainer.style.display = 'block';
         noSelectionMsg.style.display = 'none';
 
-        if(tableFooter)table.removeChild(tableFooter);
+        if (tableFooter) table.removeChild(tableFooter);
 
         document.querySelector('#selection-criteria > #province').innerHTML = `Province: ${selectedProvince}`;
         document.querySelector('#selection-criteria > #district').innerHTML = `District: ${selectedDistrict}`;
@@ -382,7 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector('#selection-criteria > #clinic-category').innerHTML = `Clinic: ${selectedClinicCategory}`;
 
         if (clinicInfo && clinicInfo.length > 0) {
-    
+
             clinicInfo.forEach(clinic => {
                 let row = document.createElement("tr");
                 row.innerHTML = `
@@ -392,9 +361,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
                 tableBody.appendChild(row);
             });
-    
+
         } else {
-    
+
             let tableFooter = document.createElement("tfoot");
             tableFooter.innerHTML = `
                 <tr>
@@ -405,11 +374,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function scrollToClinicInfoSection(){
+    function scrollToClinicInfoSection() {
         const clinicInfoSection = document.getElementById("selected-clinic-info");
         const sectionHeight = clinicInfoSection.offsetHeight;
         const viewportHeight = window.innerHeight;
-        
+
         if (sectionHeight < viewportHeight) {
             // If section is smaller than viewport, align it to the bottom
             window.scrollTo({
@@ -426,7 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
             target.scrollIntoView({ behavior: "smooth", block: "start" });
         }
     }
-    
+
 
 });
 

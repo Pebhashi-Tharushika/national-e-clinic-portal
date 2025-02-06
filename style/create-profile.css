@@ -15,6 +15,7 @@
     --color-6: #333333;
     --color-7: #dddddd;
     --color-8: #1025a152;
+    --color-9: #ff0000;
 }
 
 body {
@@ -81,7 +82,7 @@ body {
     background: transparent;
     border: none;
     border-bottom: 2px solid var(--color-1);
-    font-size: 1.1rem;
+    font-size: 1rem;
     outline: none;
     transition: border-color 0.3s;
 }
@@ -106,9 +107,9 @@ input[type="date"]:invalid::-webkit-datetime-edit {
 }
 
 select option {
-    background-color: #081b29;
-    color: #0ef;
-    font-size: 1.1rem;
+    background-color: var(--color-2);
+    color: var(--color-6);
+    font-size: 1rem;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
@@ -161,6 +162,6 @@ input[type="date"].date-selected::-webkit-calendar-picker-indicator {
 
 .error {
     margin: 0;
-    color: red;
+    color: var(--color-9);
     font-size: 0.6rem;
 }

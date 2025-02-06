@@ -115,15 +115,15 @@ require_once "./includes/profile-functions.inc.php";
                             <label for="province">Select a Province</label>
                             <select id="province" name="step2[province]" required>
                                 <option value="" hidden selected>Please select your province</option>
-                                <option value="northern" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'northern' ? 'selected' : ''; ?>>Northern</option>
-                                <option value="north-western" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'north-western' ? 'selected' : ''; ?>>North Western</option>
-                                <option value="western" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'western' ? 'selected' : ''; ?>>Western</option>
-                                <option value="north-central" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'north-central' ? 'selected' : ''; ?>>North Central</option>
-                                <option value="central" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'central' ? 'selected' : ''; ?>>Central</option>
-                                <option value="sabaragamuwa" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'sabaragamuwa' ? 'selected' : ''; ?>>Sabaragamuwa</option>
-                                <option value="eastern" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'eastern' ? 'selected' : ''; ?>>Eastern</option>
-                                <option value="uva" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'uva' ? 'selected' : ''; ?>>Uva</option>
-                                <option value="southern" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'southern' ? 'selected' : ''; ?>>Southern</option>
+                                <option value="Northern" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'northern' ? 'selected' : ''; ?>>Northern</option>
+                                <option value="North Western" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'north-western' ? 'selected' : ''; ?>>North Western</option>
+                                <option value="Western" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'western' ? 'selected' : ''; ?>>Western</option>
+                                <option value="North Central" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'north-central' ? 'selected' : ''; ?>>North Central</option>
+                                <option value="Central" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'central' ? 'selected' : ''; ?>>Central</option>
+                                <option value="Sabaragamuwa" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'sabaragamuwa' ? 'selected' : ''; ?>>Sabaragamuwa</option>
+                                <option value="Eastern" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'eastern' ? 'selected' : ''; ?>>Eastern</option>
+                                <option value="Uva" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'uva' ? 'selected' : ''; ?>>Uva</option>
+                                <option value="Southern" <?php echo isset($step2_values['province']) && $step2_values['province'] == 'southern' ? 'selected' : ''; ?>>Southern</option>
                             </select>
                             <?php if (isset($errors['province']))
                                 echo "<p class='error'>" . $errors['province'] . "</p>"; ?>

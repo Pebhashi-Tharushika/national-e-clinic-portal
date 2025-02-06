@@ -34,27 +34,19 @@
                     <!-- Select Profile -->
                     <label for="profile_name">Select Profile:</label>
                     <select id="profile_name" name="profile_name" required>
-                        <option value="">Select Profile</option>
+                        <option value="" hidden>Select Profile</option>
                     </select>
 
-                    <!-- Select Hospital -->
-                    <label for="hospital_name">Select Hospital:</label>
-                    <select id="hospital_name" name="hospital_name" required>
-                        <option value="">Select Hospital</option>
-                        <?php
-                        // Fetch and display hospitals
-                        if (!empty($hospitals)) {
-                            foreach ($hospitals as $hospitalId => $hospitalName) {
-                                echo "<option value='$hospitalId'>$hospitalName</option>";
-                            }
-                        }
-                        ?>
-                    </select>
-
-                    <!-- Select Clinic (Dynamically Populated) -->
+                    <!-- Select Clinic -->
                     <label for="clinic_name">Select Clinic:</label>
                     <select id="clinic_name" name="clinic_name" required>
-                        <option value="">Select Clinic</option>
+                        <option value="" hidden>Select Clinic</option>
+                    </select>
+
+                    <!-- Select Hospital (Dynamically Populated) -->
+                    <label for="hospital_name">Select Hospital:</label>
+                    <select id="hospital_name" name="hospital_name" required>
+                        <option value="" hidden>Select Hospital</option>
                     </select>
 
                     <!-- Display available clinic days here -->
@@ -69,7 +61,7 @@
                     <!-- Appointment Time -->
                     <label for="appointment_time">Appointment Time:</label>
                     <select id="appointment_time" name="appointment_time" required>
-                        <option value="">Select Time</option>
+                        <option value="" hidden>Select Time</option>
                         <!-- Time slots will be dynamically populated -->
                     </select>
 
