@@ -30,7 +30,7 @@
             <div id="image-container"></div>
             <div id="form-container">
                 <h1>Book an Appointment</h1>
-                <form id="appointmentForm" action="save_appointment.php" method="POST">
+                <form id="appointmentForm" action="save_appointment.php" method="POST" novalidate>
                     <!-- Select Profile -->
                     <label for="profile_name">Select Profile:</label>
                     <select id="profile_name" name="profile_name" required>
@@ -66,7 +66,7 @@
                     </select>
 
                     <!-- Submit Button -->
-                    <Button name="submit" type="submit">Book Appointment</Button>
+                    <button id="btn-submit" type="button">Book Appointment</button>
                 </form>
 
                 <p id="error_message" style="color: red; display: none;"></p>

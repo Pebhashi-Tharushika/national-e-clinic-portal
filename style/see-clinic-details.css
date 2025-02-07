@@ -277,6 +277,7 @@ svg #Sri_Lanka path.selected+text {
     border-radius: 1rem;
     background-color: var(--color-1);
     color: var(--color-2);
+    transition: background-color 0.3s, color 0.3s;
 }
 
 #other-selection>#search-heading-and-form>form>.form-field:last-child>#button-wrapper>button:not(:disabled):hover {
@@ -286,7 +287,9 @@ svg #Sri_Lanka path.selected+text {
 }
 
 #other-selection>#search-heading-and-form>form>.form-field:last-child>#button-wrapper>button:disabled{
-    opacity: 0.7;
+    opacity: 0.6;
+    background-color: var(--color-3);
+    color: var(--color-6);
 }
 
 /* --------------- search result ----------- */

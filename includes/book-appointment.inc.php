@@ -22,13 +22,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if(isset($_POST['province']) && isset($_POST['clinic_id']) && isset($_POST['hospital_id'])){
+        $provinceName = $_POST['province'];
+        $clinicCategoryId = $_POST['clinic_id'];
+        $hospitalId = $_POST['hospital_id'];
+
+        $days = getClinicAvailableDays(convertProvinceNameToTable($provinceName),$clinicCategoryId, $hospitalId);
+        sendResponse($days);
+    }
+
+
     if (isset($_POST['province']) && isset($_POST['clinic_id'])) {
         $provinceName = $_POST['province'];
         $clinicCategoryId = $_POST['clinic_id'];
-
         
         $hospitals = getHospitalsByProvinceAndClinicCategory(convertProvinceNameToTable($provinceName), $provinceName, $clinicCategoryId);
-        sendResponse(response: $hospitals);
+        sendResponse( $hospitals);
     }
 }
 

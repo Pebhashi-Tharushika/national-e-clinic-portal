@@ -100,7 +100,6 @@ body {
 #form-container select:invalid,
 input[type="date"]:invalid::-webkit-datetime-edit {
   color: var(--color-7);
-  opacity: 0.75;
   font-size: 0.85rem;
 }
 
@@ -164,4 +163,21 @@ input[type="date"].date-selected::-webkit-calendar-picker-indicator {
   /* margin: 0;
   color: red;
   font-size: 0.6rem; */
+}
+
+
+#form-container input:disabled,
+#form-container select:disabled{
+  color: var(--color-6);
+  font-size: 0.85rem;
+  opacity: 0.3;
+}
+
+#form-container label.disabled-label{
+  opacity: 0.4;
+}
+
+#form-container button:disabled{
+  pointer-events: none;
+  opacity: 0.5;
 }

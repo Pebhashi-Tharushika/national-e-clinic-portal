@@ -1,7 +1,17 @@
 $(document).ready(function () {
 
+    disableForm(); //disable all fields except profile field at start
+
+    isDisableClinic;
+    isDisableHospital;
+    isDisableDate;
+    isDisableTime;
+
     patients = [];
-    selectedProfileId = '';
+    var patientProvince;
+    var selectedPatientId;
+    var selectedClinicId;
+    var selectedHospitalId;
 
     // fetch profiles
     $.ajax({
@@ -39,52 +49,50 @@ $(document).ready(function () {
         }
     });
 
+    // fetch selected patient profile
+    $('#profile_name').change(function () {
+        selectedPatientId = $(this).val().trim();
 
-    $('#profile_name').change(function(){
-        selectedProfileId = $(this).val();
+        $('#clinic_name').val(''); // Reset clinic name
+        $('#hospital_name').val('');  // Reset hospital name
+        // document.getElementById('available_days').textContent = 'Available Days: '; // Reset available days display
+        $('#appointment_date').val('');  // Reset appointment date
+        $('#appointment_time').empty().append('<option value="" hidden>Select Time</option>'); // Reset appointment time - Clear & add default option
+
+        enableField('clinic_name');
+
+        patientProvince = patients.find(p => p.id == selectedPatientId)?.province.trim() || null;
     });
 
     // When clinic is selected, fetch available hospitals 
-
     $('#clinic_name').change(function () {
-        var clinicId = $(this).val();
+        selectedClinicId = $(this).val().trim();
 
-        // var clinicId = $('#clinic_name').val();
-
-        // Reset hospital name
-        $('#hospital_name').val('');
-
-        // Reset available days display
-        // document.getElementById('available_days').textContent = 'Available Days: ';
-
-        // Reset appointment date
-        $('#appointment_date').val('');
-
-        // Reset appointment time
-        var timeSelect = $('#appointment_time');
-        timeSelect.empty().append('<option value="" hidden>Select Time</option>'); // Clear & add default option
+        $('#hospital_name').val('');  // Reset hospital name
+        // document.getElementById('available_days').textContent = 'Available Days: '; // Reset available days display
+        $('#appointment_date').val('');  // Reset appointment date
+        $('#appointment_time').empty().append('<option value="" hidden>Select Time</option>'); // Reset appointment time - Clear & add default option
 
 
-
-        if (clinicId) {
-            var patientProvince = patients.find(p => p.id == selectedProfileId)?.province || null;
-            console.log(patients);
-            console.log(selectedProfileId);
-            console.log(patientProvince);
+        if (selectedClinicId) {
             $.ajax({
                 type: 'POST',
                 url: '/national-e-clinic-portal/includes/book-appointment.inc.php',
-                data: { province: patientProvince.trim(), clinic_id: clinicId.trim() },
+                data: {
+                    province: patientProvince,
+                    clinic_id: selectedClinicId
+                },
                 success: function (response) {
                     console.log(response);
                     if (response.status === "success") {
-                        populateDropdown("hospital_name", response.data, "id", "hospital_name", null, "Select Hospital");
+                        enableField('hospital_name');
+                        populateDropdown("hospital_name", response.data, "id", "hospital_name", "institute_type", "Select Hospital");
                     } else if (response.status === "error") {
                         alert(response.message);
                     }
                 },
                 error: function (xhr, status, error) {
-                    $('#error_message').text('Error fetching clinics: ' + error).show();
+                    $('#error_message').text('Error fetching hospitals: ' + error).show();
                 }
             });
         } else {
@@ -93,49 +101,54 @@ $(document).ready(function () {
     });
 
 
-    // When clinic is selected, fetch available days
-    // $('#clinic_name').change(function () {
-    //     var clinicId = $(this).val();
-    //     var hospitalId = $('#hospital_name').val();
+    // When hospital is selected, fetch available clinic days
+    $('#hospital_name').change(function () {
+        selectedHospitalId = $(this).val().trim();
+
+        // document.getElementById('available_days').textContent = 'Available Days: '; // Reset available days display
+        $('#appointment_date').val('');  // Reset appointment date
+        $('#appointment_time').empty().append('<option value="" hidden>Select Time</option>'); // Reset appointment time - Clear & add default option
 
 
-    //     // Reset available days display
-    //     document.getElementById('available_days').textContent = 'Available Days: ';
+        if (selectedHospitalId) {
+            $.ajax({
+                type: 'POST',
+                url: '/national-e-clinic-portal/includes/book-appointment.inc.php',
+                data: {
+                    province: patientProvince,
+                    clinic_id: selectedClinicId,
+                    hospital_id: selectedHospitalId
+                },
+                success: function (response) {
+                    console.log(response);
+                    console.log(response.data[0].clinic_date);
+                    
+                    if (response.status === "success") {
+                        var num = getDayNumber(response.data[0].clinic_date);
+                        customizeDatePicker(num);
+                        enableField('appointment_date');
+                    } else if (response.status === "error") {
+                        alert(response.message);
+                    }
+                    // $('#available_days').text("Available Days: " + response);
+                    // restrictDatePickerToTodayAndAfter(response);
+                },
+                error: function (xhr, status, error) {
+                    $('#error_message').text('Error fetching available days: ' + error).show();
+                }
+            });
+        } else {
+            $('#appointment_date').val('');
 
-    //     // Reset appointment date
-    //     document.getElementById('appointment_date').value = '';
-
-    //     // Reset appointment time
-    //     var timeSelect = $('#appointment_time');
-    //     timeSelect.empty(); // Clear previous options
-    //     timeSelect.append($('<option></option>').attr('value', '').text('Select Time'))
-    //     timeSelect.val('');
-
-
-    //     if (clinicId) {
-
-    //         // Fetch available days
-    //         $.ajax({
-    //             type: 'POST',
-    //             url: 'fetch_clinic_days.php',
-    //             data: { clinic_id: clinicId, hospital_Id: hospitalId },
-    //             success: function (response) {
-    //                 $('#available_days').text("Available Days: " + response);
-    //                 restrictDatePickerToTodayAndAfter(response);
-    //             },
-    //             error: function (xhr, status, error) {
-    //                 $('#error_message').text('Error fetching available days: ' + error).show();
-    //             }
-    //         });
-    //     }
-    // });
+        }
+    });
 
 
     // Fetch booked times when an appointment date is selected
     // $('#appointment_date').change(function () {
     //     var appointmentDate = $(this).val();
-    //     var clinicId = $('#clinic_name').val();
-    //     var hospitalId = $('#hospital_name').val();
+    //     var selectedClinicId = $('#clinic_name').val();
+    //     var selectedHospitalId = $('#hospital_name').val();
 
     //     // Reset appointment time
     //     var timeSelect = $('#appointment_time');
@@ -143,13 +156,13 @@ $(document).ready(function () {
     //     timeSelect.append($('<option></option>').attr('value', '').text('Select Time'))
     //     timeSelect.val('');
 
-    //     if (!hospitalId) {
+    //     if (!selectedHospitalId) {
     //         alert("Please choose hospital.");
     //         document.getElementById('appointment_date').value = '';
     //         return;
     //     }
 
-    //     if (!clinicId) {
+    //     if (!selectedClinicId) {
     //         alert("Please choose clinic.");
     //         document.getElementById('appointment_date').value = '';
     //         return;
@@ -160,7 +173,7 @@ $(document).ready(function () {
     //         $.ajax({
     //             type: 'POST',
     //             url: 'fetch_clinic_days.php',
-    //             data: { clinic_id: clinicId, hospital_Id: hospitalId },
+    //             data: { clinic_id: selectedClinicId, hospital_Id: selectedHospitalId },
     //             success: function (response) {
     //                 var selectedDay = new Date(appointmentDate).toLocaleString('en-US', { weekday: 'long' });
 
@@ -170,7 +183,7 @@ $(document).ready(function () {
     //                     timeSelect.empty(); // Clear time
     //                     timeSelect.append($('<option></option>').attr('value', '').text('Select Time'))
     //                 } else {
-    //                     populateTimeSlots(response, appointmentDate, clinicId, hospitalId);
+    //                     populateTimeSlots(response, appointmentDate, selectedClinicId, selectedHospitalId);
     //                 }
 
     //             },
@@ -322,6 +335,49 @@ $(document).ready(function () {
                 .attr("value", item[valueKey])
                 .text(text));
         });
+    }
+
+    function disableForm() {
+        // Disable all select, input, and button elements inside the form
+        $(appointmentForm).find("select, input, button").prop("disabled", true);
+
+        // Re-enable the element with id "profile_name"
+        $("#profile_name").prop("disabled", false);
+
+        // Add 'disabled-label' class to labels of all disabled inputs and selects
+        $(appointmentForm).find("select:disabled, input:disabled").each(function () {
+            $('label[for="' + this.id + '"]').addClass('disabled-label');
+        });
+
+        isDisableClinic = true;
+        isDisableHospital = true;
+        isDisableDate = true;
+        isDisableTime = true;
+    }
+
+    function enableField(fieldId) {
+        $("#" + fieldId).prop("disabled", false);
+        $('label[for="' + fieldId + '"]').removeClass('disabled-label');
+    }
+
+    function customizeDatePicker(day){
+        let today = new Date();
+        console.log(today);
+
+        // get next weekday from today
+        let startDate = new Date();
+        startDate.setDate(today.getDate() + ((7 + day - today.getDay()) % 7 || 7)); 
+        let firstAllowedDay = startDate.toISOString().split('T')[0];
+        
+        let dateInput = document.getElementById("appointment_date");
+        dateInput.min = firstAllowedDay;
+        dateInput.value = firstAllowedDay;
+        dateInput.step = 7; // Allow only weekly selection
+    }
+
+    function getDayNumber(dayName) {
+        const days = { "Sunday": 0, "Monday": 1, "Tuesday": 2, "Wednesday": 3, "Thursday": 4, "Friday": 5, "Saturday": 6 };
+        return days[dayName] ?? -1; // Return -1 if the input is invalid
     }
 
 });

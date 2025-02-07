@@ -82,7 +82,7 @@
               echo '<a href="/national-e-clinic-portal/register-and-login.php?action=login"><i class="fa-solid fa-user"></i></a>';
             }
             ?>
-            <p>Create Your Profile</p>
+            <p>Create Patient's Profile</p>
           </div>
 
           <div class="icon">
@@ -94,7 +94,7 @@
             }
             ?>
 
-            <p>Book Your Appointment</p>
+            <p>Make An Appointment</p>
           </div>
 
           <div class="icon">
@@ -105,7 +105,7 @@
               echo '<a href="login.php"><i class="fa-solid fa-eye"></i></a>';
             }
             ?>
-            <p>View My Appointmnets</p>
+            <p>View Appointmnets</p>
           </div>
 
           <!-- <div class="icon">
