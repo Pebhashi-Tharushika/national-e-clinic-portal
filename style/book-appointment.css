@@ -156,15 +156,6 @@ input[type="date"].date-selected::-webkit-calendar-picker-indicator {
   top: 0;
 }
 
-#error_message {
-  color: var(--color-9);
-  text-align: center;
-  margin-top: 10px;
-  /* margin: 0;
-  color: red;
-  font-size: 0.6rem; */
-}
-
 
 #form-container input:disabled,
 #form-container select:disabled{

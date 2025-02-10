@@ -1,7 +1,7 @@
 <?php
 
 // Map province_name to database value
-function convertProvinceNameToTable($province)
+function convertProvinceNameToTable($province,$prefix)
 {
     $provinceMap = [
         'Central' => 'central_province',
@@ -16,7 +16,7 @@ function convertProvinceNameToTable($province)
     ];
 
     $provinceName = $provinceMap[$province];
-    return 'clinic_' . $provinceName;
+    return $prefix . $provinceName;
 }
 
 function sendResponse($response)

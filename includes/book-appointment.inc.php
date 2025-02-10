@@ -22,12 +22,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if(isset($_POST['province']) && isset($_POST['clinic_id']) && isset($_POST['hospital_id'])){
+
+    if (isset($_POST['province']) && isset($_POST['patient_id']) && isset($_POST['clinic_id']) && isset($_POST['hospital_id']) && isset($_POST['clinic_date']) && isset($_POST['clinic_time_period']) ) {
+        $provinceName = $_POST['province'];
+        $patientId = $_POST['patient_id'];
+        $clinicCategoryId = $_POST['clinic_id'];
+        $hospitalId = $_POST['hospital_id'];
+        $appointmentDate = $_POST['clinic_date'];
+        $appointmentTime = $_POST['clinic_time_period'];
+
+        $result = saveAppointment(convertProvinceNameToTable($provinceName,'appointment_'),$patientId, $clinicCategoryId, $hospitalId, $appointmentDate, $appointmentTime);
+        sendResponse($result);
+    }
+
+    if (isset($_POST['province']) && isset($_POST['clinic_id']) && isset($_POST['hospital_id']) && isset($_POST['appointment_date'])) {
+        $provinceName = $_POST['province'];
+        $clinicCategoryId = $_POST['clinic_id'];
+        $hospitalId = $_POST['hospital_id'];
+        $appointmentDate = $_POST['appointment_date'];
+
+        $timeSolts = GetAlreadyBookedTimeSolts(convertProvinceNameToTable($provinceName,'appointment_'), $clinicCategoryId, $hospitalId, $appointmentDate);
+        sendResponse($timeSolts);
+    }
+
+    if (isset($_POST['province']) && isset($_POST['clinic_id']) && isset($_POST['hospital_id'])) {
         $provinceName = $_POST['province'];
         $clinicCategoryId = $_POST['clinic_id'];
         $hospitalId = $_POST['hospital_id'];
 
-        $days = getClinicAvailableDays(convertProvinceNameToTable($provinceName),$clinicCategoryId, $hospitalId);
+        $days = getClinicAvailableDays(convertProvinceNameToTable($provinceName,'clinic_'), $clinicCategoryId, $hospitalId);
         sendResponse($days);
     }
 
@@ -35,9 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['province']) && isset($_POST['clinic_id'])) {
         $provinceName = $_POST['province'];
         $clinicCategoryId = $_POST['clinic_id'];
-        
-        $hospitals = getHospitalsByProvinceAndClinicCategory(convertProvinceNameToTable($provinceName), $provinceName, $clinicCategoryId);
-        sendResponse( $hospitals);
+
+        $hospitals = getHospitalsByProvinceAndClinicCategory(convertProvinceNameToTable($provinceName,'clinic_'), $provinceName, $clinicCategoryId);
+        sendResponse($hospitals);
     }
 }
 

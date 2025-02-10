@@ -12,6 +12,9 @@ $(document).ready(function () {
     var selectedPatientId;
     var selectedClinicId;
     var selectedHospitalId;
+    var selectedClinicDate;
+    var selectedClinicTime;
+    var selectedClinicTimePeriod;
 
     // fetch profiles
     $.ajax({
@@ -27,7 +30,7 @@ $(document).ready(function () {
             }
         },
         error: function (xhr, status, error) {
-            $('#error_message').text('Error fetching profiles: ' + error).show();
+            alert('Error fetching profiles: ' + error);
         }
     });
 
@@ -45,7 +48,7 @@ $(document).ready(function () {
             }
         },
         error: function (xhr, status, error) {
-            $('#error_message').text('Error fetching clinics: ' + error).show();
+            alert('Error fetching clinics: ' + error);
         }
     });
 
@@ -53,28 +56,32 @@ $(document).ready(function () {
     $('#profile_name').change(function () {
         selectedPatientId = $(this).val().trim();
 
-        $('#clinic_name').val(''); // Reset clinic name
-        $('#hospital_name').val('');  // Reset hospital name
-        // document.getElementById('available_days').textContent = 'Available Days: '; // Reset available days display
-        $('#appointment_date').val('');  // Reset appointment date
-        $('#appointment_time').empty().append('<option value="" hidden>Select Time</option>'); // Reset appointment time - Clear & add default option
+        if (selectedPatientId) {
+            $('#clinic_name').val(''); // Reset clinic name
+            $('#hospital_name').val('');  // Reset hospital name
+            $('#appointment_date').val('');  // Reset appointment date
+            $('#appointment_time').empty().append('<option value="" hidden>Select Time</option>'); // Reset appointment time - Clear & add default option
 
-        enableField('clinic_name');
+            enableField('clinic_name');
 
-        patientProvince = patients.find(p => p.id == selectedPatientId)?.province.trim() || null;
+            patientProvince = patients.find(p => p.id == selectedPatientId)?.province.trim() || null;
+        } else {
+            $('#profile_name').html('<option value="" hidden>Select Profile</option>');
+        }
+
+
     });
 
     // When clinic is selected, fetch available hospitals 
     $('#clinic_name').change(function () {
         selectedClinicId = $(this).val().trim();
 
-        $('#hospital_name').val('');  // Reset hospital name
-        // document.getElementById('available_days').textContent = 'Available Days: '; // Reset available days display
-        $('#appointment_date').val('');  // Reset appointment date
-        $('#appointment_time').empty().append('<option value="" hidden>Select Time</option>'); // Reset appointment time - Clear & add default option
-
-
         if (selectedClinicId) {
+            $('#hospital_name').val('');
+            $('#appointment_date').val('');
+            $('#appointment_time').empty().append('<option value="" hidden>Select Time</option>');
+            $('#btn-submit').prop("disabled", true);
+
             $.ajax({
                 type: 'POST',
                 url: '/national-e-clinic-portal/includes/book-appointment.inc.php',
@@ -83,7 +90,6 @@ $(document).ready(function () {
                     clinic_id: selectedClinicId
                 },
                 success: function (response) {
-                    console.log(response);
                     if (response.status === "success") {
                         enableField('hospital_name');
                         populateDropdown("hospital_name", response.data, "id", "hospital_name", "institute_type", "Select Hospital");
@@ -92,7 +98,7 @@ $(document).ready(function () {
                     }
                 },
                 error: function (xhr, status, error) {
-                    $('#error_message').text('Error fetching hospitals: ' + error).show();
+                    alert('Error fetching hospitals: ' + error);
                 }
             });
         } else {
@@ -105,12 +111,11 @@ $(document).ready(function () {
     $('#hospital_name').change(function () {
         selectedHospitalId = $(this).val().trim();
 
-        // document.getElementById('available_days').textContent = 'Available Days: '; // Reset available days display
-        $('#appointment_date').val('');  // Reset appointment date
-        $('#appointment_time').empty().append('<option value="" hidden>Select Time</option>'); // Reset appointment time - Clear & add default option
-
-
         if (selectedHospitalId) {
+            $('#appointment_date').val('');
+            $('#appointment_time').empty().append('<option value="" hidden>Select Time</option>');
+            $('#btn-submit').prop("disabled", true);
+
             $.ajax({
                 type: 'POST',
                 url: '/national-e-clinic-portal/includes/book-appointment.inc.php',
@@ -120,207 +125,179 @@ $(document).ready(function () {
                     hospital_id: selectedHospitalId
                 },
                 success: function (response) {
-                    console.log(response);
-                    console.log(response.data[0].clinic_date);
-                    
+
                     if (response.status === "success") {
-                        var num = getDayNumber(response.data[0].clinic_date);
-                        customizeDatePicker(num);
+                        selectedClinicDate = response.data[0].clinic_date.trim();
+                        selectedClinicTime = response.data[0].clinic_time.trim();
+
+                        customizeDatePicker(getDayNumber(selectedClinicDate));
                         enableField('appointment_date');
+                        enableField('appointment_time')
                     } else if (response.status === "error") {
                         alert(response.message);
                     }
-                    // $('#available_days').text("Available Days: " + response);
-                    // restrictDatePickerToTodayAndAfter(response);
                 },
                 error: function (xhr, status, error) {
-                    $('#error_message').text('Error fetching available days: ' + error).show();
+                    alert('Error fetching available days: ' + error);
                 }
             });
         } else {
-            $('#appointment_date').val('');
-
+            $('#clinic_name').html('<option value="" hidden>Select Hospital</option>');
         }
     });
 
 
     // Fetch booked times when an appointment date is selected
-    // $('#appointment_date').change(function () {
-    //     var appointmentDate = $(this).val();
-    //     var selectedClinicId = $('#clinic_name').val();
-    //     var selectedHospitalId = $('#hospital_name').val();
+    $('#appointment_date').change(function () {
+        selectedClinicDate = $(this).val().trim();
 
-    //     // Reset appointment time
-    //     var timeSelect = $('#appointment_time');
-    //     timeSelect.empty(); // Clear previous options
-    //     timeSelect.append($('<option></option>').attr('value', '').text('Select Time'))
-    //     timeSelect.val('');
+        if (selectedClinicDate) {
+            $('#appointment_time').empty().append('<option value="" hidden>Select Time</option>'); // Reset appointment time 
+            $('#btn-submit').prop("disabled", true);
 
-    //     if (!selectedHospitalId) {
-    //         alert("Please choose hospital.");
-    //         document.getElementById('appointment_date').value = '';
-    //         return;
-    //     }
+            populateTimeSlots();
 
-    //     if (!selectedClinicId) {
-    //         alert("Please choose clinic.");
-    //         document.getElementById('appointment_date').value = '';
-    //         return;
-    //     }
+        } else {
+            $('#appointment_time').html('<option value="" hidden>Select Time</option>');
+        }
+    });
 
-    //     if (appointmentDate) {
+    $('#appointment_time').change(function () {
+        selectedClinicTimePeriod = $(this).val().trim();
+        $('#btn-submit').prop("disabled", false);
+    });
 
-    //         $.ajax({
-    //             type: 'POST',
-    //             url: 'fetch_clinic_days.php',
-    //             data: { clinic_id: selectedClinicId, hospital_Id: selectedHospitalId },
-    //             success: function (response) {
-    //                 var selectedDay = new Date(appointmentDate).toLocaleString('en-US', { weekday: 'long' });
+    $('#btn-submit').click(function () {
+        saveProfile();
+    });
 
-    //                 if (!isValidDay(response, selectedDay)) {
-    //                     alert("Selected date is not available for this clinic. Please choose another date.");
-    //                     // If the date is not valid, reset the appointment date
-    //                     timeSelect.empty(); // Clear time
-    //                     timeSelect.append($('<option></option>').attr('value', '').text('Select Time'))
-    //                 } else {
-    //                     populateTimeSlots(response, appointmentDate, selectedClinicId, selectedHospitalId);
-    //                 }
+    function saveProfile() {
+        if (selectedPatientId, selectedClinicId, selectedHospitalId, selectedClinicDate, selectedClinicTimePeriod, patientProvince) {
+            $.ajax({
+                type: 'POST',
+                url: '/national-e-clinic-portal/includes/book-appointment.inc.php',
+                data: {
+                    province: patientProvince,
+                    patient_id: selectedPatientId,
+                    clinic_id: selectedClinicId,
+                    hospital_id: selectedHospitalId,
+                    clinic_date: selectedClinicDate,
+                    clinic_time_period: selectedClinicTimePeriod
+                },
+                success: function (response) {
 
-    //             },
-    //             error: function (xhr, status, error) {
-    //                 $('#error_message').text('Error fetching booked times: ' + error).show();
-    //             }
-    //         });
-    //     }
-    // });
+                    if (response.status === "success") {
+                        alert(response.message);
+                        window.location.href = "/national-e-clinic-portal/index.php?page=home";
+                    } else if (response.status === "error") {
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Error saving the appointment: ' + error);
+                }
+            });
 
-    // Function to restrict date picker to available days
-    function restrictDatePickerToTodayAndAfter() {
-        var today = new Date();
-        $('#appointment_date').attr('min', today.toISOString().split('T')[0]);
+        }
+
     }
 
-    function isValidDay(response, selectedDay) {
 
-        var availableDays = response.split(",")[0];
+    function parseTime(timeStr) {
+        let parts = timeStr.trim().split(/(\d+)/);
+        let hour = parseInt(parts[1]);
+        let minute = parseInt(parts[3]);
+        let isPM = parts[4].trim() === 'PM';
 
-        var availableDaysArray = availableDays.split("and").map(function (day) {
-            return day.trim();
-        });
+        // Convert 12-hour format to 24-hour format
+        hour = hour === 12 ? (isPM ? 12 : 0) : hour + (isPM ? 12 : 0);
 
-        return availableDaysArray.includes(selectedDay);
+        let time = new Date();
+        time.setHours(hour, minute, 0, 0);
+        return time;
     }
 
-    // Function to populate available time slots
 
-    function populateTimeSlots(response, appointmentDate, clinicId, hospitalId) {
-        console.log(response);
-        var availabletime = response.split(",")[1];
-
-        console.log(availabletime);
-        var availabletimeArray = availabletime.split("and").map(function (time) {
-            return time.trim().replace(/;$/, '');
+    function getReservedAppointments() {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: '/national-e-clinic-portal/includes/book-appointment.inc.php',
+                type: 'POST',
+                data: {
+                    province: patientProvince,
+                    hospital_id: selectedHospitalId,
+                    clinic_id: selectedClinicId,
+                    appointment_date: selectedClinicDate
+                },
+                success: function (response) {
+                    resolve(response.data); // Return the data on success
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching time slots:', error);
+                    reject(error); // Reject the promise if there's an error
+                }
+            });
         });
+    }
 
-        $.ajax({
-            url: 'fetch_appointments.php',
-            type: 'POST',
-            data: {
-                hospital_id: hospitalId,
-                clinic_id: clinicId,
-                appointment_date: appointmentDate
-            },
-            success: function (reserved_appointments) {
 
-                console.log(reserved_appointments);
+    async function populateTimeSlots() {
+        try {
+            let reservedTimeSlots = await getReservedAppointments();
 
-                var timeSelect = $('#appointment_time');
-                timeSelect.empty(); // Clear previous options
-                timeSelect.append($('<option></option>').attr('value', '').text('Select Time'))
+            if (selectedClinicTime) {
 
-                availabletimeArray.forEach(function (timeSlot) {
-                    console.log(timeSlot);
+                var timearray = selectedClinicTime.split("-");
 
-                    var timearray = timeSlot.split("-");
-                    console.log(timearray);
+                let startTime = parseTime(timearray[0]);
+                let endTime = parseTime(timearray[1]);
 
-                    var startParts = timearray[0].trim().split(/(\d+)/);
-                    if (startParts[1] === '12') {
-                        var startHour = parseInt(startParts[4].trim() === 'PM' ? 12 : 0);
+                // Create time slots from start to end time with 20-minute intervals
+                while (startTime < endTime) {
+                    var startTimeString = startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true, hourCycle: 'h12' }); // Format as HH:MM AM/PM
+
+                    var startTimeClone = new Date(startTime.getTime());
+                    startTimeClone.setMinutes(startTimeClone.getMinutes() + 20);
+                    var endTimeString = startTimeClone.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true, hourCycle: 'h12' });
+
+                    // Create the time period string (e.g., "08:00 AM - 08:20 AM")
+                    var timePeriod = startTimeString + ' - ' + endTimeString;
+
+                    var status = '';
+                    // Check the status of the booked time slot
+                    if (reservedTimeSlots)
+                        status = reservedTimeSlots.find(appointment => appointment.time_period === timePeriod)?.status;
+
+                    // Create option element
+                    var option = null;
+
+                    // Change color based on status
+                    if (status === 'APPROVED') {
+                        option = $('<option></option>').attr('value', timePeriod).text(`${timePeriod} \u00A0\u00A0\u00A0 RESERVED \u00A0\u00A0\u00A0 ${status}`);
+                        option.css('color', 'green'); // Approved - green
+                        option.prop('disabled', true); // Disable time slots
+                    } else if (status === 'PENDING') {
+                        option = $('<option></option>').attr('value', timePeriod).text(`${timePeriod} \u00A0\u00A0\u00A0 RESERVED \u00A0\u00A0\u00A0 ${status}`);
+                        option.css('color', 'orange'); // Pending - orange
+                        option.prop('disabled', true); // Disable time slots
                     } else {
-                        var startHour = parseInt(startParts[1]) + (startParts[4].trim() === 'PM' ? 12 : 0);
-                    }
-                    var startMinute = parseInt(startParts[3]);
-                    var startTime = new Date(); // Create a new Date object
-                    startTime.setHours(startHour, startMinute, 0, 0); // Set the hour, minute, second, and millisecond to 0
-
-                    var endParts = timearray[1].trim().split(/(\d+)/);
-                    if (endParts[1] === '12') {
-                        var endHour = parseInt(endParts[4].trim() === 'PM' ? 12 : 0);
-                    } else {
-                        var endHour = parseInt(endParts[1]) + (endParts[4].trim() === 'PM' ? 12 : 0);
-                    }
-                    var endMinute = parseInt(endParts[3]);
-                    var endTime = new Date(); // Create a new Date object
-                    endTime.setHours(endHour, endMinute, 0, 0);       // Set the hour, minute, second, and millisecond to 0
-
-                    console.log(startParts);
-                    console.log(endParts)
-                    console.log(startTime);
-                    console.log(endTime)
-
-                    // Create time slots from start to end time with 20-minute intervals
-                    while (startTime < endTime) {
-                        var startTimeString = startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true, hourCycle: 'h12' }); // Format as HH:MM AM/PM
-                        console.log(startTimeString);
-
-                        var startTimeClone = new Date(startTime.getTime());
-                        startTimeClone.setMinutes(startTimeClone.getMinutes() + 20);
-                        var endTimeString = startTimeClone.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true, hourCycle: 'h12' });
-
-                        // Create the time period string (e.g., "8:00 AM - 8:20 AM")
-                        var timePeriod = startTimeString + ' - ' + endTimeString;
-                        console.log(timePeriod);
-
-                        // Check the status of the booked time slot
-                        var status = reserved_appointments.find(app => app.time_period === timePeriod)?.status; // Get the status from reserved_appointments
-
-                        // Create option element
-                        var option = null;
-
-                        // Change color based on status
-                        if (status === 'APPROVED') {
-                            option = $('<option></option>').attr('value', timePeriod).text(`${timePeriod} \u00A0\u00A0\u00A0 BOOKED \u00A0\u00A0\u00A0 ${status}`);
-                            option.css('color', 'green'); // Approved - green
-                            option.prop('disabled', true); // Disable time slots
-                        } else if (status === 'PENDING') {
-                            option = $('<option></option>').attr('value', timePeriod).text(`${timePeriod} \u00A0\u00A0\u00A0 BOOKED \u00A0\u00A0\u00A0 ${status}`);
-                            option.css('color', 'orange'); // Pending - orange
-                            option.prop('disabled', true); // Disable time slots
-                        } else {
-                            option = $('<option></option>').attr('value', timePeriod).text(timePeriod);
-
-                        }
-
-                        // Append the option to the select element
-                        timeSelect.append(option);
-
-                        startTime.setMinutes(startTime.getMinutes() + 20); // Increment by 20 minutes
-
-
+                        option = $('<option></option>').attr('value', timePeriod).text(timePeriod);
                     }
 
-                });
-            },
-            error: function (xhr, status, error) {
-                console.error('Error fetching appointments:', error);
+                    $('#appointment_time').append(option);
+
+                    startTime.setMinutes(startTime.getMinutes() + 20); // Increment by 20 minutes
+
+
+                }
+
+
             }
-        });
-
+        } catch (error) {
+            console.log("Failed to fetch time slots:", error);
+        }
     }
 
-
-    // show options in dropdown
     function populateDropdown(dropdownId, data, valueKey, textKey1, textKey2, defaultText) {
         let dropdown = $("#" + dropdownId);
         dropdown.empty().append(`<option value="" hidden>${defaultText}</option>`); // Clear & add default option
@@ -360,20 +337,22 @@ $(document).ready(function () {
         $('label[for="' + fieldId + '"]').removeClass('disabled-label');
     }
 
-    function customizeDatePicker(day){
+    function customizeDatePicker(day) {
         let today = new Date();
-        console.log(today);
 
-        // get next weekday from today
+        // Get next available weekday
         let startDate = new Date();
-        startDate.setDate(today.getDate() + ((7 + day - today.getDay()) % 7 || 7)); 
+        startDate.setDate(today.getDate() + ((7 + day - today.getDay()) % 7 || 7)); // restrict dates to available clinic days
         let firstAllowedDay = startDate.toISOString().split('T')[0];
-        
-        let dateInput = document.getElementById("appointment_date");
-        dateInput.min = firstAllowedDay;
-        dateInput.value = firstAllowedDay;
-        dateInput.step = 7; // Allow only weekly selection
+
+        // update the date input
+        let $dateInput = $("#appointment_date");
+        $dateInput.attr("min", firstAllowedDay)
+            .val(firstAllowedDay)
+            .attr("step", 7)  // Allow only weekly selection
+            .trigger("change"); // Trigger change event manually
     }
+
 
     function getDayNumber(dayName) {
         const days = { "Sunday": 0, "Monday": 1, "Tuesday": 2, "Wednesday": 3, "Thursday": 4, "Friday": 5, "Saturday": 6 };
