@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $hospitalId = $_POST['hospital_id'];
         $appointmentDate = $_POST['appointment_date'];
 
-        $timeSolts = GetAlreadyBookedTimeSolts(convertProvinceNameToTable($provinceName,'appointment_'), $clinicCategoryId, $hospitalId, $appointmentDate);
+        $timeSolts = getAlreadyBookedTimeSolts(convertProvinceNameToTable($provinceName,'appointment_'), $clinicCategoryId, $hospitalId, $appointmentDate);
         sendResponse($timeSolts);
     }
 

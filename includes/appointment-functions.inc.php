@@ -104,7 +104,7 @@ function getClinicAvailableDays($provinceTable, $clinicCategoryId, $hospitalId)
 }
 
 // fetch already booked time solts
-function GetAlreadyBookedTimeSolts($provinceTable, $clinicCategoryId, $hospitalId, $appointmentDate)
+function getAlreadyBookedTimeSolts($provinceTable, $clinicCategoryId, $hospitalId, $appointmentDate)
 {
     global $conn;
     $query = "SELECT time_period, `status` FROM $provinceTable WHERE hospital_id=? AND clinic_id=? AND appointment_date=?";
@@ -142,8 +142,8 @@ function saveAppointment($provinceTable, $patientId, $clinicCategoryId, $hospita
     $stmt = mysqli_prepare($conn, $query);
     if ($stmt) {
         // Get user_id from the current logged-in user (session userid)
-    $userId = $_SESSION["userId"];
-        mysqli_stmt_bind_param($stmt, "iiiiss",$hospitalId, $clinicCategoryId,$patientId, $userId,$appointmentDate,$appointmentTime);
+        $userId = $_SESSION["userId"];
+        mysqli_stmt_bind_param($stmt, "iiiiss", $hospitalId, $clinicCategoryId, $patientId, $userId, $appointmentDate, $appointmentTime);
         $result = mysqli_stmt_execute($stmt);
 
         mysqli_stmt_close($stmt); // Close statement
@@ -160,6 +160,106 @@ function saveAppointment($provinceTable, $patientId, $clinicCategoryId, $hospita
         ];
 
     }
+}
+
+function getAllBookedAppointments($appointmentTable,$clinicTable)
+{
+    global $conn;
+    $query = "SELECT h.hospital_name, i.institute_type, c.clinic_name, b.clinic_place, p.first_name, p.last_name, p.province, a.appointment_date, a.time_period ,a.`status` 
+                FROM $appointmentTable a 
+                JOIN hospitals h ON a.hospital_id = h.id 
+                JOIN patient_profiles p ON a.profile_id = p.id
+                JOIN clinics_categories c ON a.clinic_id = c.id
+                JOIN institutes i ON h.institute_type_id = i.id
+                JOIN $clinicTable b ON a.clinic_id = b.clinic_category_id AND a.hospital_id = b.hospital_id
+                WHERE a.user_id=?";
+    $stmt = mysqli_prepare($conn, $query);
+
+    if ($stmt) {
+        $userId = $_SESSION["userId"]; // Get logged-in user ID
+        mysqli_stmt_bind_param($stmt, "s", $userId);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        $appointments = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $appointments[] = $row;
+        }
+
+        mysqli_stmt_close($stmt);
+        return !empty($appointments) ?
+            ['status' => 'success', 'data' => $appointments, 'message' => 'All appointments fetched successfully.'] :
+            ['status' => 'error', 'message' => 'No appointments found.'];
+
+    } else {
+        return [
+            'status' => 'error',
+            'message' => 'Error during preparing query.'
+        ];
+
+    }
+}
+
+function getPatientProvincesByUser(){
+    
+    global $conn;
+    $query = "SELECT DISTINCT province FROM patient_profiles WHERE user_id=?";
+    $stmt = mysqli_prepare($conn, $query);
+
+    if ($stmt) {
+        $userId = $_SESSION["userId"]; // Get logged-in user ID
+        mysqli_stmt_bind_param($stmt, "s", $userId);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        $provinces = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $provinces[] = $row;
+        }
+
+        mysqli_stmt_close($stmt);
+        return !empty($provinces) ?
+            ['status' => 'success', 'data' => $provinces, 'message' => 'All provinces fetched successfully.'] :
+            ['status' => 'error', 'message' => 'No provinces found.'];
+
+    } else {
+        return [
+            'status' => 'error',
+            'message' => 'Error during preparing query.'
+        ];
+
+    }
+}
+
+function getNameByUserId(){
+    global $conn;
+    $query = "SELECT `name` FROM clinic_users WHERE user_id=?";
+    $stmt = mysqli_prepare($conn, $query);
+
+    if ($stmt) {
+        $userId = $_SESSION["userId"]; // Get logged-in user ID
+        mysqli_stmt_bind_param($stmt, "s", $userId);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        $name = '';
+        if ($row = mysqli_fetch_assoc($result)) {
+            $name = $row['name']; // Get the name only
+        }
+
+        mysqli_stmt_close($stmt);
+        return ($name !== '') ?
+            ['status' => 'success', 'data' => $name, 'message' => 'Current logged user name fetched successfully.'] :
+            ['status' => 'error', 'message' => 'No current logged user name found.'];
+
+    } else {
+        return [
+            'status' => 'error',
+            'message' => 'Error during preparing query.'
+        ];
+
+    }
+    
 }
 
 ?>

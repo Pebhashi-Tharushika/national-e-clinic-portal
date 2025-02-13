@@ -100,20 +100,13 @@
           <div class="icon">
             <?php
             if (isset($_SESSION["username"])) {
-              echo '<a href="Appointment/view_appointment.php"><i class="fa-solid fa-eye"></i></a>';
+              echo '<a href="/national-e-clinic-portal/view-appointment.php"><i class="fa-solid fa-eye"></i></a>';
             } else {
-              echo '<a href="login.php"><i class="fa-solid fa-eye"></i></a>';
+              echo '<a href="/national-e-clinic-portal/register-and-login.php?action=login"><i class="fa-solid fa-eye"></i></a>';
             }
             ?>
             <p>View Appointmnets</p>
           </div>
-
-          <!-- <div class="icon">
-    <?php
-    echo '<a href="FAQ/FAQ.php"><i class="fa fa-comments"></i></a>';
-    ?>
-    <p>FAQs</p>
-  </div> -->
 
         </div>
       </div>

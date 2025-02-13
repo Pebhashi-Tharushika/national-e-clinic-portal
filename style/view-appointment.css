@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
+}
+
+:root {
+    --header-height: 10vh;
+    --color-1: #1025a1;
+    --color-2: #ffffff;
+    --color-3: #999999;
+    --color-4: #56aeff;
+    --color-5: #000000;
+    --color-6: #333333;
+    --color-7: #dddddd;
+    --color-8: #dddddda6;
+    --color-9: #1025a169;
+
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#view-apointment {
+    width: 90%;
+    min-height: calc(90vh - var(--header-height));
+    margin: 5vh auto;
+    background-color: var(--color-2);
+}
+
+
+
+#appointment-title > #title {
+    font-size: 1.8rem;
+    text-align: center;
+    color: var(--color-1);
+    text-shadow: 3px -3px 3px var(--color-3);
+    padding: 1vh 0;
+    position: relative;
+
+}
+
+#user-details{
+    padding: 2vh 0;
+}
+
+.username-label {
+    color: var(--color-1);
+}
+
+.username-value{
+    color: var(--color-9);
+}
+
+
+#table-appointments{
+    margin-top: 3vh;
+}
+
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--color-1);
+    background-color: var(--color-2);
+}
+
+table thead{
+    background-color: var(--color-1);
+    color: var(--color-7);
+}
+
+table th{
+    text-align: center; 
+    vertical-align: middle;
+    padding: 1rem;
+}
+table td {
+    text-align: left; 
+    vertical-align: middle;
+    padding: 0.75rem;
+}
+
+#table-appointments tbody tr:nth-child(odd) {
+    background-color: var(--color-2);
+}
+
+#table-appointments tbody tr:nth-child(even) {
+background-color: var(--color-8);
+}
+
+#table-appointments tbody tr td:last-child.pending {
+    color: green;
+}
+
+
