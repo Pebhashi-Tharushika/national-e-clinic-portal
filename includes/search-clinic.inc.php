@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $clinicCategory = $_POST['clinic_category'];
 
         // $provinceName = $provinceMap[$province];
-        $provinceTable = convertProvinceNameToTable($province);
+        $provinceTable = convertProvinceNameToTable($province,'clinic_');
 
         $clinicDetails = getClinicDetails($provinceTable, $province,$hospital, $clinicCategory);
         sendResponse($clinicDetails);

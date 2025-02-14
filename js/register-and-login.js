@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch('/national-e-clinic-portal/includes/register.inc.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(formData)
             });
 
             const result = await response.json();

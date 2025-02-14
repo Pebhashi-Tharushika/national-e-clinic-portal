@@ -99,7 +99,7 @@ function ExistUser($email)
 {
     $adminRow = isExistEmail($email, true, false);
     if ($adminRow !== false) {
-        return ['role' => 'admin', 'email' => $adminRow['email']];
+        return ['role' => 'admin', 'email' => $adminRow['email'], 'user_id' => $adminRow['admin_id']];
     }
 
     $userRow = isExistEmail($email, false, false);
