@@ -143,7 +143,7 @@ function saveAppointment($provinceTable, $patientId, $clinicCategoryId, $hospita
     if ($stmt) {
         // Get user_id from the current logged-in user (session userid)
         $userId = $_SESSION["userId"];
-        mysqli_stmt_bind_param($stmt, "iiiiss", $hospitalId, $clinicCategoryId, $patientId, $userId, $appointmentDate, $appointmentTime);
+        mysqli_stmt_bind_param($stmt, "iiisss", $hospitalId, $clinicCategoryId, $patientId, $userId, $appointmentDate, $appointmentTime);
         $result = mysqli_stmt_execute($stmt);
 
         mysqli_stmt_close($stmt); // Close statement
@@ -233,7 +233,10 @@ function getPatientProvincesByUser(){
 
 function getNameByUserId(){
     global $conn;
-    $query = "SELECT `name` FROM clinic_users WHERE user_id=?";
+    $table = $_SESSION['isAdmin'] ? "admins" : "clinic_users";
+    $column = $_SESSION['isAdmin'] ? "admin_id" : "user_id";
+    $query = "SELECT `name` FROM $table WHERE $column=?";
+    
     $stmt = mysqli_prepare($conn, $query);
 
     if ($stmt) {

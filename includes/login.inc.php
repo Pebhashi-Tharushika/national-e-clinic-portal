@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     session_start();
     $_SESSION["username"] = $user['email'];
     $_SESSION['isAdmin'] = $isAdminUser;
-    $_SESSION['userId'] = $isAdminUser ? $user['admin_id'] : $user['user_id'];
+    $_SESSION['userId'] = $user['user_id'];
 
     echo json_encode(['status' => 'success', 'message' => 'User login successfully.']);
 
