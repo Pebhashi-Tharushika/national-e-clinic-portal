@@ -16,6 +16,7 @@
     --color-7: #dddddd;
     --color-8: #dddddda6;
     --color-9: #1025a169;
+    --color-10: #008000;
 
 }
 
@@ -95,7 +96,7 @@ background-color: var(--color-8);
 }
 
 #table-appointments tbody tr td:last-child.pending {
-    color: green;
+    color: var(--color-10);
 }
 
 
