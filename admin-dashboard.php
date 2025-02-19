@@ -5,8 +5,8 @@
             <div id="mnu1" class="menu">
                 <h3>Dashboard</h3>
 
-                <span><i class="fa-sharp fa-regular fa-house"></i></span>
-                
+                <span><i class="fa-light fa-objects-column"></i></span>
+
             </div>
         </a>
 
@@ -39,26 +39,90 @@
         </a>
     </div>
 
-    <div class="overview" id="overview">
-        <div id="overview-header">
-            <h1>Welcome to the Admin Dashboard</h1>
+    <div id="overview-wrapper">
+        <div class="overview" id="overview1">
+            <div id="overview-header">
+                <h3>DASHBOARD</h3>
+                <h6>Welcome to National E-Clinic Portal Admin Panel</h6>
+            </div>
+            <div id="overview-content">
+                <div class="dashboard-card" id="patients">
+                    <h6>Today's Patients</h6>
+                    <div class="qty">
+                        <div class="count">
+                            <i class="fa-regular fa-arrow-up up"></i>
+                            <p id="num-patients">753,209</p>
+                        </div>
+
+                        <i class="fa-solid fa-wheelchair"></i>
+                    </div>
+                    <div class="change">
+                        <p>compare to last week</p>
+                        <p>20%</p>
+                    </div>
+                </div>
+                <div class="dashboard-card" id="appointments">
+                    <h6>Today's Appointments</h6>
+                    <div class="qty">
+                        <div class="count">
+                            <i class="fa-regular fa-arrow-down down"></i>
+                            <p id="num-appointments">788,135</p>
+                        </div>
+
+                        <i class="fa-solid fa-calendar-clock"></i>
+                    </div>
+                    <div class="change">
+                        <p>compare to last week</p>
+                        <p>16%</p>
+                    </div>
+
+                </div>
+                <div class="dashboard-card" id="clinics">
+                    <h6>Today's Clinics</h6>
+                    <div class="qty">
+                        <div class="count">
+                            <i class="fa-regular fa-arrow-up up"></i>
+                            <p id="num-clinics">855</p>
+                        </div>
+
+                        <i class="fa-solid fa-house-medical"></i>
+                    </div>
+                    <div class="change">
+                        <p>compare to last week</p>
+                        <p>10%</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="overview-content">
-            <h2>Dashboard Overview</h2>
-            <div class="dashboard-card">
-                <h3>Total Patients</h3>
-                <p id="totalPatients">150</p>
+        <div class="overview" id="overview2">
+
+            <div id="bar-graph">
+                <h6>Analytics of patients, clinics and cancelled appointments</h6>
+                <div id="selection">
+                    <select id="province" name="province">
+                        <option value="Central" selected>Central</option>
+                        <option value="Eastern">Eastern</option>
+                        <option value="North Central">North Central</option>
+                        <option value="North Western">North Western</option>
+                        <option value="Northern">Northern</option>
+                        <option value="Sabaragamuwa">Sabaragamuwa</option>
+                        <option value="Southern">Southern</option>
+                        <option value="Uva">Uva</option>
+                        <option value="Western">Western</option>
+                    </select>
+                    <div id="btn-container">
+                        <button id="year">Year</button>
+                        <button id="month">Month</button>
+                        <button id="day">Day</button>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="stackedBarChart"></canvas>
+                </div>
             </div>
-            <div class="dashboard-card">
-                <h3>Total Appointments</h3>
-                <p id="totalAppointments">200</p>
-            </div>
-            <div class="dashboard-card">
-                <h3>Doctors Available</h3>
-                <p id="doctorsAvailable">12</p>
-            </div>
-            
+            <div id="province-info"></div>
+
         </div>
     </div>
-
 </section>

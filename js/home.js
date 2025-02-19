@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function () {
 // dynamic percentage increment 
 const percentageElements = document.querySelectorAll('.percentage');
     if (percentageElements.length === 0) {
-      console.error("error");
         return;
     }
 

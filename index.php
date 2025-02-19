@@ -46,6 +46,9 @@ if (isset($_GET['reset']) && $_GET['reset'] === 'true') {
   <!-- bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
+  <!-- chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <script defer src="/national-e-clinic-portal/js/header.js"></script>
   <script defer src="/national-e-clinic-portal/js/footer.js"></script>
   <script defer src="/national-e-clinic-portal/js/home.js"></script>
