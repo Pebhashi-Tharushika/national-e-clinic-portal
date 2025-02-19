@@ -45,7 +45,7 @@
   justify-content: space-between;
 }
 
-.dashboard-card>.change{
+.dashboard-card>.change {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -54,7 +54,7 @@
   border-top: 1px solid;
 }
 
-.dashboard-card>.change>p{
+.dashboard-card>.change>p {
   margin: 0;
 }
 
@@ -90,28 +90,35 @@
 }
 
 /* ----------------- overview-2 ------------- */
-#overview2{
+#overview2 {
   margin-top: 5vh;
   display: flex;
   justify-content: space-between;
   width: 95%;
   margin: 6vh 0 0 auto;
 }
-#overview2 #bar-graph{
+
+#overview2 #bar-graph {
   background-color: var(--color-2);
   width: 60%;
   padding: 1rem 1rem 1.5rem;
+  height: 72vh;
 }
 
-#overview2 #bar-graph h6{
+#overview2 #bar-graph h6 {
   text-align: center;
   margin: 0;
   padding: 1rem;
 }
 
-#overview2 #province-info{
-  background-color: burlywood;
+#overview2 #province-info {
+  background-color: var(--color-2);
   width: 35%;
+  height: 72vh;
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .chart-container {
@@ -120,25 +127,25 @@
   margin: auto;
 }
 
-#stackedBarChart{
+#stackedBarChart {
   height: 50vh;
 }
 
-#selection{
+#selection {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 1.5rem 1.5rem;
 }
 
-#btn-container{
+#btn-container {
   display: flex;
   justify-content: space-around;
   align-items: center;
   gap: 1vw;
 }
 
-#btn-container>button{
+#btn-container>button {
   width: 5vw;
   border: none;
   border-radius: 0.25rem;
@@ -150,9 +157,68 @@
   transition: all 0.2s ease-in-out;
 }
 
-#btn-container>button.clicked{
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+#btn-container>button.clicked {
   background-color: var(--color-4);
+  box-shadow: rgba(63, 172, 233, 0.36) 0px 0px 0px 4px, rgba(61, 59, 53, 0.16) 0px 0px 0px 1px;
+}
+
+
+#province-info>h6 {
+  text-align: center;
+  margin: 0;
+  padding-bottom: 1.5rem;
+}
+
+#sl-map {
+  height: 65%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#sl-map>svg {
+  height: 100%;
+  width: auto;
+}
+
+svg #Sri_Lanka path {
+  fill: var(--color-7);
+  stroke: var(--color-6);
+  stroke-width: 0.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: all 0.3s;
+  cursor: pointer;
+  transition: fill 0.3s, stroke 0.3s;
+}
+
+svg #Sri_Lanka path:hover,
+svg #Sri_Lanka path.selected {
+  fill: var(--color-1);
+  stroke: var(--color-2);
+}
+
+svg #Sri_Lanka text {
+  font-size: 0.8rem;
+  fill: var(--color-6);
+  pointer-events: none;
+  transition: fill 0.3s;
+}
+
+svg #Sri_Lanka path:hover+text,
+svg #Sri_Lanka path.selected+text {
+  fill: var(--color-2);
+}
+
+
+#province-info #info{
+  display: flex;
+  flex-direction: column;
+}
+
+#province-info #info>div{
+  display: flex;
+  justify-content: space-between;
 }
 
 

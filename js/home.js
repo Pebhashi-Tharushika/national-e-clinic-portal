@@ -18,21 +18,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
   window.addEventListener('scroll', function () {
 
-    const topOffset = gettingStartedSection.getBoundingClientRect().top;
-
-    if (isClickedGettingStarted) {
-      if (topOffset > 0.8 || -1 * window.innerHeight > topOffset) {
-        if (window.location.hash) {
-          history.replaceState(null, '', window.location.pathname);
-
+    if(gettingStartedSection){
+      const topOffset = gettingStartedSection.getBoundingClientRect().top;
+      if (isClickedGettingStarted && topOffset) {
+        if (topOffset > 0.8 || -1 * window.innerHeight > topOffset) {
+          if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname);
+  
+          }
+          isClickedGettingStarted = false;
         }
-        isClickedGettingStarted = false;
-      }
-    } else {
-      if (-1 * window.innerHeight <= topOffset && topOffset < 0.8) {
-        isClickedGettingStarted = true;
+      } else {
+        if (-1 * window.innerHeight <= topOffset && topOffset < 0.8) {
+          isClickedGettingStarted = true;
+        }
       }
     }
+    
+    
 
   });
 

@@ -105,6 +105,31 @@ document.addEventListener("DOMContentLoaded", function () {
         btnMonth.click(); // Click the button after DOM is fully loaded
     }
 
+    /* ------------------ map --------------------*/
+
+    const provinces = document.querySelectorAll("svg path");
+    const selectedProvince = document.getElementById("selected-province");
+
+    provinces.forEach(province => {
+        province.addEventListener("click", async (event) => {
+            const provinceTitle = province.getAttribute("title");
+            selectedProvince.textContent = `${provinceTitle}`;
+
+            provinces.forEach(p => p.classList.remove("selected"));
+
+            event.target.classList.add("selected");
+
+        });
+    });
+
+    // Automatically select Central Province on page load
+    
+        const centralProvince = provinces[7];
+        if (centralProvince) {
+            centralProvince.classList.add("selected");
+        }
+   
+
 
 });
 
