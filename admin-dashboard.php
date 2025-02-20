@@ -62,11 +62,11 @@
                     </div>
                 </div>
                 <div class="dashboard-card" id="appointments">
-                    <h6>Today's Appointments</h6>
+                    <h6>Today's Cancelled Appointments</h6>
                     <div class="qty">
                         <div class="count">
                             <i class="fa-regular fa-arrow-down down"></i>
-                            <p id="num-appointments">788,135</p>
+                            <p id="num-appointments">735</p>
                         </div>
 
                         <i class="fa-solid fa-calendar-clock"></i>
@@ -82,7 +82,7 @@
                     <div class="qty">
                         <div class="count">
                             <i class="fa-regular fa-arrow-up up"></i>
-                            <p id="num-clinics">855</p>
+                            <p id="num-clinics">1,386</p>
                         </div>
 
                         <i class="fa-solid fa-house-medical"></i>
@@ -98,18 +98,22 @@
 
             <div id="bar-graph">
                 <h6>Analytics of Patients, Clinics and Cancelled Appointments</h6>
-                <div id="selection">
-                    <select id="province" name="province">
-                        <option value="Central" selected>Central</option>
-                        <option value="Eastern">Eastern</option>
-                        <option value="North Central">North Central</option>
-                        <option value="North Western">North Western</option>
-                        <option value="Northern">Northern</option>
-                        <option value="Sabaragamuwa">Sabaragamuwa</option>
-                        <option value="Southern">Southern</option>
-                        <option value="Uva">Uva</option>
-                        <option value="Western">Western</option>
-                    </select>
+
+                <div id="province-selection">
+                    <div id="selection">
+                        <p>Province:</p>
+                        <select id="province" name="province">
+                            <option value="Central" selected>Central</option>
+                            <option value="Eastern">Eastern</option>
+                            <option value="North Central">North Central</option>
+                            <option value="North Western">North Western</option>
+                            <option value="Northern">Northern</option>
+                            <option value="Sabaragamuwa">Sabaragamuwa</option>
+                            <option value="Southern">Southern</option>
+                            <option value="Uva">Uva</option>
+                            <option value="Western">Western</option>
+                        </select>
+                    </div>
                     <div id="btn-container">
                         <button id="year">Year</button>
                         <button id="month">Month</button>
@@ -118,7 +122,7 @@
                 </div>
 
                 <div class="chart-container">
-                    <canvas id="stackedBarChart"></canvas>
+                    <canvas id="stacked-bar-chart"></canvas>
                 </div>
             </div>
             <div id="province-info">
@@ -177,7 +181,7 @@
                     </svg>
                 </div>
                 <div id="info">
-                <div>
+                    <div>
                         <p>Province</p>
                         <p id="selected-province">Central</p>
                     </div>
@@ -197,6 +201,17 @@
                 </div>
             </div>
 
+        </div>
+
+        <div class="overview" id="overview3">
+            <div id="pie-chart-wrapper">
+                <h6>Clinics with the Highest Patient Capacity</h6>
+                <div id="pie-chart-container">
+                    <canvas id="pie-chart"></canvas>
+                </div>
+            </div>
+
+            <div id="nationwide-overview-container"></div>
         </div>
     </div>
 </section>

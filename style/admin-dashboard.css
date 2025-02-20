@@ -16,12 +16,15 @@
   flex-direction: column;
 }
 
+.overview {
+  display: flex;
+  width: 95%;
+}
+
 /* ------------- overview-1 ---------------- */
 
 #overview1 {
-  display: flex;
   flex-direction: column;
-  width: 95%;
   margin: 0 0 0 auto;
   gap: 3vh;
 }
@@ -91,52 +94,78 @@
 
 /* ----------------- overview-2 ------------- */
 #overview2 {
-  margin-top: 5vh;
-  display: flex;
   justify-content: space-between;
-  width: 95%;
   margin: 6vh 0 0 auto;
+  height: 72vh;
 }
 
 #overview2 #bar-graph {
+  display: flex;
   background-color: var(--color-2);
   width: 60%;
   padding: 1rem 1rem 1.5rem;
-  height: 72vh;
+  height: 100%;
+  box-shadow: inset 0px 0px 3px 0px rgba(0, 0, 255, 0.3);
+  flex-direction: column;
 }
 
 #overview2 #bar-graph h6 {
   text-align: center;
   margin: 0;
   padding: 1rem;
+  flex-shrink: 0;
 }
 
 #overview2 #province-info {
   background-color: var(--color-2);
+  box-shadow: inset 0px 0px 3px 0px rgba(0, 0, 255, 0.3);
   width: 35%;
-  height: 72vh;
-  padding: 1.5rem 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  height: 100%;
+  padding: 1rem 2rem 1.5rem;
 }
 
 .chart-container {
-  width: 90%;
-  max-width: 100%;
-  margin: auto;
+      width: 100%;
+      padding: 0 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 }
 
-#stackedBarChart {
-  height: 50vh;
+#stacked-bar-chart {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+#province-selection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem 1.5rem;
+  flex-shrink: 0;
 }
 
 #selection {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 1.5rem 1.5rem;
+  gap: 0.75rem;
 }
+
+#selection>p {
+  margin: 0;
+  color: var(--color-1);
+}
+
+#selection>#province {
+  font-size: 0.8rem;
+  outline: none;
+  border: none;
+  padding: 0 0.25rem;
+  border-right: 0.25rem solid transparent;
+  border-bottom: 1px solid var(--color-1);
+}
+
+
 
 #btn-container {
   display: flex;
@@ -166,7 +195,7 @@
 #province-info>h6 {
   text-align: center;
   margin: 0;
-  padding-bottom: 1.5rem;
+  padding: 1rem;
 }
 
 #sl-map {
@@ -211,16 +240,60 @@ svg #Sri_Lanka path.selected+text {
 }
 
 
-#province-info #info{
+#province-info #info {
   display: flex;
   flex-direction: column;
 }
 
-#province-info #info>div{
+#province-info #info>div {
   display: flex;
   justify-content: space-between;
 }
 
+#province-info #info>div>p {
+  margin-bottom: 0.5rem;
+}
+
+/* -------------------- overview-3 -------------------*/
+
+#overview3 {
+  margin: 6vh 0 0 auto;
+  justify-content: space-between;
+  height: 50vh;
+}
+
+#pie-chart-wrapper {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-2);
+  width: 30%;
+  padding: 1rem 1rem 1.5rem;
+  height: 50vh;
+}
+
+#pie-chart-wrapper>h6 {
+  text-align: center;
+  margin: 0;
+  padding: 1rem;
+  flex-shrink: 0; /* Ensures <h6> doesn't shrink */
+}
+
+#pie-chart-container {
+  flex-grow: 1; /* Takes up remaining space */
+  display: flex; /* Ensures the canvas fills the div */
+  align-items: center; /* Optional: Center the chart */
+  justify-content: center; /* Optional: Center the chart */
+}
+
+#pie-chart {
+  width: 95% !important;
+  height: 95% !important;
+}
+
+#nationwide-overview-container {
+  width: 65%;
+  background-color: var(--color-2);
+}
 
 /* ------------- side bar --------------- */
 

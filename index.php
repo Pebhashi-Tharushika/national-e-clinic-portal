@@ -48,6 +48,8 @@ if (isset($_GET['reset']) && $_GET['reset'] === 'true') {
 
   <!-- chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
 
   <script defer src="/national-e-clinic-portal/js/header.js"></script>
   <script defer src="/national-e-clinic-portal/js/footer.js"></script>
