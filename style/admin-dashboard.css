@@ -6,7 +6,8 @@
   --d-color-2: #02ff18;
   --d-color-3: #3c57e7;
   --d-color-4: #0049b2;
-  --d-color-5: #0ab0ba;
+  --d-color-5: #4884db;
+  --d-color-6: #086b98;
 }
 
 #overview-wrapper {
@@ -31,11 +32,11 @@
 
 #overview-content {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
 .dashboard-card {
-  width: 28%;
+  width: 23.75%;
   height: 23vh;
   color: var(--color-2);
   padding: 1.5rem;
@@ -92,17 +93,21 @@
   background-color: var(--d-color-5);
 }
 
+#hospitals{
+  background-color: var(--d-color-6);
+}
+
 /* ----------------- overview-2 ------------- */
 #overview2 {
   justify-content: space-between;
-  margin: 6vh 0 0 auto;
+  margin: 3vh 0 0 auto;
   height: 72vh;
 }
 
 #overview2 #bar-graph {
   display: flex;
   background-color: var(--color-2);
-  width: 60%;
+  width: 63.25%;
   padding: 1rem 1rem 1.5rem;
   height: 100%;
   box-shadow: inset 0px 0px 3px 0px rgba(0, 0, 255, 0.3);
@@ -134,8 +139,8 @@
 }
 
 #stacked-bar-chart {
-  height: 100% !important;
-  width: 100% !important;
+  height: 95% !important;
+  width: 95% !important;
 }
 
 #province-selection {
@@ -257,21 +262,22 @@ svg #Sri_Lanka path.selected+text {
 /* -------------------- overview-3 -------------------*/
 
 #overview3 {
-  margin: 6vh 0 0 auto;
+  margin: 3vh 0 0 auto;
   justify-content: space-between;
   height: 50vh;
 }
 
-#pie-chart-wrapper {
+#clinic-overview-container {
   display: flex;
   flex-direction: column;
   background-color: var(--color-2);
   width: 30%;
-  padding: 1rem 1rem 1.5rem;
-  height: 50vh;
+  padding: 1rem;
+  height: 100%;
+  box-shadow: inset 0px 0px 3px 0px rgba(0, 0, 255, 0.3);
 }
 
-#pie-chart-wrapper>h6 {
+#clinic-overview-container>h6 {
   text-align: center;
   margin: 0;
   padding: 1rem;
@@ -280,20 +286,47 @@ svg #Sri_Lanka path.selected+text {
 
 #pie-chart-container {
   flex-grow: 1; /* Takes up remaining space */
-  display: flex; /* Ensures the canvas fills the div */
-  align-items: center; /* Optional: Center the chart */
-  justify-content: center; /* Optional: Center the chart */
+  display: flex; 
+   align-items: center;
+   justify-content: center; 
 }
 
-#pie-chart {
-  width: 95% !important;
-  height: 95% !important;
+#pie-chart-wrapper{
+  height:100%;
 }
 
 #nationwide-overview-container {
-  width: 65%;
+  display: flex;
+  flex-direction: column;
+  width: 68%;
   background-color: var(--color-2);
+  padding: 1rem 1rem 1.5rem;
+  height: 100%;
+  box-shadow: inset 0px 0px 3px 0px rgba(0, 0, 255, 0.3);
 }
+
+
+#nationwide-overview-container>h6 {
+  text-align: center;
+  margin: 0;
+  padding: 1rem;
+  flex-shrink: 0;
+}
+
+
+#area-chart-container{
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+#stacked-area-chart-wrapper,
+#area-chart-wrapper{
+  width: 48%;
+  height: 90%;
+}
+
 
 /* ------------- side bar --------------- */
 

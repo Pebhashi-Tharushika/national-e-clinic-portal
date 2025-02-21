@@ -1,6 +1,6 @@
 Chart.register(ChartDataLabels);
 document.addEventListener("DOMContentLoaded", function () {
-    console.log(document.documentElement.clientHeight);
+
     let menus = document.querySelectorAll('.menu'); // Select all menu items
 
     menus.forEach(menu => menu.classList.remove('active')); // Remove 'active' from all menu items
@@ -22,13 +22,16 @@ document.addEventListener("DOMContentLoaded", function () {
     // Mock data simulation 
     document.getElementById("num-patients").innerText = '753,209'; // hardcode patients
     document.getElementById("num-appointments").innerText = '735'; // hardcode appointments
-    document.getElementById("num-clinics").innerText = '1,386'; // hardcode clinics
+    document.getElementById("num-clinics").innerText = '2,386'; // hardcode clinics
+    document.getElementById("num-hospitals").innerText = '425'; // hardcode hospitals
 
 
-    /* --------------------------------- line chart and pie chart -----------------------------------*/
+    /* --------------------------------- line chart, pie chart and area chart -----------------------------------*/
 
     const stackedCtx = document.getElementById('stacked-bar-chart').getContext('2d');
     const pieCtx = document.getElementById('pie-chart').getContext('2d');
+    const stackedAreaCtx = document.getElementById('stacked-area-chart').getContext('2d');
+    const areaCtx = document.getElementById('area-chart').getContext('2d');
 
     // Destroy existing chart instances if they exist
     if (Chart.getChart(stackedCtx)) {
@@ -37,6 +40,13 @@ document.addEventListener("DOMContentLoaded", function () {
     if (Chart.getChart(pieCtx)) {
         Chart.getChart(pieCtx).destroy();
     }
+    if (Chart.getChart(stackedAreaCtx)) {
+        Chart.getChart(stackedAreaCtx).destroy();
+    }
+    if (Chart.getChart(areaCtx)) {
+        Chart.getChart(areaCtx).destroy();
+    }
+
 
     // Create the stacked bar chart
     new Chart(stackedCtx, {
@@ -103,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    
+
 
     // Create the pie chart
     new Chart(pieCtx, {
@@ -111,21 +121,20 @@ document.addEventListener("DOMContentLoaded", function () {
         data: {
             labels: ['Gastroenterology', 'Rheumatology', 'Urology and Renal', 'Cardiology', 'Pulmonology', 'Oncology'],
             datasets: [{
-                data: [ 51971, 73061, 94151, 119007, 152148, 262870],
-                backgroundColor: ['#002244', '#00008B', '#0000FF',  '#1da1f2','#00CCFF', '#A4DDED'],
+                data: [51971, 73061, 94151, 119007, 152148, 262870],
+                backgroundColor: ['#002244', '#00008B', '#0000FF', '#1da1f2', '#00CCFF', '#A4DDED'],
                 hoverOffset: 4
             }]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
             plugins: {
                 legend: {
                     display: true,
                     position: 'bottom',
                     labels: {
                         font: {
-                            size: 15 // Set font size
+                            size: 14 // Set font size
                         },
                         boxWidth: 10, // Size of color boxes
                         boxHeight: 10,
@@ -151,8 +160,114 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    
-    
+    // Create the stacked area chart
+    new Chart(stackedAreaCtx, {
+        type: 'line',
+        data: {
+            labels: ['2028', '2029', '2030', '2031', '2032', '2033', '2034', '2035'],
+            datasets: [
+                {
+                    label: 'Clinic',
+                    data: [1809, 1760, 1894, 2217, 2199, 2438, 2622, 3006],
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1.5,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    fill: true
+                }, {
+                    label: 'Hospital',
+                    data: [287, 261, 293, 307, 330, 378, 409, 434],
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1.5,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    fill: true
+                }
+
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                },
+                datalabels: {
+                    display: false // Hide actual values in the bar chart
+                }
+            },
+            elements: {
+                line: {
+                    // tension: 0.4  // Smooth curve
+                }
+            },
+            scales: {
+                x: {
+                    stacked: true  // Stack X-axis values
+                },
+                y: {
+                    stacked: true, // Stack Y-axis values
+                    min: 1700,
+                    max: 3500,
+                    ticks: {
+                        count: 6,
+                        beginAtZero: false,
+                        autoSkip: false,
+                        stepSize: 300,
+                    }
+                }
+            }
+        }
+    });
+
+    // Create the area chart
+    new Chart(areaCtx, {
+        type: 'line',
+        data: {
+            labels: ['2028', '2029', '2030', '2031', '2032', '2033', '2034', '2035'],
+            datasets: [
+                {
+                    label: 'Patient',
+                    data: [729163, 726511, 734141, 747474, 740967, 749925, 751991, 758442],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1.5,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true
+                }
+
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                },
+                datalabels: {
+                    display: false // Hide actual values in the bar chart
+                }
+            },
+            scales: {
+                x: {
+                    stacked: true  // Stack X-axis values
+                },
+                y: {
+                    stacked: true, // Stack Y-axis values
+                    min: 725000,
+                    max: 760000,
+                    ticks: {
+                        count: 7,
+                        beginAtZero: false,
+                        autoSkip: false,
+                        stepSize: 5000,
+                    }
+                }
+            }
+        }
+    });
+
 
     /* ------------------  button ------------------*/
 

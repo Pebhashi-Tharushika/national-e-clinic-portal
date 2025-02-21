@@ -27,7 +27,7 @@
         <a href="#">
             <div id="mnu4" class="menu">
                 <h3>Clinics</h3>
-                <span><i class="fa-regular fa-hospital"></i></span>
+                <span><i class="fa-regular fa-hospital-user"></i></span>
             </div>
         </a>
 
@@ -82,7 +82,7 @@
                     <div class="qty">
                         <div class="count">
                             <i class="fa-regular fa-arrow-up up"></i>
-                            <p id="num-clinics">1,386</p>
+                            <p id="num-clinics">2,386</p>
                         </div>
 
                         <i class="fa-solid fa-house-medical"></i>
@@ -90,6 +90,21 @@
                     <div class="change">
                         <p>compare to last week</p>
                         <p>10%</p>
+                    </div>
+                </div>
+                <div class="dashboard-card" id="hospitals">
+                    <h6>Today's Hospitals</h6>
+                    <div class="qty">
+                        <div class="count">
+                            <i class="fa-regular fa-arrow-down down"></i>
+                            <p id="num-hospitals">425</p>
+                        </div>
+
+                        <i class="fa-solid fa-hospital"></i>
+                    </div>
+                    <div class="change">
+                        <p>compare to last week</p>
+                        <p>3.7%</p>
                     </div>
                 </div>
             </div>
@@ -204,14 +219,31 @@
         </div>
 
         <div class="overview" id="overview3">
-            <div id="pie-chart-wrapper">
+            <div id="clinic-overview-container">
                 <h6>Clinics with the Highest Patient Capacity</h6>
                 <div id="pie-chart-container">
-                    <canvas id="pie-chart"></canvas>
+                    <div id="pie-chart-wrapper">
+                        <canvas id="pie-chart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+            <div id="nationwide-overview-container">
+                <h6>Comprehensive Nationwide Overview of Past Years</h6>
+                <div id="area-chart-container">
+                    <div id="stacked-area-chart-wrapper">
+                        <canvas id="stacked-area-chart"></canvas>
+                    </div>
+                    <div id="area-chart-wrapper">
+                        <canvas id="area-chart"></canvas>
+                    </div>
                 </div>
             </div>
 
-            <div id="nationwide-overview-container"></div>
+
         </div>
+
+
+    </div>
     </div>
 </section>
