@@ -1,23 +1,11 @@
 Chart.register(ChartDataLabels);
 document.addEventListener("DOMContentLoaded", function () {
 
-    let menus = document.querySelectorAll('.menu'); // Select all menu items
-
-    menus.forEach(menu => menu.classList.remove('active')); // Remove 'active' from all menu items
-    document.getElementById('mnu1').classList.add('active');
-    menus.forEach(menu => {
-        menu.addEventListener('click', event => {
-            event.stopPropagation();
-            menus.forEach(m => m.classList.remove('active')); // Remove 'active' from all menu items
-
-            // Find the top-level `.menu` item and add 'active'
-            let targetMenu = event.target.closest('.menu');
-            if (targetMenu) {
-                targetMenu.classList.add('active');
-            }
-        });
-    });
-
+    // Get active menu from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('content') !== 'mnu1') {
+        return;
+    }
 
     // Mock data simulation 
     document.getElementById("num-patients").innerText = '753,209'; // hardcode patients

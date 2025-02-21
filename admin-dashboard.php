@@ -1,43 +1,4 @@
 <section id="admin-dashboard-container">
-    <div class="sidebar" id="sidebar">
-
-        <a href="#">
-            <div id="mnu1" class="menu">
-                <h3>Dashboard</h3>
-
-                <span><i class="fa-light fa-objects-column"></i></span>
-
-            </div>
-        </a>
-
-        <a href="#">
-            <div id="mnu2" class="menu">
-                <h3>Patients</h3>
-                <span><i class="fa-sharp fa-regular fa-bed-pulse"></i></span>
-            </div>
-        </a>
-
-        <a href="#">
-            <div id="mnu3" class="menu">
-                <h3>Appointments</h3>
-                <span><i class="fa-regular fa-calendar-check"></i></span>
-            </div>
-        </a>
-
-        <a href="#">
-            <div id="mnu4" class="menu">
-                <h3>Clinics</h3>
-                <span><i class="fa-regular fa-hospital-user"></i></span>
-            </div>
-        </a>
-
-        <a href="#">
-            <div id="mnu5" class="menu">
-                <h3>Request</h3>
-                <span><i class="fa-regular fa-comment-medical"></i></span>
-            </div>
-        </a>
-    </div>
 
     <div id="overview-wrapper">
         <div class="overview" id="overview1">

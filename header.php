@@ -20,7 +20,7 @@
           <!-- Show Profile, Settings, and Logout only if user IS logged in -->
           <?php if (isset($_SESSION['username'])): ?>
             <?php if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin']): ?>
-              <a href="/national-e-clinic-portal/index.php?page=admin-dashboard">Admin Dashboard</a>
+              <a href="/national-e-clinic-portal/index.php?page=admin&content=mnu1">Admin Dashboard</a>
             <?php endif; ?>
             <a href="/national-e-clinic-portal/profile/profile.html">Profile</a>
             <a href="/national-e-clinic-portal/setting/settings.html">Settings</a>

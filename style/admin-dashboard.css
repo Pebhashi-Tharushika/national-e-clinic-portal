@@ -1,7 +1,7 @@
 #admin-dashboard-container {
   width: 100%;
-  background-color: var(--d-color-0);
-  --d-color-0: #ebf4fc;
+  background-color: var(--background-color);
+ 
   --d-color-1: #de3333;
   --d-color-2: #02ff18;
   --d-color-3: #3c57e7;
@@ -327,70 +327,3 @@ svg #Sri_Lanka path.selected+text {
   height: 90%;
 }
 
-
-/* ------------- side bar --------------- */
-
-.menu {
-  background-color: var(--color-2);
-  color: var(--color-1);
-  border: 1px solid var(--color-1);
-  width: 19vw;
-  left: -212px;
-  position: fixed;
-  padding: 0.75rem 1.5rem 0.75rem 1rem;
-  display: flex;
-  justify-content: space-between;
-  transition: left 1s;
-  border-top-right-radius: 2.5rem;
-  border-bottom-right-radius: 2.5rem;
-  align-items: center;
-  font-size: 1.35rem;
-}
-
-.menu.active {
-  background-color: var(--color-1);
-  color: var(--color-2);
-  border: none;
-}
-
-.menu h3 {
-  font-size: 1.35rem;
-  margin: 0;
-}
-
-.menu span {
-  width: 2rem;
-  height: 2rem;
-  position: relative;
-}
-
-.menu span i {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.menu:hover {
-  left: 0px;
-}
-
-#mnu1 {
-  top: 17vh;
-}
-
-#mnu2 {
-  top: 27vh;
-}
-
-#mnu3 {
-  top: 37vh;
-}
-
-#mnu4 {
-  top: 47vh;
-}
-
-#mnu5 {
-  top: 57vh;
-}

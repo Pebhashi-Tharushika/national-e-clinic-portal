@@ -41,6 +41,7 @@ if (isset($_GET['reset']) && $_GET['reset'] === 'true') {
   <link rel="stylesheet" href="/national-e-clinic-portal/style/privacy-policy.css">
   <link rel="stylesheet" href="/national-e-clinic-portal/style/faq.css">
   <link rel="stylesheet" href="/national-e-clinic-portal/style/support.css">
+  <link rel="stylesheet" href="/national-e-clinic-portal/style/admin.css">
   <link rel="stylesheet" href="/national-e-clinic-portal/style/admin-dashboard.css">
 
   <!-- bootstrap -->
@@ -56,6 +57,7 @@ if (isset($_GET['reset']) && $_GET['reset'] === 'true') {
   <script defer src="/national-e-clinic-portal/js/home.js"></script>
   <script defer src="/national-e-clinic-portal/js/faq.js"></script>
   <script defer src="/national-e-clinic-portal/js/support.js"></script>
+  <script defer src="/national-e-clinic-portal/js/admin.js"></script>
   <script defer src="/national-e-clinic-portal/js/admin-dashboard.js"></script>
 </head>
 
@@ -63,7 +65,7 @@ if (isset($_GET['reset']) && $_GET['reset'] === 'true') {
 
   <?php
   // Define an array of allowed pages to prevent unauthorized file access
-  $allowedPages = ['home', 'about-us', 'services', 'support', 'faq', 'tac', 'privacy-policy', 'admin-dashboard'];
+  $allowedPages = ['home', 'about-us', 'services', 'support', 'faq', 'tac', 'privacy-policy', 'admin'];
 
   // Get the 'page' parameter from the URL
   $page = $_GET['page'] ?? 'home';
