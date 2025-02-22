@@ -1,0 +1,65 @@
+#admin-appointment-container {
+  width: 100%;
+  background-color: var(--background-color);
+
+  --d-color-1: #de3333;
+  --d-color-2: #02ff18;
+  --d-color-3: #3c57e7;
+  --d-color-4: #0049b2;
+  --d-color-5: #4884db;
+  --d-color-6: #086b98;
+}
+
+#patient-appointment-wrapper {
+  width: 90%;
+  margin: 5vh auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.patient-appointment {
+  width: 95%;
+}
+
+#patient-appointment-header {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 3vh auto;
+}
+
+#patient-appointment-header>h6 {
+  text-align: justify;
+}
+
+#patient-appointment-content {
+  margin: 0 0 3vh auto;
+}
+
+#btn-province-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.btn-province {
+  margin: 1.5rem 0;
+  position: relative;
+}
+
+.province {
+  color: var(--d-color-6);
+  height: 16vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  box-shadow: rgba(63, 172, 233, 0.36) 0px 0px 0px 5px, rgb(18 81 210 / 40%) 0px 0px 0px 2px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+}
+
+.province:hover{
+  box-shadow: none;
+  border: 3px solid rgb(118 176 234);
+}
