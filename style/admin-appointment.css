@@ -19,20 +19,49 @@
 
 .patient-appointment {
   width: 95%;
+  margin: 0 0 3vh auto;
 }
+
+/* ------------------ header (title) -------------------------- */
 
 #patient-appointment-header {
   display: flex;
   flex-direction: column;
-  margin: 0 0 3vh auto;
+}
+
+#patient-appointment-title {
+  word-spacing: 0.5rem;
 }
 
 #patient-appointment-header>h6 {
   text-align: justify;
 }
 
-#patient-appointment-content {
-  margin: 0 0 3vh auto;
+#patient-appointment-header>h6:last-child{
+  font-weight: 600;
+  color: var(--color-4);
+  margin-top: 0.5rem;
+}
+
+
+/* ------------------ content 1 -------------------------- */
+
+#patient-appointment-content1 {
+  background-image: url(/national-e-clinic-portal/images/admin-dashboard/appointment-approval.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
+}
+
+#patient-appointment-content1::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(235 244 252 / 93%);
 }
 
 #btn-province-container {
@@ -59,7 +88,103 @@
   cursor: pointer;
 }
 
-.province:hover{
+.province:hover,
+.province.active {
   box-shadow: none;
   border: 3px solid rgb(118 176 234);
+  background-color: rgb(118 176 234);
+}
+
+/* ------------------ content 2 -------------------------- */
+
+#patient-appointment-content2 {
+  display: none;
+  flex-direction: column;
+}
+
+#patient-appointment-content2>h4 {
+  text-align: center;
+  margin: 0;
+  padding: 1rem;
+  color: var(--color-1);
+  text-shadow: 3px -3px 3px var(--color-3);
+}
+
+#filter-container{
+  padding: 1rem 0;
+}
+
+#filter-container>#filter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#filter-title{
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+#filter-title > i{
+  font-size: 1.15rem;
+}
+
+#filter-title>p {
+  margin: 0;
+  font-weight: 600;
+}
+
+#filter-options{
+  display: flex;
+  gap: 3rem;
+}
+
+#filter-select select{
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid var(--d-color-6);
+  outline: none;
+  background-color: rgb(134 183 254 / 64%);
+  color: var(--d-color-6);
+}
+
+#filter-select select:focus{
+  border-bottom-color: var(--color-1);
+}
+
+#filter-select{
+  display: none;
+}
+
+#filter-select .col{
+  display: none;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+}
+
+#button-wrapper{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#button-wrapper>button{
+  background-color: var(--d-color-6);
+  font-size: 0.85rem;
+  color: var(--color-2);
+  width: 5.5rem;
+  border: none;
+  border-radius: 0.2rem;
+  box-shadow: rgba(63, 172, 233, 0.36) 0px 0px 0px 5px, rgb(18 81 210 / 40%) 0px 0px 0px 2px;
+  margin:0 7px;
+  padding: 0.25rem 0;
+}
+
+#button-wrapper>button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#button-wrapper>button:enabled:hover{
+  box-shadow: none;
 }

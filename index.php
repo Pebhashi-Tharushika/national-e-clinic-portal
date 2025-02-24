@@ -60,6 +60,7 @@ if (isset($_GET['reset']) && $_GET['reset'] === 'true') {
   <script defer src="/national-e-clinic-portal/js/support.js"></script>
   <script defer src="/national-e-clinic-portal/js/admin.js"></script>
   <script defer src="/national-e-clinic-portal/js/admin-dashboard.js"></script>
+  <script defer src="/national-e-clinic-portal/js/admin-appointment.js"></script>
 </head>
 
 <body>
