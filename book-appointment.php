@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/national-e-clinic-portal/style/back-to-home.css">
     <link rel="stylesheet" href="/national-e-clinic-portal/style/book-appointment.css">
 
+    <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script defer src="/national-e-clinic-portal/js/book-appointment.js"></script>
 </head>

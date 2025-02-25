@@ -45,6 +45,9 @@ if (isset($_GET['reset']) && $_GET['reset'] === 'true') {
   <link rel="stylesheet" href="/national-e-clinic-portal/style/admin-dashboard.css">
   <link rel="stylesheet" href="/national-e-clinic-portal/style/admin-appointment.css">
 
+  <!-- jquery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
   <!-- bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
