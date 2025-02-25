@@ -11,6 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnSearch = document.getElementById('b-search');
 
     let selectedFilters = {};
+
+    let provinceName='';
+
+    let invalidFields = [];
+
     let selectedHospital = '';
     let selectedClinic = '';
     let patientNic = '';
@@ -21,8 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     provinces.forEach(element => {
         element.addEventListener('click', event => {
+            if (window.scrollY < window.innerHeight * 0.5) {
+                window.scrollBy({ top: window.innerHeight * 0.5 - window.scrollY, behavior: 'smooth' });
+            }
 
-            let provinceName = event.target.textContent.trim() // Get text of the clicked div
+            provinceName = event.target.textContent.trim() // Get text of the clicked div
 
             provinces.forEach(p => p.classList.remove('active'));
             element.classList.add('active');
@@ -31,11 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             resetFilters();
 
-            // displayAppointments(); //Todo
-
             searchContent.style.display = 'flex';
 
-            getFilterSelectData(provinceName);
+            getFilterSelectData();
 
         });
     });
@@ -79,11 +85,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     btnSearch.addEventListener('click', () => {
-        patientNic = document.getElementById('patient').value;
-        userEmail = document.getElementById('user').value;
+        patientNic = document.getElementById('patient').value.trim();
+        userEmail = document.getElementById('user').value.trim();
 
-        appointmentDate = document.getElementById('appointment-date').value;
-        reservecDate = document.getElementById('reserved-date').value;
+        appointmentDate = document.getElementById('appointment-date').value.trim();
+        reservecDate = document.getElementById('reserved-date').value.trim();
 
         console.log(selectedHospital);
         console.log(selectedClinic);
@@ -93,39 +99,48 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(appointmentDate);
         console.log(reservecDate);
 
+        const keyMappings = {
+            'cb-hospital': selectedHospital,
+            'cb-clinic': selectedClinic,
+            'cb-patient': patientNic,
+            'cb-user': userEmail,
+            'cb-appointment-date': appointmentDate,
+            'cb-reserved-date': reservecDate,
+            'cb-status': selectedStatus
+        };
+        
         Object.keys(selectedFilters).forEach(key => {
-            val = '';
-
-            switch (key) {
-                case 'cb-hospital':
-                    val = capitalizeFirstLetter(selectedHospital);
-                    break;
-                case 'cb-clinic':
-                    val = capitalizeFirstLetter(selectedClinic);
-                    break;
-                case 'cb-patient':
-                    val = capitalizeFirstLetter(patientNic);
-                    break;
-                case 'cb-user':
-                    val = capitalizeFirstLetter(userEmail);
-                    break;
-                case 'cb-appointment-date':
-                    val = capitalizeFirstLetter(appointmentDate);
-                    break;
-                case 'cb-reserved-date':
-                    val = capitalizeFirstLetter(reservecDate);
-                    break;
-                case 'cb-status':
-                    val = capitalizeFirstLetter(selectedStatus);
-                    break;
-                default:
-                    break;
-            }
-            selectedFilters[key] = val;
+            selectedFilters[key] = capitalizeFirstLetter(keyMappings[key] || '');
         });
 
         console.log('object: ', selectedFilters);
+
+        if(validateObject(selectedFilters)){
+            getAppointments();
+        }else{
+            showErrors(); //Todo
+        }
+        
     });
+
+    function validateObject(obj) {
+        let isValid = true;
+    
+        Object.keys(obj).forEach(key => {
+            if (obj[key] === undefined || obj[key] === null || obj[key] === '') { 
+                invalidFields.push(key);
+                isValid = false;
+            }
+        });
+    
+        console.log('invalidFields:',invalidFields);
+        return isValid;
+    }
+
+    function showErrors(){
+        console.log(invalidFields);
+    }
+    
 
     btnReset.addEventListener('click', () => resetFilters());
 
@@ -153,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const btns = document.querySelectorAll('#button-wrapper>button').forEach(btn => btn.disabled = isDisable);
     }
 
-    function getFilterSelectData(provinceName) {
+    function getFilterSelectData() {
         provinceName = provinceName.replace('Province', '').trim();
         $.ajax({
             type: 'GET',
@@ -170,32 +185,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             },
             error: function (xhr, status, error) {
-                alert('Error fetching appointments: ' + error);
+                alert('Error fetching select options: ' + error);
             }
         });
     }
 
-    // function displayAppointments() {
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: '/national-e-clinic-portal/includes/admin-fetch-appointment.inc.php',
-    //         dataType: "json", // Ensure response is JSON
-    //         data: JSON.stringify(selectedFilters),
-    //         success: function (response) {
-    //             if (response.status === "success") {
-    //                 console.log(response.data);
-    //                 // populateTable();
-    //             } else if (response.status === "error") {
-    //                 alert(response.message);
-    //             }
-    //         },
-    //         error: function (xhr, status, error) {
-    //             alert('Error fetching profiles: ' + error);
-    //         }
-    //     });
+    function getAppointments() {
+        provinceName = provinceName.replace('Province', '').trim();
+        $.ajax({
+            type: 'POST', // Change to POST
+            url: `/national-e-clinic-portal/includes/admin-fetch-appointment.inc.php?province=${provinceName}`,
+            dataType: "json",
+            contentType: "application/json", // Specify JSON format
+            data: JSON.stringify(selectedFilters),
+            success: function (response) {
+                if (response.status === "success") {
+                    console.log(response.data);
+                } else if (response.status === "error") {
+                    alert(response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                alert('Error fetching appointments: ' + error);
+            }
+        });        
 
 
-    // }
+    }
 
     // Function to get unique values from an array of objects
     function getUniqueValues(data, key) {

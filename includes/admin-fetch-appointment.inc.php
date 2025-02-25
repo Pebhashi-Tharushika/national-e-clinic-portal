@@ -9,3 +9,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['province']))  {
    $appointments = getAppointmentsByProvince(convertProvinceNameToTable($provinceName,'appointment_'));
     sendResponse($appointments);
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['province']) ){
+    $provinceName = $_GET['province'];
+
+    $json = file_get_contents("php://input"); // Get the raw JSON input
+
+    $data = json_decode($json, true); // Decode JSON into a PHP associative array
+
+    // Check if decoding was successful
+    if ($data === null) {
+        sendResponse(["status" => "error", "message" => "Invalid JSON data"]);
+    }
+
+   $filtere_ppointments = getFilteredAppointments(convertProvinceNameToTable($provinceName,'appointment_'),$data);
+   sendResponse($filtere_ppointments);
+}
