@@ -10,9 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnReset = document.getElementById('b-reset');
     const btnSearch = document.getElementById('b-search');
 
+    const tblBody = document.querySelector('#table-container table tbody');
+    const tblFooter = document.querySelector('#table-container table tfoot');
+    const tblContainer = document.getElementById('table-container');
+
     let selectedFilters = {};
 
-    let provinceName='';
+    let provinceName = '';
 
     let invalidFields = [];
 
@@ -91,14 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
         appointmentDate = document.getElementById('appointment-date').value.trim();
         reservecDate = document.getElementById('reserved-date').value.trim();
 
-        console.log(selectedHospital);
-        console.log(selectedClinic);
-        console.log(selectedStatus);
-        console.log(patientNic);
-        console.log(userEmail);
-        console.log(appointmentDate);
-        console.log(reservecDate);
-
         const keyMappings = {
             'cb-hospital': selectedHospital,
             'cb-clinic': selectedClinic,
@@ -108,39 +104,39 @@ document.addEventListener('DOMContentLoaded', () => {
             'cb-reserved-date': reservecDate,
             'cb-status': selectedStatus
         };
-        
+
         Object.keys(selectedFilters).forEach(key => {
             selectedFilters[key] = capitalizeFirstLetter(keyMappings[key] || '');
         });
 
         console.log('object: ', selectedFilters);
 
-        if(validateObject(selectedFilters)){
+        if (validateObject(selectedFilters)) {
             getAppointments();
-        }else{
+        } else {
             showErrors(); //Todo
         }
-        
+
     });
 
     function validateObject(obj) {
         let isValid = true;
-    
+
         Object.keys(obj).forEach(key => {
-            if (obj[key] === undefined || obj[key] === null || obj[key] === '') { 
+            if (obj[key] === undefined || obj[key] === null || obj[key] === '') {
                 invalidFields.push(key);
                 isValid = false;
             }
         });
-    
-        console.log('invalidFields:',invalidFields);
+
+        console.log('invalidFields:', invalidFields);
         return isValid;
     }
 
-    function showErrors(){
+    function showErrors() {
         console.log(invalidFields);
     }
-    
+
 
     btnReset.addEventListener('click', () => resetFilters());
 
@@ -161,6 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
         allSearchFieldCols.forEach(selector => selector.style.display = 'none'); // Hide all selectors 
 
         disableButton(true);
+
+        tblContainer.style.display = 'none'; //hide table
 
     }
 
@@ -201,17 +199,79 @@ document.addEventListener('DOMContentLoaded', () => {
             success: function (response) {
                 if (response.status === "success") {
                     console.log(response.data);
+                    populateTable(response.data);
                 } else if (response.status === "error") {
-                    alert(response.message);
+                    populateTable([]);
                 }
             },
             error: function (xhr, status, error) {
                 alert('Error fetching appointments: ' + error);
             }
-        });        
+        });
 
 
     }
+
+    function populateTable(result) {
+        let lastcolumn = document.querySelectorAll('#table-container table th:last-child, #table-container table td:last-child');
+    
+        tblContainer.style.display = 'block';
+
+        tblBody.innerHTML = ''; // Clear previous table rows
+    
+        console.log(result.length);
+        if (result.length === 0) {
+            tblFooter.style.display = 'table-footer-group';
+            lastcolumn.forEach(e => e.classList.add('unfreeze'));
+            return;
+        }
+    
+        tblFooter.style.display = 'none';
+        lastcolumn.forEach(e => e.classList.remove('unfreeze'));
+    
+        result.forEach(data => {
+            // Ensure data exists and provide default values if missing
+            let firstName = data.first_name || '';
+            let lastName = data.last_name || '';
+            let nic = data.nic || '';
+            let hospitalName = data.hospital_name || '';
+            let instituteType = data.institute_type || '';
+            let clinicName = data.clinic_name || '';
+            let appointmentDate = data.appointment_date || '';
+            let timePeriod = data.time_period || '';
+            let userName = data.user_name || '';
+            let userEmail = data.user_email || '';
+            let createdAt = data.created_at || '';
+            let status = data.status || '';
+    
+            let htmlContent = `<tr>
+                                <td>${firstName} ${lastName}</td>
+                                <td>${nic}</td>
+                                <td>${hospitalName} ${instituteType}</td>
+                                <td>${clinicName}</td>
+                                <td>${appointmentDate}</td>
+                                <td>${timePeriod}</td>
+                                <td>${userName}</td>
+                                <td>${userEmail}</td>
+                                <td>${createdAt}</td>
+                                <td>${status}</td>
+                                <td>
+                                    <div>
+                                        <div class="btnApprove">
+                                            <i class="fa-solid fa-octagon-check"></i> Approve
+                                        </div>
+                                        <div class="btnReject">
+                                            <i class="fa-solid fa-octagon-xmark"></i> Reject
+                                        </div>
+                                    </div>
+                                </td>
+                              </tr>`;
+    
+            // Insert new row into table body
+            tblBody.insertAdjacentHTML('beforeend', htmlContent);
+        });
+    }
+    
 
     // Function to get unique values from an array of objects
     function getUniqueValues(data, key) {
@@ -252,5 +312,24 @@ document.addEventListener('DOMContentLoaded', () => {
     function capitalizeFirstLetter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     }
+
+/* --------------------- table scroll bar ---------------- */
+    const tableContainer = document.getElementById("table-container");
+
+tableContainer.addEventListener("scroll", function () {
+    if (tableContainer.scrollLeft === 0) {
+        tableContainer.style.borderLeftWidth = '0px';
+    } else {
+        tableContainer.style.borderLeft = '1px solid var(--color-1)';
+    }
+    
+    
+    if (tableContainer.scrollLeft + tableContainer.clientWidth >= tableContainer.scrollWidth) {
+        tableContainer.style.borderRightWidth = '0px';
+    }else{
+        tableContainer.style.borderRight = '1px solid var(--color-1)';
+    }
+});
+
 
 });

@@ -198,3 +198,133 @@
 #button-wrapper>button:enabled:hover{
   box-shadow: none;
 }
+
+/* ----------------- search result table ---------------- */
+#table-container{
+  display: none;
+  margin-top: 1rem;
+  width: 100%;
+  overflow-x: auto;
+  position: relative;
+  box-shadow: 0px 0px 5px 0px rgb(16 37 161 / 31%);
+  border-right:1px solid var(--color-1);
+
+  
+  transition: all 1s ease; /* Smooth transition */
+}
+
+#table-container table{
+  width: 100%;
+    border-collapse: collapse;
+    color: var(--d-color-6);
+}
+
+
+#table-container table th, #table-container table td {
+    border: 1px solid var(--color-1);
+    vertical-align: middle;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+#table-container table th{
+  text-align: center;
+  padding: 1rem;
+  line-height: 2.5;
+}
+
+#table-container table td{
+  line-height: 1;
+  padding: 0.75rem;
+    text-align: left;
+}
+
+/* Freeze the last column */
+#table-container table th:last-child, #table-container table td:last-child {
+  position: sticky;
+  right: 0;
+  background-color: var(--color-3);
+  z-index: 2;
+  /* box-shadow: 0px 0px 5px 0px rgb(16 37 161 / 31%); */
+}
+
+#table-container table th:last-child.unfreeze, #table-container table td:last-child.unfreeze{
+  position: relative;
+  background-color: transparent;
+}
+
+#table-container table tr td:last-child > div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+#table-container table tr td:last-child > div>div{
+  padding: 0.5rem;
+  color: var(--color-2);
+  border-radius: 0.3rem;
+  width: 6.1rem;
+  text-align: center;
+  vertical-align: middle;
+  word-spacing: 2px;
+}
+
+#table-container table .btnApprove{
+  background-color: var(--d-color-5);
+}
+
+#table-container table .btnReject{
+  background-color: var(--d-color-1);
+}
+
+#table-container table .btnApprove:hover{
+  background-color: var(--color-2);
+  color: var(--d-color-5);
+  cursor: pointer;
+}
+
+#table-container table .btnReject:hover{
+  background-color: var(--color-2);
+  color: var(--d-color-1);
+  cursor: pointer;
+}
+
+#table-container table tfoot {
+  display: none;
+  width: 100%;
+}
+
+#table-container table tfoot td {
+  text-align: center;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* -------------------table scroll bar ----------------- */
+
+
+#table-container::-webkit-scrollbar {
+  display: none; /* For WebKit browsers */
+}
+
+
+/* Webkit-based browsers */
+#table-container:hover::-webkit-scrollbar {
+  display: block; /* Show scrollbar on hover */
+  width: 10px;
+}
+
+#table-container::-webkit-scrollbar-track {
+  background: var(--background-color);
+  border-radius: 8px;
+}
+
+#table-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, var(--color-4),var(--d-color-6));
+  border-radius: 8px;
+  border: 2px solid var(--background-color);
+}
+
+#table-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg,var(--d-color-6), var(--color-4));
+}

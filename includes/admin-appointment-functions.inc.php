@@ -38,7 +38,8 @@ function getFilteredAppointments($provinceTable, $data)
     global $conn;
 
     $query = "SELECT 
-                    h.hospital_name, 
+                    h.hospital_name,
+                    i.institute_type, 
                     c.clinic_name, 
                     pp.first_name, 
                     pp.last_name, 
@@ -51,6 +52,7 @@ function getFilteredAppointments($provinceTable, $data)
                     p.status
               FROM $provinceTable p
               JOIN hospitals h ON p.hospital_id = h.id
+              JOIN institutes i ON h.institute_type_id = i.id
               JOIN clinics_categories c ON p.clinic_id = c.id
               JOIN patient_profiles pp ON p.profile_id = pp.id
               LEFT JOIN clinic_users u ON p.user_id = u.user_id

@@ -145,7 +145,7 @@
               </div>
             </div>
           </div>
-          
+
           <div id="button-wrapper">
             <button id="b-reset" disabled>RESET</button>
             <button id="b-search" disabled>SEARCH</button>
@@ -156,12 +156,34 @@
 
       </div>
 
+      <div id="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Patient Name</th>
+              <th>Patient NIC</th>
+              <th>Hospital</th>
+              <th>Clinic</th>
+              <th>Appointment Date</th>
+              <th>Appointment Time</th>
+              <th>User Name</th>
+              <th>User Email</th>
+              <th>Reserved At</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tfoot>
+            <tr>
+              <td colspan="11">Not Found appointments</td>
+            </tr>
+          </tfoot>
+
+        </table>
+      </div>
+
     </div>
-    <div id="appointment-table-container"></div>
-  </div>
 
   </div>
-
-
-
 </section>
