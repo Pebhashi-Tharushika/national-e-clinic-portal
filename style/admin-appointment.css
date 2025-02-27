@@ -277,13 +277,19 @@
   background-color: var(--d-color-1);
 }
 
-#table-container table .btnApprove:hover{
+#table-container table .btnApprove:not(.disabled):hover{
   background-color: var(--color-2);
   color: var(--d-color-5);
   cursor: pointer;
 }
 
-#table-container table .btnReject:hover{
+#table-container table .btnApprove.disabled,
+#table-container table .btnReject.disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+#table-container table .btnReject:not(.disabled):hover{
   background-color: var(--color-2);
   color: var(--d-color-1);
   cursor: pointer;
@@ -298,6 +304,7 @@
   text-align: center;
   font-weight: bold;
   white-space: nowrap;
+  color: var(--d-color-1);
 }
 
 /* -------------------table scroll bar ----------------- */
@@ -327,4 +334,11 @@
 
 #table-container::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(90deg,var(--d-color-6), var(--color-4));
+}
+
+/* --------------- object validation error -------------------------- */
+.error-message {
+  display: none;
+  color: var(--d-color-1);
+  font-size: 0.8rem;
 }

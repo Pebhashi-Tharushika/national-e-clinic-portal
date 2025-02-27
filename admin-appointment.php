@@ -101,6 +101,7 @@
                   <select name="hospital" id="hospital">
                     <option value="" hidden>Select Hospital</option>
                   </select>
+                  <span id="hospital-error" class="error-message">required*</span>
                 </div>
               </div>
               <div class="col" data-filter="clinic">
@@ -108,28 +109,33 @@
                   <select name="clinic" id="clinic">
                     <option value="" hidden>Select Clinic</option>
                   </select>
+                  <span id="clinic-error" class="error-message">required*</span>
                 </div>
               </div>
               <div class="col" data-filter="patient">
                 <div class="ps-1 pe-1 pt-0 pb-1">
                   <input type="text" id="patient" name="patient" placeholder="Patient NIC">
+                  <span id="patient-error" class="error-message">required*</span>
                 </div>
               </div>
               <div class="col" data-filter="user">
                 <div class="ps-1 pe-1 pt-0 pb-1">
                   <input type="text" id="user" name="user" placeholder="User E-Mail">
+                  <span id="user-error" class="error-message">required*</span>
                 </div>
               </div>
               <div class="col" data-filter="appointment-date">
                 <div class="ps-1 pe-1 pt-0 pb-1">
                   <input type="text" id="appointment-date" name="appointment-date" placeholder="Appointment Date"
                     onfocus="(this.type='date')" onblur="(this.type='text')">
+                    <span id="appointment-date-error" class="error-message">required*</span>
                 </div>
               </div>
               <div class="col" data-filter="reserved-date">
                 <div class="ps-1 pe-1 pt-0 pb-1">
                   <input type="text" id="reserved-date" name="reserved-date" placeholder="Reserved Date"
                     onfocus="(this.type='date')" onblur="(this.type='text')">
+                    <span id="reserved-date-error" class="error-message">required*</span>
                 </div>
               </div>
 
@@ -141,6 +147,7 @@
                     <option value="pending">PENDING</option>
                     <option value="rejected">REJECTED</option>
                   </select>
+                  <span id="status-error" class="error-message">required*</span>
                 </div>
               </div>
             </div>

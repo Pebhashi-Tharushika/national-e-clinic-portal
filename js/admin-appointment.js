@@ -25,27 +25,28 @@ document.addEventListener('DOMContentLoaded', () => {
     let patientNic = '';
     let userEmail = '';
     let appointmentDate = '';
-    let reservecDate = '';
+    let reservedDate = '';
     let selectedStatus = '';
 
     provinces.forEach(element => {
         element.addEventListener('click', event => {
-            if (window.scrollY < window.innerHeight * 0.5) {
-                window.scrollBy({ top: window.innerHeight * 0.5 - window.scrollY, behavior: 'smooth' });
-            }
 
-            provinceName = event.target.textContent.trim() // Get text of the clicked div
-
+            //remove previous clicked province and show current clicked province
             provinces.forEach(p => p.classList.remove('active'));
             element.classList.add('active');
 
-            document.querySelector('#patient-appointment-content2 > h4').innerText = provinceName + " Appointments";
-
             resetFilters();
 
-            searchContent.style.display = 'flex';
+            searchContent.style.display = 'flex'; // show search content (province title,cb-filters, input,select, search and reset button)
+            provinceName = event.target.textContent.trim() // Get text of the clicked div
+            document.querySelector('#patient-appointment-content2 > h4').innerText = provinceName + " Appointments"; // change title w.r.t clicked province
 
-            getFilterSelectData();
+            getFilterSelectData(); // get hospital and clinic data w.r.t province
+
+            // auto scroll to bottom 
+            if (window.scrollY < window.innerHeight * 0.5) {
+                window.scrollBy({ top: window.innerHeight * 0.5 - window.scrollY, behavior: 'smooth' });
+            }
 
         });
     });
@@ -54,25 +55,29 @@ document.addEventListener('DOMContentLoaded', () => {
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener("change", () => {
 
-            selectSection.style.display = 'block'; // show selectors section
+            selectSection.style.display = 'block'; // show section includes select and input
 
-            // Show selectors for only selected checkboxes
             let select = document.querySelector(`#filter-select .col[data-filter="${checkbox.value.replace('cb-', '')}"]`);
             if (select) {
-                select.style.display = checkbox.checked ? 'block' : 'none';
+                select.style.display = checkbox.checked ? 'block' : 'none'; // Show select/input for only selected checkboxes
+
                 if (checkbox.checked) {
-                    selectedFilters[checkbox.value] = select.value;
+                    selectedFilters[checkbox.value] = select.value; //if checked, add filter and value to array
                 } else {
                     let keyToRemove = checkbox.value;
-                    delete selectedFilters[keyToRemove];
-                    resetField(document.getElementById(checkbox.value.replace('cb-', '')));
+                    delete selectedFilters[keyToRemove]; // if unchecked, remove filter and value from array
+                    resetField(document.getElementById(checkbox.value.replace('cb-', ''))); // reset check box's field value
+                    //reset error msg
+                    document.getElementById(checkbox.value.replace('cb-', '').concat('-error')).style.display = 'none'; // hide error msg of unchecked one
+                    invalidFields = invalidFields.filter(str => str !== checkbox.value); //remove unchecked one from error list
                 }
             }
+            console.log("cb-selectedFilters: ",selectedFilters);
 
+            disableButton(Object.keys(selectedFilters).length === 0); // if no any checked cb, disable search and reset button
 
-            console.log("Selected Options:", selectedFilters);
+            tblContainer.style.display = 'none'; // hide table
 
-            disableButton(Object.keys(selectedFilters).length === 0);
         });
     });
 
@@ -93,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         userEmail = document.getElementById('user').value.trim();
 
         appointmentDate = document.getElementById('appointment-date').value.trim();
-        reservecDate = document.getElementById('reserved-date').value.trim();
+        reservedDate = document.getElementById('reserved-date').value.trim();
 
         const keyMappings = {
             'cb-hospital': selectedHospital,
@@ -101,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'cb-patient': patientNic,
             'cb-user': userEmail,
             'cb-appointment-date': appointmentDate,
-            'cb-reserved-date': reservecDate,
+            'cb-reserved-date': reservedDate,
             'cb-status': selectedStatus
         };
 
@@ -109,36 +114,40 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedFilters[key] = capitalizeFirstLetter(keyMappings[key] || '');
         });
 
-        console.log('object: ', selectedFilters);
+        console.log('search-selectedFilters: ', selectedFilters);
 
+        resetAllErrors();
+
+        // validate filer-object
         if (validateObject(selectedFilters)) {
             getAppointments();
         } else {
-            showErrors(); //Todo
+            showErrors();
         }
 
     });
 
-    function validateObject(obj) {
-        let isValid = true;
+    btnReset.addEventListener('click', () => resetFilters());
 
+
+
+
+    function validateObject(obj) {
         Object.keys(obj).forEach(key => {
             if (obj[key] === undefined || obj[key] === null || obj[key] === '') {
                 invalidFields.push(key);
-                isValid = false;
             }
         });
-
-        console.log('invalidFields:', invalidFields);
-        return isValid;
+        return invalidFields.length === 0;
     }
 
     function showErrors() {
         console.log(invalidFields);
+        invalidFields.forEach(key => {
+            fieldId = key.replace('cb-','').concat('-error');
+            document.getElementById(fieldId).style.display = 'block';
+        });
     }
-
-
-    btnReset.addEventListener('click', () => resetFilters());
 
     function resetFilters() {
         // unchecked all filters
@@ -146,20 +155,27 @@ document.addEventListener('DOMContentLoaded', () => {
             checkbox.checked = false;
         });
 
-        Object.keys(selectedFilters).forEach(key => delete selectedFilters[key]); //remove all filters
+        Object.keys(selectedFilters).forEach(key => delete selectedFilters[key]); //remove all filters in array
 
-        //reset all fields
+        //reset all fields (select, input)
         allSearchFields.forEach(field => {
             resetField(field);
-
         });
-        //TODO : reset selection also
-        allSearchFieldCols.forEach(selector => selector.style.display = 'none'); // Hide all selectors 
+
+        resetAllErrors();
+
+        allSearchFieldCols.forEach(selector => selector.style.display = 'none'); // Hide all fields (select, input)
 
         disableButton(true);
 
         tblContainer.style.display = 'none'; //hide table
 
+    }
+
+    //reset all error msg
+    function resetAllErrors(){
+        invalidFields = []; // remove all error-fields in array
+        document.querySelectorAll('.error-message').forEach(msg => msg.style.display = 'none'); // hide all error msg
     }
 
     function disableButton(isDisable) {
@@ -174,7 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
             dataType: "json",
             success: function (response) {
                 if (response.status === "success") {
-                    console.log(response.data);
                     populateDropdown('hospital', getUniqueValues(response.data, 'hospital_name'), 'Select Hospital');
                     populateDropdown('clinic', getUniqueValues(response.data, 'clinic_name'), 'Select Clinic');
                     populateDropdown('status', ['APPROVED', 'PENDING', 'REJECTED'], 'Select Status');
@@ -191,14 +206,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function getAppointments() {
         provinceName = provinceName.replace('Province', '').trim();
         $.ajax({
-            type: 'POST', // Change to POST
+            type: 'POST', 
             url: `/national-e-clinic-portal/includes/admin-fetch-appointment.inc.php?province=${provinceName}`,
             dataType: "json",
-            contentType: "application/json", // Specify JSON format
+            contentType: "application/json", 
             data: JSON.stringify(selectedFilters),
             success: function (response) {
                 if (response.status === "success") {
-                    console.log(response.data);
                     populateTable(response.data);
                 } else if (response.status === "error") {
                     populateTable([]);
@@ -214,21 +228,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function populateTable(result) {
         let lastcolumn = document.querySelectorAll('#table-container table th:last-child, #table-container table td:last-child');
-    
+
         tblContainer.style.display = 'block';
 
         tblBody.innerHTML = ''; // Clear previous table rows
-    
-        console.log(result.length);
+
         if (result.length === 0) {
             tblFooter.style.display = 'table-footer-group';
             lastcolumn.forEach(e => e.classList.add('unfreeze'));
             return;
         }
-    
+
         tblFooter.style.display = 'none';
         lastcolumn.forEach(e => e.classList.remove('unfreeze'));
-    
+
         result.forEach(data => {
             // Ensure data exists and provide default values if missing
             let firstName = data.first_name || '';
@@ -243,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let userEmail = data.user_email || '';
             let createdAt = data.created_at || '';
             let status = data.status || '';
-    
+
             let htmlContent = `<tr>
                                 <td>${firstName} ${lastName}</td>
                                 <td>${nic}</td>
@@ -266,12 +279,24 @@ document.addEventListener('DOMContentLoaded', () => {
                                     </div>
                                 </td>
                               </tr>`;
-    
+
             // Insert new row into table body
             tblBody.insertAdjacentHTML('beforeend', htmlContent);
+
+            // Select buttons in the newly inserted row
+            let row = tblBody.lastElementChild;
+            let btnApprove = row.querySelector('.btnApprove');
+            let btnReject = row.querySelector('.btnReject');
+
+            if (status === 'APPROVED') {
+                btnApprove.classList.add('disabled');
+                btnReject.classList.add('disabled');
+            }
+
         });
+
     }
-    
+
 
     // Function to get unique values from an array of objects
     function getUniqueValues(data, key) {
@@ -295,14 +320,29 @@ document.addEventListener('DOMContentLoaded', () => {
     function resetField(field) {
 
         if (field instanceof HTMLSelectElement) { // Check for <select> elements
-            const defaultText = "Select " + capitalizeFirstLetter(field.id);
-            console.log(defaultText);
+
+            let fieldId = field.id;
+            const defaultText = "Select " + capitalizeFirstLetter(fieldId);
+
             // Find the option with the default placeholder text and make it selected
             const defaultOption = Array.from(field.options).find(option => option.text === defaultText);
 
             if (defaultOption) {
                 defaultOption.selected = true;
             }
+
+            // clear selected value storage
+            if(fieldId === 'hospital'){
+                selectedHospital = '';
+            }else if(fieldId === 'clinic'){
+                selectedClinic = '';
+            }else if(fieldId === 'status'){
+                selectedStatus = '';
+            }
+
+            console.log('selectedStatus:',selectedStatus);
+            console.log('rf-selectedFilters: ',selectedFilters );
+
         } else if (field instanceof HTMLInputElement) { // Check for <input> elements
             field.value = ''; // Clear the input field value
         }
@@ -313,23 +353,23 @@ document.addEventListener('DOMContentLoaded', () => {
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     }
 
-/* --------------------- table scroll bar ---------------- */
+    /* --------------------- table scroll bar ---------------- */
     const tableContainer = document.getElementById("table-container");
 
-tableContainer.addEventListener("scroll", function () {
-    if (tableContainer.scrollLeft === 0) {
-        tableContainer.style.borderLeftWidth = '0px';
-    } else {
-        tableContainer.style.borderLeft = '1px solid var(--color-1)';
-    }
-    
-    
-    if (tableContainer.scrollLeft + tableContainer.clientWidth >= tableContainer.scrollWidth) {
-        tableContainer.style.borderRightWidth = '0px';
-    }else{
-        tableContainer.style.borderRight = '1px solid var(--color-1)';
-    }
-});
+    tableContainer.addEventListener("scroll", function () {
+        if (tableContainer.scrollLeft === 0) {
+            tableContainer.style.borderLeftWidth = '0px';
+        } else {
+            tableContainer.style.borderLeft = '1px solid var(--color-1)';
+        }
+
+
+        if (tableContainer.scrollLeft + tableContainer.clientWidth >= tableContainer.scrollWidth) {
+            tableContainer.style.borderRightWidth = '0px';
+        } else {
+            tableContainer.style.borderRight = '1px solid var(--color-1)';
+        }
+    });
 
 
 });
