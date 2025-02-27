@@ -49,7 +49,8 @@ function getFilteredAppointments($provinceTable, $data)
                     p.appointment_date,
                     p.time_period,
                     p.created_at,
-                    p.status
+                    p.status,
+                    p.id
               FROM $provinceTable p
               JOIN hospitals h ON p.hospital_id = h.id
               JOIN institutes i ON h.institute_type_id = i.id
@@ -132,5 +133,33 @@ function getFilteredAppointments($provinceTable, $data)
         ? ['status' => 'success', 'data' => $appointments, 'message' => 'Appointments fetched successfully.']
         : ['status' => 'error', 'message' => 'No appointments found.'];
 }
+
+function ApproveOrRejectAppointments($provinceTable, $status, $id)
+{
+    global $conn;
+    $query = "UPDATE `$provinceTable` SET `status` = ? WHERE id = ?";
+    $stmt = mysqli_prepare($conn, $query);
+
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "si", $status, $id);
+        $result = mysqli_stmt_execute($stmt);
+
+        mysqli_stmt_close($stmt);
+
+        $status = strtolower($status);
+        $action = ($status === 'approve') ? 'approving' : (($status === 'reject') ? 'rejecting' : 'processing');
+
+        return $result
+            ? ['status' => 'success', 'message' => 'Appointment ' . $status . ' successfully.']
+            : ['status' => 'error', 'message' => 'Error during ' . $action . ' appointment.'];
+
+    } else {
+        return [
+            'status' => 'error',
+            'message' => 'Error during query preparation.'
+        ];
+    }
+}
+
 
 ?>

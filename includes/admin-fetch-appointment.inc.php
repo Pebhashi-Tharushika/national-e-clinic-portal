@@ -22,6 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['province']) ){
         sendResponse(["status" => "error", "message" => "Invalid JSON data"]);
     }
 
-   $filtere_ppointments = getFilteredAppointments(convertProvinceNameToTable($provinceName,'appointment_'),$data);
-   sendResponse($filtere_ppointments);
+   $filtered_appointments = getFilteredAppointments(convertProvinceNameToTable($provinceName,'appointment_'),$data);
+   sendResponse($filtered_appointments);
 }
+
+?>

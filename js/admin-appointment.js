@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     invalidFields = invalidFields.filter(str => str !== checkbox.value); //remove unchecked one from error list
                 }
             }
-            console.log("cb-selectedFilters: ",selectedFilters);
 
             disableButton(Object.keys(selectedFilters).length === 0); // if no any checked cb, disable search and reset button
 
@@ -114,8 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedFilters[key] = capitalizeFirstLetter(keyMappings[key] || '');
         });
 
-        console.log('search-selectedFilters: ', selectedFilters);
-
         resetAllErrors();
 
         // validate filer-object
@@ -142,9 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showErrors() {
-        console.log(invalidFields);
         invalidFields.forEach(key => {
-            fieldId = key.replace('cb-','').concat('-error');
+            fieldId = key.replace('cb-', '').concat('-error');
             document.getElementById(fieldId).style.display = 'block';
         });
     }
@@ -173,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     //reset all error msg
-    function resetAllErrors(){
+    function resetAllErrors() {
         invalidFields = []; // remove all error-fields in array
         document.querySelectorAll('.error-message').forEach(msg => msg.style.display = 'none'); // hide all error msg
     }
@@ -206,10 +202,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function getAppointments() {
         provinceName = provinceName.replace('Province', '').trim();
         $.ajax({
-            type: 'POST', 
+            type: 'POST',
             url: `/national-e-clinic-portal/includes/admin-fetch-appointment.inc.php?province=${provinceName}`,
             dataType: "json",
-            contentType: "application/json", 
+            contentType: "application/json",
             data: JSON.stringify(selectedFilters),
             success: function (response) {
                 if (response.status === "success") {
@@ -256,8 +252,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let userEmail = data.user_email || '';
             let createdAt = data.created_at || '';
             let status = data.status || '';
+            let appointmentId = data.id || '';
 
-            let htmlContent = `<tr>
+            let htmlContent = `<tr id=${appointmentId}>
                                 <td>${firstName} ${lastName}</td>
                                 <td>${nic}</td>
                                 <td>${hospitalName} ${instituteType}</td>
@@ -293,10 +290,57 @@ document.addEventListener('DOMContentLoaded', () => {
                 btnReject.classList.add('disabled');
             }
 
+            // Attach event listeners with confirmation
+            btnApprove.addEventListener('click', function () {
+                if (confirmApproveOrReject('approve')) {
+                    processApproval('approve', row.id,btnApprove,btnReject);
+                }
+            });
+
+            btnReject.addEventListener('click', function () {
+                if (confirmApproveOrReject('reject')) {
+                    processApproval('reject', row.id,btnApprove,btnReject);
+                }
+            });
+
         });
 
     }
 
+    // Alert to confirm approve or reject
+    function confirmApproveOrReject(action) {
+        return confirm(`Are you sure you want to ${action} the appointment?`);
+    }
+
+    function processApproval(action, appointmentId,btnApprove,btnReject) {
+        provinceName = provinceName.replace('Province', '').trim();
+
+        let appointmentStatus = action === 'approve' ? "APPROVED" : action === 'reject' ? "REJECTED" : null;
+        if (!appointmentStatus) {
+            alert("Invalid action specified.");
+            return;
+        }
+
+        $.ajax({
+            type: 'PUT',
+            url: "/national-e-clinic-portal/includes/admin-approve-appointment.inc.php",
+            data: JSON.stringify({
+                province: provinceName, 
+                status: appointmentStatus,
+                id: appointmentId
+            }),
+            contentType: "application/json", 
+            success: function (response) {
+                alert(response.message);
+                btnApprove.classList.add('disabled');
+                btnReject.classList.add('disabled');
+            },
+            error: function (xhr, status, error) {
+                alert('Error in appointment approval process:', error);
+            }
+        });
+        
+    }
 
     // Function to get unique values from an array of objects
     function getUniqueValues(data, key) {
@@ -332,16 +376,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // clear selected value storage
-            if(fieldId === 'hospital'){
+            if (fieldId === 'hospital') {
                 selectedHospital = '';
-            }else if(fieldId === 'clinic'){
+            } else if (fieldId === 'clinic') {
                 selectedClinic = '';
-            }else if(fieldId === 'status'){
+            } else if (fieldId === 'status') {
                 selectedStatus = '';
             }
-
-            console.log('selectedStatus:',selectedStatus);
-            console.log('rf-selectedFilters: ',selectedFilters );
 
         } else if (field instanceof HTMLInputElement) { // Check for <input> elements
             field.value = ''; // Clear the input field value
