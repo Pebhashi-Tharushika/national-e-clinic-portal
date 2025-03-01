@@ -44,6 +44,7 @@ if (isset($_GET['reset']) && $_GET['reset'] === 'true') {
   <link rel="stylesheet" href="/national-e-clinic-portal/style/admin.css">
   <link rel="stylesheet" href="/national-e-clinic-portal/style/admin-dashboard.css">
   <link rel="stylesheet" href="/national-e-clinic-portal/style/admin-appointment.css">
+  <link rel="stylesheet" href="/national-e-clinic-portal/style/admin-patient.css">
 
   <!-- jquery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -64,6 +65,8 @@ if (isset($_GET['reset']) && $_GET['reset'] === 'true') {
   <script defer src="/national-e-clinic-portal/js/admin.js"></script>
   <script defer src="/national-e-clinic-portal/js/admin-dashboard.js"></script>
   <script defer src="/national-e-clinic-portal/js/admin-appointment.js"></script>
+  <script defer src="/national-e-clinic-portal/js/admin-patient.js"></script>
+
 </head>
 
 <body>

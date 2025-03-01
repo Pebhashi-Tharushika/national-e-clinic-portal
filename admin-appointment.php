@@ -183,7 +183,7 @@
           <tbody></tbody>
           <tfoot>
             <tr>
-              <td colspan="11">Not Found appointments</td>
+              <td colspan="11">Not found appointments</td>
             </tr>
           </tfoot>
 

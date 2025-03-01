@@ -1,0 +1,233 @@
+#admin-patient-container {
+  width: 100%;
+  background-color: var(--background-color);
+
+  --p-color-1: #757575;
+  --d-color-1: #de3333;
+  --d-color-2: #02ff18;
+  --d-color-3: #3c57e7;
+  --d-color-4: #0049b2;
+  --d-color-5: #4884db;
+  --d-color-6: #086b98;
+}
+
+#patient-info-wrapper {
+  width: 90%;
+  margin: 5vh auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.patient-info {
+  width: 95%;
+  margin: 0 0 3vh auto;
+}
+
+/* ------------------ header (title) -------------------------- */
+
+#patient-info-header {
+  display: flex;
+  flex-direction: column;
+}
+
+#patient-info-title {
+  word-spacing: 0.5rem;
+}
+
+#patient-info-header>h6 {
+  text-align: justify;
+}
+
+/* --------------------- search -------------------------- */
+
+#patient-info-search #input-set {
+  display: flex;
+  align-items: center;
+  border-radius: 0.25rem;
+  width: 50%;
+}
+
+/* Dropdown Button */
+#patient-info-search #input-set .dropdown {
+  position: relative;
+}
+
+#patient-info-search #input-set .dropdown-button {
+  background-color: var(--color-2);
+  border: 1px solid var(--color-4);
+  color: var(--color-4);
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#patient-info-search #input-set .dropdown-button:hover {
+  background-color: var(--color-4);
+  color: var(--color-2);
+}
+
+
+/* Dropdown Menu */
+#patient-info-search #input-set .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--color-2);
+  border: 1px solid var(--color-3);
+  color: var(--p-color-1);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+#patient-info-search #input-set .dropdown-menu li {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+#patient-info-search #input-set .dropdown-menu li:hover {
+  background-color: var(--color-4);
+  color: var(--color-2);
+}
+
+/* Input Field */
+.search-input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  outline: none;
+  border: 1px solid var(--color-4);
+}
+
+/* Search Button */
+.search-button {
+  background-color: var(--color-4);
+  border: 1px solid var(--color-4);
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  border-left: none;
+  color: var(--color-2);
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: var(--d-color-6);
+}
+
+/* ---------------- patients table -------------- */
+
+#tblContainer {
+  /* display: none; */
+  margin-top: 1rem;
+  width: 100%;
+  overflow-x: auto;
+  position: relative;
+  box-shadow: 0px 0px 5px 0px rgb(16 37 161 / 31%);
+  border-right: 1px solid var(--color-1);
+  transition: all 1s ease;
+}
+
+#tblContainer table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--d-color-6);
+  margin-bottom: 0;
+}
+
+#tblContainer table th,
+#tblContainer table td {
+  border: 1px solid var(--color-1);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+#tblContainer table th {
+  text-align: center;
+  padding: 1rem;
+  line-height: 2.5;
+}
+
+#tblContainer table td {
+  line-height: 1;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+#tblContainer table tr:not(:nth-child(2)) th:last-child,
+#tblContainer table td:last-child {
+  position: sticky;
+  right: 0;
+  background-color: var(--color-3);
+  z-index: 2;
+  /* box-shadow: 0px 0px 5px 0px rgb(16 37 161 / 31%); */
+}
+
+#tblContainer table tr:not(:nth-child(2)) th:last-child.unfreeze, #tblContainer table td:last-child.unfreeze{
+  position: relative;
+  background-color: transparent;
+}
+
+
+#tblContainer table tfoot {
+  /* display: none; */
+  width: 100%;
+}
+
+
+#tblContainer table tfoot td {
+  text-align: center;
+  font-weight: bold;
+  white-space: nowrap;
+  color: var(--d-color-1);
+}
+
+
+#tblContainer table .user-info,
+#tblContainer table .edit-user-info{
+  display: flex;
+  padding: 0.5rem;
+  justify-content: center; 
+  cursor: pointer;
+  transition: all 0.7s ease;
+}
+
+#tblContainer table .user-info:hover,
+#tblContainer table .edit-user-info:hover{
+  scale: 1.2;
+  color: var(--color-1);
+}
+
+/* -------------------table scroll bar ----------------- */
+
+
+#tblContainer::-webkit-scrollbar {
+  display: none; /* For WebKit browsers */
+}
+
+/* Webkit-based browsers */
+#tblContainer:hover::-webkit-scrollbar {
+  display: block; /* Show scrollbar on hover */
+  width: 10px;
+}
+
+#tblContainer::-webkit-scrollbar-track {
+  background: var(--background-color);
+  border-radius: 8px;
+}
+
+#tblContainer::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, var(--color-4),var(--d-color-6));
+  border-radius: 8px;
+  border: 2px solid var(--background-color);
+}
+
+#tblContainer::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg,var(--d-color-6), var(--color-4));
+}

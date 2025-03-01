@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const tblBody = document.querySelector('#table-container table tbody');
     const tblFooter = document.querySelector('#table-container table tfoot');
-    const tblContainer = document.getElementById('table-container');
+    const tblContainer = document.getElementById("table-container");
 
     let selectedFilters = {};
 
@@ -80,19 +80,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    document.getElementById('hospital').addEventListener('change', event => {
+    document.getElementById('hospital')?.addEventListener('change', event => {
         selectedHospital = event.target.value;
     });
 
-    document.getElementById('clinic').addEventListener('change', event => {
+    document.getElementById('clinic')?.addEventListener('change', event => {
         selectedClinic = event.target.value;
     });
 
-    document.getElementById('status').addEventListener('change', event => {
+    document.getElementById('status')?.addEventListener('change', event => {
         selectedStatus = event.target.value;
     });
 
-    btnSearch.addEventListener('click', () => {
+    btnSearch?.addEventListener('click', () => {
         patientNic = document.getElementById('patient').value.trim();
         userEmail = document.getElementById('user').value.trim();
 
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 
-    btnReset.addEventListener('click', () => resetFilters());
+    btnReset?.addEventListener('click', () => resetFilters());
 
 
 
@@ -209,9 +209,9 @@ document.addEventListener('DOMContentLoaded', () => {
             data: JSON.stringify(selectedFilters),
             success: function (response) {
                 if (response.status === "success") {
-                    populateTable(response.data);
+                    // populateTable(response.data);
                 } else if (response.status === "error") {
-                    populateTable([]);
+                    // populateTable([]);
                 }
             },
             error: function (xhr, status, error) {
@@ -395,20 +395,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* --------------------- table scroll bar ---------------- */
-    const tableContainer = document.getElementById("table-container");
 
-    tableContainer.addEventListener("scroll", function () {
-        if (tableContainer.scrollLeft === 0) {
-            tableContainer.style.borderLeftWidth = '0px';
+    tblContainer?.addEventListener("scroll", function () {
+        if (tblContainer.scrollLeft === 0) {
+            tblContainer.style.borderLeftWidth = '0px';
         } else {
-            tableContainer.style.borderLeft = '1px solid var(--color-1)';
+            tblContainer.style.borderLeft = '1px solid var(--color-1)';
         }
 
 
-        if (tableContainer.scrollLeft + tableContainer.clientWidth >= tableContainer.scrollWidth) {
-            tableContainer.style.borderRightWidth = '0px';
+        if (tblContainer.scrollLeft + tblContainer.clientWidth >= tblContainer.scrollWidth) {
+            tblContainer.style.borderRightWidth = '0px';
         } else {
-            tableContainer.style.borderRight = '1px solid var(--color-1)';
+            tblContainer.style.borderRight = '1px solid var(--color-1)';
         }
     });
 

@@ -18,6 +18,7 @@
   --color-8: #0ef;
   --color-9: #081b29;
   --color-10:#f4f4f4;
+  --color-11:#ff0000;
 }
 
 body {
@@ -472,7 +473,7 @@ text-align: center;
 /* ------------ form validation error --------------- */
 .error-message {
   display: none;
-  color: red;
+  color: var(--color-11);
   font-size: 0.8rem;
   /* margin-top: 5px; */
 }
