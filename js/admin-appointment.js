@@ -209,9 +209,9 @@ document.addEventListener('DOMContentLoaded', () => {
             data: JSON.stringify(selectedFilters),
             success: function (response) {
                 if (response.status === "success") {
-                    // populateTable(response.data);
+                    populateTable(response.data);
                 } else if (response.status === "error") {
-                    // populateTable([]);
+                    populateTable([]);
                 }
             },
             error: function (xhr, status, error) {

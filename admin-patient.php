@@ -25,54 +25,53 @@
             </span>
           </button>
           <ul id="mnu-dropdown" class="dropdown-menu">
-            <li data-value="ALL">ALL</li>
-            <li data-value="NAME">NAME</li>
-            <li data-value="NIC">NIC</li>
-            <li data-value="PHONE NO">PHONE NO</li>
-            <li data-value="EMAIL">EMAIL</li>
+            <li data-value="">ALL</li>
+            <li data-value="0">NAME</li>
+            <li data-value="1">NIC</li>
+            <li data-value="2">EMAIL</li>
+            <li data-value="3">PHONE NO</li>
           </ul>
         </div>
 
         <!-- Search Input -->
-        <input type="text" id="search-input" class="search-input" placeholder="Search Here">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search Here">
 
         <!-- Search Button -->
-        <button id="search-btn" class="search-button">
+        <div id="search-btn" class="search-button">
           <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
+        </div>
       </div>
     </div>
     <div class="patient-info" id="patient-table">
       <h6>Details of Patient</h6>
-      <div id="tblContainer">
-        <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <th rowspan="2">Patient Name</th>
-              <th rowspan="2">NIC</th>
-              <th rowspan="2">Email</th>
-              <th rowspan="2">Phone No.</th>
-              <th rowspan="2">Address</th>
-              <th rowspan="2">Province</th>
-              <th rowspan="2">Date of Birth</th>
-              <th colspan="3">Age</th>
-              <th rowspan="2">User</th>
-              <th rowspan="2">Action</th>
-            </tr>
-            <tr>
-              <th>years</th>
-              <th>months</th>
-              <th>days</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-          <tfoot>
-            <tr>
-              <td colspan="12">No patients found yet</td>
-            </tr>
-          </tfoot>
+      <div id="tblWrapper">
+        <div id="tblContainer">
+          <table id="patientTable" class="table table-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th rowspan="2">Patient Name</th>
+                <th rowspan="2">NIC</th>
+                <th rowspan="2">Email</th>
+                <th rowspan="2">Phone No.</th>
+                <th rowspan="2">Address</th>
+                <th rowspan="2">Province</th>
+                <th rowspan="2">Date of Birth</th>
+                <th id="age-center" colspan="3">Age</th>
+                <th rowspan="2">User</th>
+                <th rowspan="2">Action</th>
+              </tr>
+              <tr>
+                <th>years</th>
+                <th>months</th>
+                <th>days</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
 
-        </table>
+          </table>
+        </div>
+        
       </div>
+
     </div>
 </section>

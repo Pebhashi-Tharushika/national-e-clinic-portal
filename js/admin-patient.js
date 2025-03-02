@@ -1,16 +1,24 @@
 document.addEventListener("DOMContentLoaded", function () {
   const btnDropdown = document.getElementById("btn-dropdown");
   const mnuDropdown = document.getElementById("mnu-dropdown");
-  const btnSearch = document.getElementById("search-btn");
 
   const tblContainer = document.getElementById("tblContainer");
   const tblBody = document.querySelector('#tblContainer table tbody');
-  const tblFooter = document.querySelector('#tblContainer table tfoot');
-  const tblFooterText = document.querySelector('#tblContainer table tfoot tr td');
 
-  let lastcolumn = document.querySelectorAll('#tblContainer table th:last-child, #tblContainer table td:last-child');
+  let selectedColumn = '';
+  var searchTerm = '';
 
-  lastcolumn.forEach(e => e.classList.add('unfreeze'));
+  var table = $('#patientTable').DataTable({
+    paging: true,
+    lengthMenu: [5, 10, 25, 50],
+    searching: true,
+    ordering: true,
+    info: true,
+    scrollX: true,
+    dom: 'lrtip'
+  });
+
+
 
   // Dropdown Toggle
   btnDropdown?.addEventListener("click", function () {
@@ -21,6 +29,8 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("#mnu-dropdown li").forEach(item => {
     item.addEventListener("click", function () {
       document.querySelector("#btn-dropdown > span:first-child").textContent = this.textContent;
+      selectedColumn = $(this).attr('data-value');
+      searchTable();
       toggleDisplayMenu("none");
     });
   });
@@ -32,23 +42,36 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  $('#searchInput').on('keyup', function () {
+    searchTerm = this.value;
+    searchTable();
+  });
+
+  function searchTable() {
+    table.search('').columns().search('').draw(); // Clear previous filters
+
+    if (selectedColumn === "") {
+      // Global search
+      table.search(searchTerm).draw();
+    } else {
+      // Individual column search
+      table.column(selectedColumn).search(searchTerm).draw();
+    }
+  }
+
+  getAllPatients();
+
   // Handle Search Button Click
-  btnSearch?.addEventListener("click", function () {
-    let searchBy = btnDropdown.textContent;
-    let searchText = document.getElementById("search-input").value;
+  function getAllPatients() {
 
     $.ajax({
-      type: 'POST',
+      type: 'GET',
       url: `/national-e-clinic-portal/includes/admin-fetch-patient.inc.php`,
-      data: {
-        search_by: searchBy,
-        search_text: searchText
-      },
       success: function (response) {
         if (response.status === "success") {
-          populateTable(response.data);
+          insertTableData(response.data);
         } else if (response.status === "error") {
-          populateTable([]);
+          alert(response.message);
         }
 
       },
@@ -56,28 +79,23 @@ document.addEventListener("DOMContentLoaded", function () {
         alert('Error fetching patients: ' + error);
       }
     });
-  });
+  }
+
 
 
   function toggleDisplayMenu(show) {
     mnuDropdown.style.display = show;
   }
 
-  function populateTable(result) {
+  function insertTableData(patients) {
 
-    tblBody.innerHTML = ''; // Clear previous table rows
+    table.clear(); // Clear existing data
 
-    if (result.length === 0) {
-      tblFooter.style.display = 'table-footer-group';
-      tblFooterText.textContent = 'Not found patients';
-      lastcolumn.forEach(e => e.classList.add('unfreeze'));
+    if (patients.length === 0) {
       return;
     }
 
-    tblFooter.style.display = 'none';
-    lastcolumn.forEach(e => e.classList.remove('unfreeze'));
-
-    result.forEach(data => {
+    patients.forEach(data => {
       // Ensure data exists and provide default values if missing
       let firstName = data.first_name || '';
       let lastName = data.last_name || '';
@@ -94,62 +112,46 @@ document.addEventListener("DOMContentLoaded", function () {
       let userId = data.user_id || '';
       let patientId = data.id || '';
 
-      let year, month, day;
-      if (birthDate !== '') {
-        let age = calculateAge(birthDate);
-        console.log(age);
-        let ageArray = age.split(' ');
-        console.log(ageArray)
-        year = ageArray[0];
-        month = ageArray[1];
-        day = ageArray[2];
-        console.log('year- ', year);
-        console.log('month- ', month);
-        console.log('day- ', day);
-      } else {
-        year = '';
-        month = '';
-        day = '';
+      let year = '', month = '', day = '';
+
+      if (birthDate) {
+        let age = calculateAge(birthDate).split(' ');
+        year = age[0];
+        month = age[1];
+        day = age[2];
       }
 
-      let addressParts = [addressLine1]; 
-      if (addressLine2) addressParts.push(addressLine2); 
-      if (addressLine3) addressParts.push(addressLine3); 
+      let addressParts = [addressLine1];
+      if (addressLine2) addressParts.push(addressLine2);
+      if (addressLine3) addressParts.push(addressLine3);
+      let fullAddress = addressParts.join(', ');
 
-      let fullAddress = addressParts.join(', '); 
+      table.row.add([
+        `${firstName} ${lastName}`,
+        nic,
+        email,
+        phone,
+        fullAddress,
+        province,
+        birthDate,
+        year,
+        month,
+        day,
+        `<div class="user-info"><i class="fa-solid fa-eye"></i></div>`,
+        `<div class="edit-user-info"><i class="fa-solid fa-pen-to-square"></i></div>`
+      ]);
 
-      let htmlContent = `<tr id=${patientId}>
-                            <td>${firstName} ${lastName}</td>
-                            <td>${nic}</td>
-                            <td>${email}</td>
-                            <td>${phone}</td>
-                            <td>${fullAddress}</td>
-                            <td>${province}</td>
-                            <td>${birthDate}</td>
-                            <td>${year}</td>
-                            <td>${month}</td>
-                            <td>${day}</td>
-                            <td><div class=user-info><i class="fa-solid fa-eye"></i></div></td>
-                            <td>
-                               <div class="edit-user-info"><i class="fa-solid fa-pen-to-square"></i></div>
-                            </td>
-                          </tr>`;
+      // Redraw the table
+      table.draw();
 
-      // Insert new row into table body
-      tblBody.insertAdjacentHTML('beforeend', htmlContent);
+      let row = $('tbody tr:last-child')[0]; // Get the first DOM element from jQuery object
+      let btnUserInfo = row?.querySelector('.user-info');
+      let btnEdit = row?.querySelector('.edit-user-info');
 
-      let row = tblBody.lastElementChild;
-      let btnUserInfo = row.querySelector('.user-info');
-      let btnEdit = row.querySelector('.edit-user-info');
+      // Attach event listeners safely
+      btnEdit?.addEventListener('click', () => console.log('edit'));
+      btnUserInfo?.addEventListener('click', () => console.log('user'));
 
-      // Attach event listeners with confirmation
-      btnEdit.addEventListener('click', function () {
-        console.log('edit');
-      });
-
-      btnUserInfo.addEventListener('click', function () {
-        console.log('user');
-      });
 
     });
 
@@ -181,21 +183,6 @@ document.addEventListener("DOMContentLoaded", function () {
     return `${years} ${String(months).padStart(2, '0')} ${String(days).padStart(2, '0')}`;
   }
 
-  /* ----------------- scroll-bar--------------- */
 
-  tblContainer?.addEventListener("scroll", function () {
-    if (tblContainer.scrollLeft === 0) {
-      tblContainer.style.borderLeftWidth = '0px';
-    } else {
-      tblContainer.style.borderLeft = '1px solid var(--color-1)';
-    }
-
-
-    if (tblContainer.scrollLeft + tblContainer.clientWidth >= tblContainer.scrollWidth) {
-      tblContainer.style.borderRightWidth = '0px';
-    } else {
-      tblContainer.style.borderRight = '1px solid var(--color-1)';
-    }
-  });
 });
 
