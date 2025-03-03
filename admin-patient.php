@@ -12,6 +12,7 @@
         are committed to protecting patients' privacy and ensuring the secure handling and maintenance of their
         information.</h6>
     </div>
+
     <div class="patient-info" id="patient-info-search">
       <div id="input-set">
         <!-- Dropdown -->
@@ -40,13 +41,16 @@
         <div id="search-btn" class="search-button">
           <i class="fa-solid fa-magnifying-glass"></i>
         </div>
+
       </div>
     </div>
+
     <div class="patient-info" id="patient-table">
       <h6>Details of Patient</h6>
       <div id="tblWrapper">
+
         <div id="tblContainer">
-          <table id="patientTable" class="table table-bordered table-striped table-hover">
+          <table id="patientTable" class="table table-bordered table-striped">
             <thead>
               <tr>
                 <th rowspan="2">Patient Name</th>
@@ -70,8 +74,49 @@
 
           </table>
         </div>
-        
+
       </div>
 
     </div>
+
+  </div>
+
+  <div class="modal" tabindex="-1" id="user-info-modal">
+    <div class="modal-dialog">
+      <div class="modal-content" id="m-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Portal User Information</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body" >
+          <div class="container overflow-hidden">
+            <div class="row gy-1">
+              <div class="col-6 user-info">
+                <div class="p-1" id="user-id"><strong>User Id :</strong></div>
+              </div>
+              <div class="col-6 user-info">
+                <div class="p-1" id="user-id-val"></div>
+              </div>
+              <div class="col-6 user-info">
+                <div class="p-1" id="user-name"><strong>User Name :</strong></div>
+              </div>
+              <div class="col-6 user-info">
+                <div class="p-1" id="user-name-val"></div>
+              </div>
+              <div class="col-6 user-info">
+                <div class="p-1" id="user-email"><strong>User Email :</strong></div>
+              </div>
+              <div class="col-6 user-info">
+                <div class="p-1" id="user-email-val"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 </section>

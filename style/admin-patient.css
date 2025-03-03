@@ -157,17 +157,17 @@ table.dataTable tbody td{
   min-width: 123px;
 }
 
-#tblContainer table .user-info,
-#tblContainer table .edit-user-info{
+#tblContainer table .show-user-info,
+#tblContainer table .edit-patient-info{
   display: flex;
   padding: 0.5rem;
   justify-content: center; 
   cursor: pointer;
-  transition: all 0.7s ease;
+  /* transition: all 0.7s ease; */
 }
 
-#tblContainer table .user-info:hover,
-#tblContainer table .edit-user-info:hover{
+#tblContainer table .show-user-info:hover,
+#tblContainer table .edit-patient-info:hover{
   scale: 1.2;
   color: var(--color-1);
 }
@@ -203,4 +203,24 @@ table.dataTable td.dataTables_empty {
 .dataTables_scrollBody::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(90deg,var(--d-color-6), var(--color-4));
 } 
+
+/* ---------------------------- tooltip --------------------------- */
+.custom-tooltip {
+  --bs-tooltip-bg: var(--color-4);
+  --bs-tooltip-color: var(--color-2);
+}
+
+.tooltip .tooltip-arrow:before {
+ left: 6px;
+}
+
+/* --------------------------- modal -------------------------- */
+.user-info{
+  background-color: #e9ecef;
+}
+
+#m-content{
+  width: 75%;
+}
+
 

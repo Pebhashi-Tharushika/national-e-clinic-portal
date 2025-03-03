@@ -2,11 +2,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const btnDropdown = document.getElementById("btn-dropdown");
   const mnuDropdown = document.getElementById("mnu-dropdown");
 
-  const tblContainer = document.getElementById("tblContainer");
-  const tblBody = document.querySelector('#tblContainer table tbody');
-
   let selectedColumn = '';
   var searchTerm = '';
+
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
   var table = $('#patientTable').DataTable({
     paging: true,
@@ -15,7 +15,11 @@ document.addEventListener("DOMContentLoaded", function () {
     ordering: true,
     info: true,
     scrollX: true,
-    dom: 'lrtip'
+    dom: 'lrtip',
+    // Add event listener to redraw tooltips when the table is redrawn or when page changes
+    drawCallback: function (settings) {
+      initializeTooltips(); // Initialize tooltips after each table redraw (page change)
+    }
   });
 
 
@@ -87,8 +91,19 @@ document.addEventListener("DOMContentLoaded", function () {
     mnuDropdown.style.display = show;
   }
 
-  function insertTableData(patients) {
+  // Function to initialize tooltips
+  function initializeTooltips() {
+    // Dispose any existing tooltips to avoid multiple initializations
+    $('[data-bs-toggle="tooltip"]').tooltip('dispose');
 
+    // Initialize tooltips for new rows
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltipTriggerList.forEach(tooltipTriggerEl => {
+      new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  }
+
+  function insertTableData(patients) {
     table.clear(); // Clear existing data
 
     if (patients.length === 0) {
@@ -96,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     patients.forEach(data => {
-      // Ensure data exists and provide default values if missing
+      // Your existing code to build the table row (data insertion)
       let firstName = data.first_name || '';
       let lastName = data.last_name || '';
       let nic = data.nic || '';
@@ -126,6 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (addressLine3) addressParts.push(addressLine3);
       let fullAddress = addressParts.join(', ');
 
+      // Add the new row with tooltip data
       table.row.add([
         `${firstName} ${lastName}`,
         nic,
@@ -137,25 +153,44 @@ document.addEventListener("DOMContentLoaded", function () {
         year,
         month,
         day,
-        `<div class="user-info"><i class="fa-solid fa-eye"></i></div>`,
-        `<div class="edit-user-info"><i class="fa-solid fa-pen-to-square"></i></div>`
+        `<div class="show-user-info" data-bs-toggle="modal" data-bs-target="#user-info-modal"
+                  data-user-email="${userEmail}" 
+                  data-user-name="${userName}" 
+                  data-user-id="${userId}" 
+                  data-patient-id="${patientId}">
+              <i class="fa-solid fa-eye" 
+              data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Show User" data-bs-custom-class="custom-tooltip" data-bs-offset="0,15"></i>
+          </div>`,
+        `<div class="edit-patient-info" 
+                  data-patient-id="${patientId}">
+              <i class="fa-solid fa-pen-to-square" 
+              data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Edit" data-bs-custom-class="custom-tooltip" data-bs-offset="0,15"></i>
+          </div>`
       ]);
 
-      // Redraw the table
+      // Redraw the table after each insertion
       table.draw();
-
-      let row = $('tbody tr:last-child')[0]; // Get the first DOM element from jQuery object
-      let btnUserInfo = row?.querySelector('.user-info');
-      let btnEdit = row?.querySelector('.edit-user-info');
-
-      // Attach event listeners safely
-      btnEdit?.addEventListener('click', () => console.log('edit'));
-      btnUserInfo?.addEventListener('click', () => console.log('user'));
-
-
     });
 
+    // Initialize tooltips after table redraw
+    initializeTooltips();
   }
+
+  $('tbody').on('click', '.edit-patient-info', function () {
+    console.log('Edit button clicked');
+    showEditPane();
+  });
+
+  $('tbody').on('click', '.show-user-info', function () {
+    let userEmail = $(this).data('user-email');
+    let userName = $(this).data('user-name');
+    let userId = $(this).data('user-id');
+
+    $('#user-id-val').text(userId);
+    $('#user-name-val').text(userName);
+    $('#user-email-val').text(userEmail);
+
+  });
 
   function calculateAge(birthDateString) {
 
@@ -182,6 +217,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Format the result
     return `${years} ${String(months).padStart(2, '0')} ${String(days).padStart(2, '0')}`;
   }
+
+  function showEditPane() { }
+
 
 
 });
