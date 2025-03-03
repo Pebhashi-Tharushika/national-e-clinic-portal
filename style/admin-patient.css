@@ -179,28 +179,28 @@ table.dataTable td.dataTables_empty {
 
 /* -------------------table scroll bar ----------------- */
 
-
-#tblContainer::-webkit-scrollbar {
-  /* display: none; For WebKit browsers */
+.dataTables_scrollBody::-webkit-scrollbar {
+  display: none; 
 }
 
-/* Webkit-based browsers */
-#tblContainer:hover::-webkit-scrollbar {
-  /* display: block; Show scrollbar on hover */
-  /* width: 10px; */
-}
+/*Show scrollbar on hover*/
+.dataTables_scrollBody:hover::-webkit-scrollbar {
+  display: block; 
+  width: 10px;
+} 
 
-/* #tblContainer::-webkit-scrollbar-track {
+.dataTables_scrollBody::-webkit-scrollbar-track {
   background: var(--background-color);
   border-radius: 8px;
 }
 
-#tblContainer::-webkit-scrollbar-thumb {
+.dataTables_scrollBody::-webkit-scrollbar-thumb {
   background: linear-gradient(90deg, var(--color-4),var(--d-color-6));
   border-radius: 8px;
   border: 2px solid var(--background-color);
 }
 
-#tblContainer::-webkit-scrollbar-thumb:hover {
+.dataTables_scrollBody::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(90deg,var(--d-color-6), var(--color-4));
-} */
+} 
+
