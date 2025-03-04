@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const btnDropdown = document.getElementById("btn-dropdown");
   const mnuDropdown = document.getElementById("mnu-dropdown");
 
+  const btnClear = document.getElementById("btnClear");
+
   let selectedColumn = '';
   var searchTerm = '';
 
@@ -14,10 +16,12 @@ document.addEventListener("DOMContentLoaded", function () {
     searching: true,
     ordering: true,
     info: true,
-    scrollX: true,
+    scrollX: true, // Enables horizontal scrolling
+    fixedColumns: {
+      right: 2  // Freezes the last 2 columns
+    },
     dom: 'lrtip',
-    // Add event listener to redraw tooltips when the table is redrawn or when page changes
-    drawCallback: function (settings) {
+    drawCallback: function (settings) { // Add event listener to redraw tooltips when the table is redrawn or when page changes
       initializeTooltips(); // Initialize tooltips after each table redraw (page change)
     }
   });
@@ -65,7 +69,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   getAllPatients();
 
-  // Handle Search Button Click
   function getAllPatients() {
 
     $.ajax({
@@ -136,10 +139,8 @@ document.addEventListener("DOMContentLoaded", function () {
         day = age[2];
       }
 
-      let addressParts = [addressLine1];
-      if (addressLine2) addressParts.push(addressLine2);
-      if (addressLine3) addressParts.push(addressLine3);
-      let fullAddress = addressParts.join(', ');
+
+      let fullAddress = getFullAddress(addressLine1, addressLine2, addressLine3);
 
       // Add the new row with tooltip data
       table.row.add([
@@ -156,13 +157,11 @@ document.addEventListener("DOMContentLoaded", function () {
         `<div class="show-user-info" data-bs-toggle="modal" data-bs-target="#user-info-modal"
                   data-user-email="${userEmail}" 
                   data-user-name="${userName}" 
-                  data-user-id="${userId}" 
-                  data-patient-id="${patientId}">
+                  data-user-id="${userId}" >
               <i class="fa-solid fa-eye" 
               data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Show User" data-bs-custom-class="custom-tooltip" data-bs-offset="0,15"></i>
           </div>`,
-        `<div class="edit-patient-info" 
-                  data-patient-id="${patientId}">
+        `<div class="edit-patient-info" data-patient-id="${patientId}">
               <i class="fa-solid fa-pen-to-square" 
               data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Edit" data-bs-custom-class="custom-tooltip" data-bs-offset="0,15"></i>
           </div>`
@@ -176,10 +175,117 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeTooltips();
   }
 
+  // Function to extract user info 
+  function getUserInfo(row) {
+    let userColumn = row.find('.show-user-info'); // Find the div inside the column
+    return {
+      userEmail: userColumn.attr("data-user-email"),
+      userName: userColumn.attr("data-user-name"),
+      userId: userColumn.attr("data-user-id")
+    };
+  }
+
+
+  // Function to update the row in DataTables
+  function updateTableRow(rowIndex, updatedData, userInfo, patientId) {
+    let age = calculateAge(updatedData.dob).split(' ');
+    let year = age[0], month = age[1], day = age[2];
+    let address = getFullAddress(updatedData.address1, updatedData.address2, updatedData.address3);
+
+    table.row(rowIndex).data([
+      updatedData.name,
+      updatedData.nic,
+      updatedData.email,
+      updatedData.phone,
+      address,
+      updatedData.province,
+      updatedData.dob,
+      year,
+      month,
+      day,
+      `<div class="show-user-info" data-bs-toggle="modal" data-bs-target="#user-info-modal"
+           data-user-email="${userInfo.userEmail}" 
+           data-user-name="${userInfo.userName}" 
+           data-user-id="${userInfo.userId}" >
+          <i class="fa-solid fa-eye" 
+              data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Show User" 
+              data-bs-custom-class="custom-tooltip" data-bs-offset="0,15"></i>
+      </div>`,
+      `<div class="edit-patient-info" data-patient-id="${patientId}">
+          <i class="fa-solid fa-pen-to-square" 
+              data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Edit" 
+              data-bs-custom-class="custom-tooltip" data-bs-offset="0,15"></i>
+      </div>`
+    ]).draw(false);
+  }
+
+  // Main event handler for edit click
   $('tbody').on('click', '.edit-patient-info', function () {
-    console.log('Edit button clicked');
-    showEditPane();
+    const row = $(this).closest('tr');  // Get the closest row
+    let rowIndex = table.row(row).index(); // Get row index in DataTables
+
+    let address = row.find('td').eq(4).text();
+    let addressArray = address.split(',');
+
+    // Retrieve all table cell values
+    const patientData = {
+      name: row.find('td').eq(0).text(),
+      nic: row.find('td').eq(1).text(),
+      email: row.find('td').eq(2).text(),
+      phone: row.find('td').eq(3).text(),
+      address1: addressArray[0],
+      address2: addressArray.length >= 2 ? addressArray[1] : '',
+      address3: addressArray.length === 3 ? addressArray[2] : '',
+      province: row.find('td').eq(5).text(),
+      dob: row.find('td').eq(6).text()
+    };
+
+    openUpdateModal(patientData); // Open modal and populate form fields
+
+    let userInfo = getUserInfo(row); 
+
+    let patientId = $(this).attr("data-patient-id");
+
+    // Unbind previous click event to prevent duplicates
+    $("#btnUpdate").off('click').on('click', function () {
+      // Collect updated data
+      const updatedData = {
+        patientId: patientId,
+        name: $('#patientName').val(),
+        nic: $('#nic').val(),
+        email: $('#email').val(),
+        phone: $('#phone').val(),
+        address1: $('#address1').val(),
+        address2: $('#address2').val(),
+        address3: $('#address3').val(),
+        province: $('#province').val(),
+        dob: $('#dob').val()
+      };
+
+      // AJAX request to update the patient data
+      $.ajax({
+        type: 'POST',
+        url: `/national-e-clinic-portal/includes/admin-update-patient.inc.php`,
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(updatedData),
+        success: function (response) {
+          if (response.status === "success") {
+            btnClear.click(); // Clear fields
+            $('#patient-update-form').modal('hide'); // Close modal
+            updateTableRow(rowIndex, updatedData, userInfo, patientId); // Update DataTables row
+            alert(response.message);
+          }
+        },
+        error: function (xhr, status, error) {
+          alert('Error updating patient: ' + error);
+        }
+      });
+    });
   });
+
+
+
 
   $('tbody').on('click', '.show-user-info', function () {
     let userEmail = $(this).data('user-email');
@@ -191,6 +297,31 @@ document.addEventListener("DOMContentLoaded", function () {
     $('#user-email-val').text(userEmail);
 
   });
+
+  function getFullAddress(addressLine1, addressLine2, addressLine3) {
+    let addressParts = [addressLine1];
+    if (addressLine2) addressParts.push(addressLine2);
+    if (addressLine3) addressParts.push(addressLine3);
+    return addressParts.join(', ');
+  }
+
+
+  // Function to populate the modal form fields
+  function openUpdateModal(patient) {
+    $("#patientName").val(patient.name);
+    $("#nic").val(patient.nic);
+    $("#email").val(patient.email);
+    $("#phone").val(patient.phone);
+    $("#address1").val(patient.address1);
+    $("#address2").val(patient.address2);
+    $("#address3").val(patient.address3);
+    $("#dob").val(patient.dob);
+    $("#province").val(patient.province);
+
+    // Open the modal
+    let modal = new bootstrap.Modal($('#patient-update-form'));
+    modal.show();
+  }
 
   function calculateAge(birthDateString) {
 
@@ -218,9 +349,11 @@ document.addEventListener("DOMContentLoaded", function () {
     return `${years} ${String(months).padStart(2, '0')} ${String(days).padStart(2, '0')}`;
   }
 
-  function showEditPane() { }
+  /* -------------------------------- update patient details ------------------- */
 
-
+  btnClear?.addEventListener("click", function () {
+    document.getElementById("updatePatientForm").reset();
+  });
 
 });
 

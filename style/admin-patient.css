@@ -134,7 +134,12 @@
 }
 
 .dataTables_wrapper .dataTables_scroll {
-  padding: 1rem 0;
+  padding-bottom: 1rem;
+  z-index: 0;
+}
+
+.dataTables_wrapper .dataTables_length{
+  padding-bottom: 1rem;
 }
 
 #tblContainer table th,
@@ -163,7 +168,6 @@ table.dataTable tbody td{
   padding: 0.5rem;
   justify-content: center; 
   cursor: pointer;
-  /* transition: all 0.7s ease; */
 }
 
 #tblContainer table .show-user-info:hover,
@@ -176,6 +180,18 @@ table.dataTable td.dataTables_empty {
   text-align: left;
   font-weight: 200;
 }
+
+/* Add a thick border to the left of the frozen columns */
+.dataTables_wrapper .dtfc-fixed-right:nth-last-child(2)  {
+  border-left-width: 4px;
+}
+
+.dataTables_wrapper .dtfc-fixed-left{
+  border-right-width: 4px;
+}
+
+
+
 
 /* -------------------table scroll bar ----------------- */
 

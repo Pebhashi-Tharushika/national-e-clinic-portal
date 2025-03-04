@@ -79,8 +79,10 @@
 
     </div>
 
+
   </div>
 
+  <!-- User Info - modal -->
   <div class="modal" tabindex="-1" id="user-info-modal">
     <div class="modal-dialog">
       <div class="modal-content" id="m-content">
@@ -90,7 +92,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
-        <div class="modal-body" >
+        <div class="modal-body">
           <div class="container overflow-hidden">
             <div class="row gy-1">
               <div class="col-6 user-info">
@@ -115,6 +117,90 @@
           </div>
         </div>
 
+      </div>
+    </div>
+  </div>
+
+  <!-- patient update form - modal -->
+  <div class="modal" id="patient-update-form" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">Update Patient Details</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container overflow-hidden">
+            <form id="updatePatientForm">
+              <div class="row">
+                <!-- Left Column -->
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="patientName" class="form-label">Patient Name</label>
+                    <input type="text" class="form-control" id="patientName" placeholder="Enter patient name">
+                  </div>
+                  <div class="mb-3">
+                    <label for="nic" class="form-label">NIC</label>
+                    <input type="text" class="form-control" id="nic" placeholder="Enter NIC">
+                  </div>
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter email">
+                  </div>
+                  <div class="mb-3">
+                    <label for="phone" class="form-label">Phone No.</label>
+                    <input type="text" class="form-control" id="phone" placeholder="Enter phone number">
+                  </div>
+                  <div class="mb-3">
+                    <label for="province" class="form-label">Province</label>
+                    <select class="form-select" id="province" name="province">
+                      <option value="" disabled selected>Select Province</option>
+                      <option value="Central">Central</option>
+                      <option value="Eastern">Eastern</option>
+                      <option value="North Central">North Central</option>
+                      <option value="North Western">North Western</option>
+                      <option value="Northern">Northern</option>
+                      <option value="Sabaragamuwa">Sabaragamuwa</option>
+                      <option value="Southern">Southern</option>
+                      <option value="Uva">Uva</option>
+                      <option value="Western">Western</option>
+                    </select>
+                  </div>
+
+                </div>
+
+                <!-- Right Column -->
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="address1" class="form-label">Address Line 1</label>
+                    <input type="text" class="form-control" id="address1" placeholder="Enter address line 1">
+                  </div>
+                  <div class="mb-3">
+                    <label for="address2" class="form-label">Address Line 2</label>
+                    <input type="text" class="form-control" id="address2" placeholder="Enter address line 2">
+                  </div>
+                  <div class="mb-3">
+                    <label for="address3" class="form-label">Address Line 3</label>
+                    <input type="text" class="form-control" id="address3" placeholder="Enter address line 3">
+                  </div>
+                  <div class="mb-3">
+                    <label for="dob" class="form-label">Date of Birth</label>
+                    <input type="date" class="form-control" id="dob">
+                  </div>
+
+
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <!-- Buttons -->
+          <div class="d-flex justify-content-end pt-4">
+            <button type="button" class="btn btn-primary me-2 mt-2" id="btnUpdate">Save changes</button>
+            <button type="button" class="btn btn-secondary me-2 mt-2" id="btnClear">Clear</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

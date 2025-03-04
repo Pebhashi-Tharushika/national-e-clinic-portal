@@ -1,7 +1,7 @@
 <?php
 require_once 'dbh.inc.php';
 
-function getPatients($searchBy, $searchText)
+function getAllPatients()
 {
     global $conn;
 
@@ -24,50 +24,13 @@ function getPatients($searchBy, $searchText)
               LEFT JOIN clinic_users u ON p.user_id = u.user_id
               LEFT JOIN admins a ON p.user_id = a.admin_id";
 
-    // Initialize filters and parameters array
-    $filters = "";
-    $types = "";
-    $params = [];
-    $searchBy = trim(strtoupper($searchBy));
-
-    // Search conditions
-    if ($searchBy === 'ALL') {
-        // Joins multiple column values into a single string using a specified separator (' ') and ignoring NULL values.
-        $filters = "CONCAT_WS(' ', p.user_id, p.first_name, p.last_name, p.email, p.nic, p.phone,p.birth_date, p.address_line1, p.address_line2, p.address_line3, p.province) LIKE ?";
-        $params[] = "%" . $searchText . "%";
-        $types .= "s";
-    } elseif ($searchBy === 'NAME') {
-        $filters = "(p.first_name LIKE ? OR p.last_name LIKE ?)";
-        $params[] = "%" . $searchText . "%";
-        $params[] = "%" . $searchText . "%";
-        $types .= "ss";
-    } elseif ($searchBy === 'NIC') {
-        $filters = "p.nic LIKE ?";
-        $params[] = "%" . $searchText . "%";
-        $types .= "s";
-    } elseif ($searchBy === 'PHONE NO') {
-        $filters = "p.phone LIKE ?";
-        $params[] = "%" . $searchText . "%";
-        $types .= "s";
-    } elseif ($searchBy === 'EMAIL') {
-        $filters = "p.email LIKE ?";
-        $params[] = "%" . $searchText . "%";
-        $types .= "s";
-    }
-
-    // Append WHERE clause if filters exist
-    if (!empty($filters)) {
-        $query .= " WHERE " . $filters;
-    }
 
     $stmt = mysqli_prepare($conn, $query);
+
     if (!$stmt) {
         return ['status' => 'error', 'message' => 'Error preparing query.'];
     }
 
-    if (!empty($params)) {
-        mysqli_stmt_bind_param($stmt, $types, ...$params);
-    }
 
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
@@ -82,6 +45,41 @@ function getPatients($searchBy, $searchText)
     return !empty($patients)
         ? ['status' => 'success', 'data' => $patients, 'message' => 'Patients fetched successfully.']
         : ['status' => 'error', 'message' => 'No patients found.'];
+}
+
+function updatePatientInfo($data)
+{
+    global $conn;
+
+    $query = "UPDATE patient_profiles SET 
+    first_name=?, last_name=?, nic=?, email=?, phone=?, birth_date=?, address_line1=?, address_line2=?, address_line3=?, province=?
+    WHERE id=?";
+
+    $stmt = mysqli_prepare($conn, $query);
+
+    if (!$stmt) {
+        return ['status' => 'error', 'message' => 'Error preparing query.'];
+    }
+
+    $name = $data['name'];
+    $names = explode(' ', $name, 2);  // Split name by first space into two parts
+    $firstName = $names[0];
+    $lastName = isset($names[1]) ? $names[1] : ''; // Handle cases where there's no last name
+
+    mysqli_stmt_bind_param($stmt, "ssssssssssi", 
+        $firstName, $lastName, $data['nic'], $data['email'], 
+        $data['phone'], $data['dob'], $data['address1'], 
+        $data['address2'], $data['address3'], $data['province'], $data['patientId']
+    );
+
+    $result = mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    return $result
+        ? ['status' => 'success', 'message' => 'Patient ' . $data['patientId'] . ' updated successfully.']
+        : ['status' => 'error', 'message' => 'Patient not updated.'];
+    
 }
 
 
