@@ -9,6 +9,7 @@
   --d-color-4: #0049b2;
   --d-color-5: #4884db;
   --d-color-6: #086b98;
+  --d-color-7: #0d6efd;
 }
 
 #patient-info-wrapper {
@@ -237,6 +238,10 @@ table.dataTable td.dataTables_empty {
 
 #m-content{
   width: 75%;
+}
+
+.modal-header > h1{
+  color: var(--d-color-7);
 }
 
 

@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
   const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
+  // Initialize table
   var table = $('#patientTable').DataTable({
     paging: true,
     lengthMenu: [5, 10, 25, 50],
@@ -27,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 
+  /* ----------------------------------- search - dropdown --------------------------------- */
 
   // Dropdown Toggle
   btnDropdown?.addEventListener("click", function () {
@@ -50,6 +52,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  function toggleDisplayMenu(show) {
+    mnuDropdown.style.display = show;
+  }
+
+
+
+
+  /* -------------------------------------- dynamic search ---------------------------------- */
+
+  // Dynamic search 
   $('#searchInput').on('keyup', function () {
     searchTerm = this.value;
     searchTable();
@@ -66,6 +78,8 @@ document.addEventListener("DOMContentLoaded", function () {
       table.column(selectedColumn).search(searchTerm).draw();
     }
   }
+
+  /* ------------------------------------- get all patients list ----------------------------------- */
 
   getAllPatients();
 
@@ -89,10 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 
-
-  function toggleDisplayMenu(show) {
-    mnuDropdown.style.display = show;
-  }
+  /* ---------------------------------- display patients infor in table --------------------------- */
 
   // Function to initialize tooltips
   function initializeTooltips() {
@@ -175,6 +186,56 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeTooltips();
   }
 
+  function getFullAddress(addressLine1, addressLine2, addressLine3) {
+    let addressParts = [addressLine1];
+    if (addressLine2) addressParts.push(addressLine2);
+    if (addressLine3) addressParts.push(addressLine3);
+    return addressParts.join(', ');
+  }
+
+  function calculateAge(birthDateString) {
+
+    let birthDate = new Date(birthDateString); // Parse string into a Date object
+    let today = new Date();
+
+    // Calculate differences
+    let years = today.getFullYear() - birthDate.getFullYear();
+    let months = today.getMonth() - birthDate.getMonth();
+    let days = today.getDate() - birthDate.getDate();
+
+    // Adjust months and years
+    if (days < 0) {
+      months -= 1;
+      let previousMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+      days += previousMonth.getDate();
+    }
+
+    if (months < 0) {
+      years -= 1;
+      months += 12;
+    }
+
+    // Format the result
+    return `${years} ${String(months).padStart(2, '0')} ${String(days).padStart(2, '0')}`;
+  }
+
+
+  /* ----------------------------------- show user infor ---------------------------------------- */
+
+  $('tbody').on('click', '.show-user-info', function () {
+    let userEmail = $(this).data('user-email');
+    let userName = $(this).data('user-name');
+    let userId = $(this).data('user-id');
+
+    $('#user-id-val').text(userId);
+    $('#user-name-val').text(userName);
+    $('#user-email-val').text(userEmail);
+
+  });
+
+
+  /* -------------------------------------- update table infor ----------------------------------- */
+
   // Function to extract user info 
   function getUserInfo(row) {
     let userColumn = row.find('.show-user-info'); // Find the div inside the column
@@ -184,7 +245,6 @@ document.addEventListener("DOMContentLoaded", function () {
       userId: userColumn.attr("data-user-id")
     };
   }
-
 
   // Function to update the row in DataTables
   function updateTableRow(rowIndex, updatedData, userInfo, patientId) {
@@ -242,67 +302,103 @@ document.addEventListener("DOMContentLoaded", function () {
 
     openUpdateModal(patientData); // Open modal and populate form fields
 
-    let userInfo = getUserInfo(row); 
+    let userInfo = getUserInfo(row);
 
     let patientId = $(this).attr("data-patient-id");
 
     // Unbind previous click event to prevent duplicates
     $("#btnUpdate").off('click').on('click', function () {
-      // Collect updated data
-      const updatedData = {
-        patientId: patientId,
-        name: $('#patientName').val(),
-        nic: $('#nic').val(),
-        email: $('#email').val(),
-        phone: $('#phone').val(),
-        address1: $('#address1').val(),
-        address2: $('#address2').val(),
-        address3: $('#address3').val(),
-        province: $('#province').val(),
-        dob: $('#dob').val()
-      };
 
-      // AJAX request to update the patient data
-      $.ajax({
-        type: 'POST',
-        url: `/national-e-clinic-portal/includes/admin-update-patient.inc.php`,
-        dataType: "json",
-        contentType: "application/json",
-        data: JSON.stringify(updatedData),
-        success: function (response) {
-          if (response.status === "success") {
-            btnClear.click(); // Clear fields
-            $('#patient-update-form').modal('hide'); // Close modal
-            updateTableRow(rowIndex, updatedData, userInfo, patientId); // Update DataTables row
-            alert(response.message);
-          }
-        },
-        error: function (xhr, status, error) {
-          alert('Error updating patient: ' + error);
-        }
+      let isValid = validateForm();
+
+      // Remove error message when user starts typing
+      $("input, select").on("input change", function () {
+        $(this).removeClass("is-invalid");
+        $(this).next(".invalid-feedback").remove();
       });
+
+
+      // If form is valid, proceed with form submission logic
+      if (isValid) {
+
+        // Collect updated data
+        const updatedData = {
+          patientId: patientId,
+          name: $('#patientName').val(),
+          nic: $('#nic').val(),
+          email: $('#email').val(),
+          phone: $('#phone').val(),
+          address1: $('#address1').val(),
+          address2: $('#address2').val(),
+          address3: $('#address3').val(),
+          province: $('#province').val(),
+          dob: $('#dob').val()
+        };
+
+        // AJAX request to update the patient data
+        $.ajax({
+          type: 'POST',
+          url: `/national-e-clinic-portal/includes/admin-update-patient.inc.php`,
+          dataType: "json",
+          contentType: "application/json",
+          data: JSON.stringify(updatedData),
+          success: function (response) {
+            if (response.status === "success") {
+              btnClear.click(); // Clear fields
+              $('#patient-update-form').modal('hide'); // Close modal
+              updateTableRow(rowIndex, updatedData, userInfo, patientId); // Update DataTables row
+              alert(response.message);
+            }
+          },
+          error: function (xhr, status, error) {
+            alert('Error updating patient: ' + error);
+          }
+        });
+
+      }
+
     });
   });
 
+  function validateField(id, errorMessage) {
+    let input = $("#" + id);
+    let value = input.val().trim();
 
+    if (value === "") {
+      if (input.next(".invalid-feedback").length === 0) {
+        input.after(`<div class="invalid-feedback" style="color: red;">${errorMessage}</div>`);
+      }
+      input.addClass("is-invalid");
+      return false; 
+    }
+    return true; 
+  }
 
+  function validateForm() {
+    let isValid = true; // Assume form is valid initially
 
-  $('tbody').on('click', '.show-user-info', function () {
-    let userEmail = $(this).data('user-email');
-    let userName = $(this).data('user-name');
-    let userId = $(this).data('user-id');
+    isValid &= validateField("patientName", "Patient name is required.");
+    isValid &= validateField("nic", "NIC is required.");
+    isValid &= validateField("email", "Valid email is required.");
+    isValid &= validateField("phone", "Phone number is required.");
+    isValid &= validateField("address1", "Address Line 1 is required.");
+    isValid &= validateField("dob", "Date of birth is required.");
 
-    $('#user-id-val').text(userId);
-    $('#user-name-val').text(userName);
-    $('#user-email-val').text(userEmail);
+    isValid = Boolean(isValid); // Convert numeric result to true/false
 
-  });
+    let province = $("#province");
+      if (!province.val() || province.val() === "") {
+        province.addClass("is-invalid");
+        if (province.next(".invalid-feedback").length === 0) {
+          province.after(`<div class="invalid-feedback">Province selection is required.</div>`);
+        }
+        isValid = false;
+      } else {
+        province.removeClass("is-invalid");
+        province.next(".invalid-feedback").remove();
+      }
 
-  function getFullAddress(addressLine1, addressLine2, addressLine3) {
-    let addressParts = [addressLine1];
-    if (addressLine2) addressParts.push(addressLine2);
-    if (addressLine3) addressParts.push(addressLine3);
-    return addressParts.join(', ');
+    return isValid;
   }
 
 
@@ -323,34 +419,7 @@ document.addEventListener("DOMContentLoaded", function () {
     modal.show();
   }
 
-  function calculateAge(birthDateString) {
-
-    let birthDate = new Date(birthDateString); // Parse string into a Date object
-    let today = new Date();
-
-    // Calculate differences
-    let years = today.getFullYear() - birthDate.getFullYear();
-    let months = today.getMonth() - birthDate.getMonth();
-    let days = today.getDate() - birthDate.getDate();
-
-    // Adjust months and years
-    if (days < 0) {
-      months -= 1;
-      let previousMonth = new Date(today.getFullYear(), today.getMonth(), 0);
-      days += previousMonth.getDate();
-    }
-
-    if (months < 0) {
-      years -= 1;
-      months += 12;
-    }
-
-    // Format the result
-    return `${years} ${String(months).padStart(2, '0')} ${String(days).padStart(2, '0')}`;
-  }
-
-  /* -------------------------------- update patient details ------------------- */
-
+  // clear update patient details form
   btnClear?.addEventListener("click", function () {
     document.getElementById("updatePatientForm").reset();
   });
