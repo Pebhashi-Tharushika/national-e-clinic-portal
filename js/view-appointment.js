@@ -3,7 +3,7 @@ $(document).ready(function () {
     // fetch current logged user name
     $.ajax({
         type: 'GET',
-        url: '/national-e-clinic-portal/includes/appointment/view-appointment.inc.php?data=name',
+        url: '/national-e-clinic-portal/includes/appointment/appointment-view.inc.php?data=name',
         dataType: "json",
         success: function (response) {
             if (response.status === "success") {
@@ -24,7 +24,7 @@ $(document).ready(function () {
     //fetch Provinces
     $.ajax({
         type: 'GET',
-        url: '/national-e-clinic-portal/includes/appointment/view-appointment.inc.php?data=province',
+        url: '/national-e-clinic-portal/includes/appointment/appointment-view.inc.php?data=province',
         dataType: "json",
         success: function (response) {
             if (response.status === "success" && Array.isArray(response.data)) {
@@ -54,7 +54,7 @@ $(document).ready(function () {
         provinces.forEach(patientProvince => {
             $.ajax({
                 type: 'POST',
-                url: '/national-e-clinic-portal/includes/appointment/view-appointment.inc.php',
+                url: '/national-e-clinic-portal/includes/appointment/appointment-view.inc.php',
                 dataType: "json", 
                 data: { province: patientProvince },
                 success: function (response) {
@@ -76,7 +76,7 @@ $(document).ready(function () {
     }
     
     function sendDataToPHP(appointments) {
-        fetch("/national-e-clinic-portal/includes/appointment/fetch-appointment.inc.php", {
+        fetch("/national-e-clinic-portal/includes/appointment/appointment-fetch.inc.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(appointments)

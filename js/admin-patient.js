@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     $.ajax({
       type: 'GET',
-      url: `/national-e-clinic-portal/includes/admin-patient/admin-fetch-patient.inc.php`,
+      url: `/national-e-clinic-portal/includes/admin-patient/admin-patient-fetch.inc.php`,
       success: function (response) {
         if (response.status === "success") {
           insertTableData(response.data);
@@ -340,7 +340,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // AJAX request to update the patient data
         $.ajax({
           type: 'POST',
-          url: `/national-e-clinic-portal/includes/admin-patient/admin-update-patient.inc.php`,
+          url: `/national-e-clinic-portal/includes/admin-patient/admin-patient-update.inc.php`,
           dataType: "json",
           contentType: "application/json",
           data: JSON.stringify(updatedData),
@@ -442,7 +442,7 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       // $.ajax({
       //   type: 'GET',
-      //   url: `/national-e-clinic-portal/includes/admin-patient/admin-fetch-patient.inc.php?nic=${searchText}`,
+      //   url: `/national-e-clinic-portal/includes/admin-patient/admin-patient-fetch.inc.php?nic=${searchText}`,
       //   contentType: "application/json",
       //   success: function (response) {
       //     console.log(response);

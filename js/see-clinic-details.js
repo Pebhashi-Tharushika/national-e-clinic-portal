@@ -12,6 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnClear = document.getElementById('btn-clear');
     const btnSearch = document.getElementById('btn-search');
 
+    const tableContainer = document.getElementById('table-container');
+    const selectionCriteria = document.getElementById('selection-criteria');
+    const noSelectionMsg = document.getElementById('not-selected-msg');
+
     let isDistrictDropdownDisable = true;
     let isHospitalCategoryDropdownDisable = true;
     let isHospitalDropdownDisable = true;
@@ -37,9 +41,9 @@ document.addEventListener("DOMContentLoaded", () => {
             resetHospitalCategoryDropdown();
             resetHospitalDropdown();
             resetClinicCategoryDropdown();
+            hidePreviousClinicInfor();
 
             disableForm();
-
 
             event.target.classList.add("selected");
 
@@ -53,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Fetch districts for the selected province
             try {
-                const response = await fetch('/national-e-clinic-portal/includes/clinic/search-clinic.inc.php', {
+                const response = await fetch('/national-e-clinic-portal/includes/clinic/clinic-search.inc.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: new URLSearchParams({ province: selectedProvince })
@@ -88,10 +92,11 @@ document.addEventListener("DOMContentLoaded", () => {
         selectedDistrict = event.target.value.trim();
         resetHospitalDropdown();
         resetClinicCategoryDropdown();
+        hidePreviousClinicInfor();
 
         // Fetch hospital categories for the selected district
         try {
-            const response = await fetch('/national-e-clinic-portal/includes/clinic/search-clinic.inc.php', {
+            const response = await fetch('/national-e-clinic-portal/includes/clinic/clinic-search.inc.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams({ district: selectedDistrict })
@@ -124,10 +129,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         selectedHospitalCategory = event.target.value.trim();
         resetClinicCategoryDropdown();
+        hidePreviousClinicInfor();
 
         // Fetch hospitals for the selected hospital category
         try {
-            const response = await fetch('/national-e-clinic-portal/includes/clinic/search-clinic.inc.php', {
+            const response = await fetch('/national-e-clinic-portal/includes/clinic/clinic-search.inc.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams({
@@ -163,6 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (selectedClinicCategory !== "") {
                 populateDropdown(clinicCategoryDropdown, clinicCategoryArray, "clinic_name", "clinic_name", "Select Clinic Category");
                 selectedClinicCategory = "";
+                hidePreviousClinicInfor();
             }
         }
 
@@ -174,6 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     clinicCategoryDropdown.addEventListener("change", event => {
+        hidePreviousClinicInfor();
         selectedClinicCategory = event.target.value.trim();
         enableButtons();
     });
@@ -186,9 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         disableForm();
 
-        document.getElementById('table-container').style.display = 'none';
-        document.getElementById('selection-criteria').style.display = 'none';
-        document.getElementById('not-selected-msg').style.display = 'block';
+        hidePreviousClinicInfor();
     });
 
 
@@ -196,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
         event.preventDefault(); // Prevent form submission and page reload
 
         try {
-            const response = await fetch('/national-e-clinic-portal/includes/clinic/search-clinic.inc.php', {
+            const response = await fetch('/national-e-clinic-portal/includes/clinic/clinic-search.inc.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams({
@@ -222,10 +228,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    function hidePreviousClinicInfor(){
+        selectionCriteria.style.display = 'none';
+        tableContainer.style.display = 'none';
+        noSelectionMsg.style.display = 'block';
+    }
+
 
     async function fetchAllClinicCategories() {
         try {
-            const response = await fetch('/national-e-clinic-portal/includes/clinic/search-clinic.inc.php', {
+            const response = await fetch('/national-e-clinic-portal/includes/clinic/clinic-search.inc.php', {
                 method: 'GET',
                 headers: { 'Accept': 'application/json' }
             });
@@ -327,11 +339,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function displayClinicDetails(clinicInfo = null) {
-
-        const tableContainer = document.getElementById('table-container');
-        const selectionCriteria = document.getElementById('selection-criteria');
-        const noSelectionMsg = document.getElementById('not-selected-msg');
-
         const table = document.getElementById('clinicTable');
         const tableBody = document.querySelector("#clinicTable tbody");
         const tableFooter = document.querySelector("#clinicTable tfoot");

@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         provinceName = provinceName.replace('Province', '').trim();
         $.ajax({
             type: 'GET',
-            url: `/national-e-clinic-portal/includes/admin-appointment/admin-fetch-appointment.inc.php?province=${provinceName}`,
+            url: `/national-e-clinic-portal/includes/admin-appointment/admin-appointment-fetch.inc.php?province=${provinceName}`,
             dataType: "json",
             success: function (response) {
                 if (response.status === "success") {
@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         provinceName = provinceName.replace('Province', '').trim();
         $.ajax({
             type: 'POST',
-            url: `/national-e-clinic-portal/includes/admin-appointment/admin-fetch-appointment.inc.php?province=${provinceName}`,
+            url: `/national-e-clinic-portal/includes/admin-appointment/admin-appointment-fetch.inc.php?province=${provinceName}`,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(selectedFilters),
@@ -323,7 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         $.ajax({
             type: 'PUT',
-            url: "/national-e-clinic-portal/includes/admin-appointment/admin-approve-appointment.inc.php",
+            url: "/national-e-clinic-portal/includes/admin-appointment/admin-appointment-approve.inc.php",
             data: JSON.stringify({
                 province: provinceName, 
                 status: appointmentStatus,
