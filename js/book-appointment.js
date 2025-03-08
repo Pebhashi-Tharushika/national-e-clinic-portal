@@ -19,7 +19,7 @@ $(document).ready(function () {
     // fetch profiles
     $.ajax({
         type: 'GET',
-        url: '/national-e-clinic-portal/includes/book-appointment.inc.php?request=profile',
+        url: '/national-e-clinic-portal/includes/appointment/book-appointment.inc.php?request=profile',
         dataType: "json", // Ensure response is JSON
         success: function (response) {
             if (response.status === "success") {
@@ -37,7 +37,7 @@ $(document).ready(function () {
     // fetch cinics
     $.ajax({
         type: 'GET',
-        url: '/national-e-clinic-portal/includes/book-appointment.inc.php?request=clinic',
+        url: '/national-e-clinic-portal/includes/appointment/book-appointment.inc.php?request=clinic',
         dataType: "json",
         success: function (response) {
             if (response.status === "success") {
@@ -84,7 +84,7 @@ $(document).ready(function () {
 
             $.ajax({
                 type: 'POST',
-                url: '/national-e-clinic-portal/includes/book-appointment.inc.php',
+                url: '/national-e-clinic-portal/includes/appointment/book-appointment.inc.php',
                 data: {
                     province: patientProvince,
                     clinic_id: selectedClinicId
@@ -118,7 +118,7 @@ $(document).ready(function () {
 
             $.ajax({
                 type: 'POST',
-                url: '/national-e-clinic-portal/includes/book-appointment.inc.php',
+                url: '/national-e-clinic-portal/includes/appointment/book-appointment.inc.php',
                 data: {
                     province: patientProvince,
                     clinic_id: selectedClinicId,
@@ -175,7 +175,7 @@ $(document).ready(function () {
         if (selectedPatientId, selectedClinicId, selectedHospitalId, selectedClinicDate, selectedClinicTimePeriod, patientProvince) {
             $.ajax({
                 type: 'POST',
-                url: '/national-e-clinic-portal/includes/book-appointment.inc.php',
+                url: '/national-e-clinic-portal/includes/appointment/book-appointment.inc.php',
                 data: {
                     province: patientProvince,
                     patient_id: selectedPatientId,
@@ -221,7 +221,7 @@ $(document).ready(function () {
     function getReservedAppointments() {
         return new Promise((resolve, reject) => {
             $.ajax({
-                url: '/national-e-clinic-portal/includes/book-appointment.inc.php',
+                url: '/national-e-clinic-portal/includes/appointment/book-appointment.inc.php',
                 type: 'POST',
                 data: {
                     province: patientProvince,

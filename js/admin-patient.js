@@ -53,7 +53,9 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function toggleDisplayMenu(show) {
-    mnuDropdown.style.display = show;
+    if (mnuDropdown) {
+      mnuDropdown.style.display = show;
+    }
   }
 
 
@@ -87,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     $.ajax({
       type: 'GET',
-      url: `/national-e-clinic-portal/includes/admin-fetch-patient.inc.php`,
+      url: `/national-e-clinic-portal/includes/admin-patient/admin-fetch-patient.inc.php`,
       success: function (response) {
         if (response.status === "success") {
           insertTableData(response.data);
@@ -338,7 +340,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // AJAX request to update the patient data
         $.ajax({
           type: 'POST',
-          url: `/national-e-clinic-portal/includes/admin-update-patient.inc.php`,
+          url: `/national-e-clinic-portal/includes/admin-patient/admin-update-patient.inc.php`,
           dataType: "json",
           contentType: "application/json",
           data: JSON.stringify(updatedData),
@@ -369,9 +371,9 @@ document.addEventListener("DOMContentLoaded", function () {
         input.after(`<div class="invalid-feedback" style="color: red;">${errorMessage}</div>`);
       }
       input.addClass("is-invalid");
-      return false; 
+      return false;
     }
-    return true; 
+    return true;
   }
 
   function validateForm() {
@@ -387,16 +389,16 @@ document.addEventListener("DOMContentLoaded", function () {
     isValid = Boolean(isValid); // Convert numeric result to true/false
 
     let province = $("#province");
-      if (!province.val() || province.val() === "") {
-        province.addClass("is-invalid");
-        if (province.next(".invalid-feedback").length === 0) {
-          province.after(`<div class="invalid-feedback">Province selection is required.</div>`);
-        }
-        isValid = false;
-      } else {
-        province.removeClass("is-invalid");
-        province.next(".invalid-feedback").remove();
+    if (!province.val() || province.val() === "") {
+      province.addClass("is-invalid");
+      if (province.next(".invalid-feedback").length === 0) {
+        province.after(`<div class="invalid-feedback">Province selection is required.</div>`);
       }
+      isValid = false;
+    } else {
+      province.removeClass("is-invalid");
+      province.next(".invalid-feedback").remove();
+    }
 
     return isValid;
   }
@@ -423,6 +425,46 @@ document.addEventListener("DOMContentLoaded", function () {
   btnClear?.addEventListener("click", function () {
     document.getElementById("updatePatientForm").reset();
   });
+
+
+  /* ````````````````````````````````````````````` patient- clinic - infor ```````````````````````````````````` */
+
+  const btnSearchPatient = document.getElementById('btn-search-patient');
+  const searchInputNic = document.getElementById('search-nic');
+  const errorMessageNic = document.querySelector('#search-nic-wrapper .invalid-field');
+
+  btnSearchPatient?.addEventListener('click', () => {
+    let searchText = searchInputNic.value.trim();
+    console.log(searchText);
+
+    if (searchText === '') {
+      errorMessageNic.style.display = 'block'; // Show error message
+    } else {
+      // $.ajax({
+      //   type: 'GET',
+      //   url: `/national-e-clinic-portal/includes/admin-patient/admin-fetch-patient.inc.php?nic=${searchText}`,
+      //   contentType: "application/json",
+      //   success: function (response) {
+      //     console.log(response);
+      //     // if (response.status === "success") {
+            
+      //     // }
+      //   },
+      //   error: function (xhr, status, error) {
+      //     alert('Error updating patient: ' + error);
+      //   }
+      // });
+
+    }
+  });
+
+  // Remove error message when the user starts typing
+  searchInputNic?.addEventListener('input', () => {
+    errorMessageNic.style.display = 'none'; // Hide error message
+  });
+
+
+
 
 });
 

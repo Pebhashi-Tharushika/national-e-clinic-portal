@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             // Send data to server for validation
-            const response = await fetch('/national-e-clinic-portal/includes/register.inc.php', {
+            const response = await fetch('/national-e-clinic-portal/includes/register-login-logout/register.inc.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             // Send data to server for validation
-            const response = await fetch('/national-e-clinic-portal/includes/login.inc.php', {
+            const response = await fetch('/national-e-clinic-portal/includes/register-login-logout/login.inc.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),

@@ -24,7 +24,7 @@
             <?php endif; ?>
             <a href="/national-e-clinic-portal/profile/profile.html">Profile</a>
             <a href="/national-e-clinic-portal/setting/settings.html">Settings</a>
-            <a href="/national-e-clinic-portal/includes/logout.inc.php" onclick="return confirmLogout();">Logout</a>
+            <a href="/national-e-clinic-portal/includes/register-login-logout/logout.inc.php" onclick="return confirmLogout();">Logout</a>
           <?php endif; ?>
         </div>
       </div>

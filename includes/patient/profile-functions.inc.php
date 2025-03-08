@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // If no errors, proceed 
         if (empty($errors)) {
-            require_once 'dbh.inc.php';
+            require_once __DIR__ . '/../../includes/dbh.inc.php';
 
             // Retrieve values from session for Step 1
             if (isset($_SESSION['step1'])) {

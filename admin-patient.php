@@ -13,6 +13,10 @@
         information.</h6>
     </div>
 
+    <div class="patient-info" id="patient-info-title">
+      <h4>Basic Personal Information of Patients</h4>
+    </div>
+
     <div class="patient-info" id="patient-info-search">
       <div id="input-set">
         <!-- Dropdown -->
@@ -45,8 +49,8 @@
       </div>
     </div>
 
-    <div class="patient-info" id="patient-table">
-      <h6>Details of Patient</h6>
+    <div class="patient-info" id="patient-info-table">
+
       <div id="tblWrapper">
 
         <div id="tblContainer">
@@ -79,6 +83,112 @@
 
     </div>
 
+    <div class="patient-info" id="patient-info-title">
+      <h4>Medical Clinic Information of Patients</h4>
+    </div>
+
+    <div class="patient-info">
+
+      <!-- Search NIC -->
+      <div class="mb-4" id="search-nic-wrapper">
+
+        <div id="search-nic-container">
+          <label for="search-nic" class="form-label">Patient's NIC</label>
+          <input type="text" class="form-control input-text" id="search-nic" placeholder="Please enter NIC"
+            maxlength="12">
+          <button class="btn" id="btn-search-patient">Search <i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+
+        <div class="invalid-field">required*</div>
+      </div>
+
+      <!-- Form Fields -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label class="form-label">Patient Name</label>
+          <input type="text" class="form-control input-text" readonly>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Clinic</label>
+          <select class="form-select input-select" disabled>
+            <option value="">Select Clinic</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Hospital</label>
+          <select class="form-select input-select" disabled>
+            <option>Select Hospital</option>
+          </select>
+        </div>
+        <!-- <div class="col-md-2">
+            <label class="form-label">Dropdown</label>
+            <select class="form-select">
+              <option>Option 1</option>
+              <option>Option 2</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Last 6 months</label>
+            <select class="form-select">
+              <option>Last 6 months</option>
+              <option>Last 1 year</option>
+            </select>
+          </div> -->
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="mb-3">
+        <div class="btn-group filter-btn-group" role="group">
+          <button type="button" class="btn btn-light active" data-filter="all">ALL</button>
+          <button type="button" class="btn btn-light" data-filter="approved">Approved</button>
+          <button type="button" class="btn btn-light" data-filter="pending">Pending</button>
+          <button type="button" class="btn btn-light" data-filter="rejected">Rejected</button>
+        </div>
+      </div>
+
+      <!-- Data Table -->
+      <table id="appointmentTable" class="display table table-bordered">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Appointment Status</th>
+            <th>Absent/Present</th>
+            <th>Doctor</th>
+            <th>Prescriptions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2025-03-01</td>
+            <td>10:00 AM</td>
+            <td>Approved</td>
+            <td>Present</td>
+            <td>Dr. Smith</td>
+            <td>Paracetamol</td>
+          </tr>
+          <tr>
+            <td>2025-03-02</td>
+            <td>11:30 AM</td>
+            <td>Pending</td>
+            <td>Absent</td>
+            <td>Dr. John</td>
+            <td>Ibuprofen</td>
+          </tr>
+          <tr>
+            <td>2025-03-03</td>
+            <td>02:00 PM</td>
+            <td>Rejected</td>
+            <td>Absent</td>
+            <td>Dr. Lee</td>
+            <td>Aspirin</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Pagination (Handled by DataTables) -->
+
+    </div>
 
   </div>
 

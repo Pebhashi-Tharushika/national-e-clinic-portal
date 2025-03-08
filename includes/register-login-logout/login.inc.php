@@ -2,7 +2,7 @@
 
 header("Content-Type: application/json");
 
-require_once 'register-and-login-functions.inc.php';
+require_once './register-and-login-functions.inc.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

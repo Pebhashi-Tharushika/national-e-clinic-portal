@@ -1,5 +1,5 @@
 <?php
-require_once 'dbh.inc.php';
+require_once '../dbh.inc.php';
 
 
 // Function to check if the username or email already exists in the system

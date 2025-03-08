@@ -1,6 +1,6 @@
 <?php
 // Database connection
-require_once __DIR__ . '/../includes/dbh.inc.php';
+require_once __DIR__ . '/../../includes/dbh.inc.php';
 
 // Whitelist valid province names to prevent SQL injection
 $allowedProvinces = ['Central', 
@@ -209,8 +209,6 @@ function getHospitalsByProvinceAndDistrictAndCategory($hospital_category, $distr
 function getAllClinicCategories()
 {
     global $conn;
-
-    
         
         $query = "SELECT * FROM clinics_categories";
 

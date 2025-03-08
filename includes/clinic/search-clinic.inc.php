@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-require_once 'clinic-functions.inc.php';
-require_once 'utility-functions.inc.php';
+require_once './clinic-functions.inc.php';
+require_once '../utility-functions.inc.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 

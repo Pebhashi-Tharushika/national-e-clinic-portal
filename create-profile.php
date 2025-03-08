@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "./includes/profile-functions.inc.php";
+require_once "./includes/patient/profile-functions.inc.php";
 
 ?>
 

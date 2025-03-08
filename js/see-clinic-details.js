@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Fetch districts for the selected province
             try {
-                const response = await fetch('/national-e-clinic-portal/includes/search-clinic.inc.php', {
+                const response = await fetch('/national-e-clinic-portal/includes/clinic/search-clinic.inc.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: new URLSearchParams({ province: selectedProvince })
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Fetch hospital categories for the selected district
         try {
-            const response = await fetch('/national-e-clinic-portal/includes/search-clinic.inc.php', {
+            const response = await fetch('/national-e-clinic-portal/includes/clinic/search-clinic.inc.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams({ district: selectedDistrict })
@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Fetch hospitals for the selected hospital category
         try {
-            const response = await fetch('/national-e-clinic-portal/includes/search-clinic.inc.php', {
+            const response = await fetch('/national-e-clinic-portal/includes/clinic/search-clinic.inc.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams({
@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
         event.preventDefault(); // Prevent form submission and page reload
 
         try {
-            const response = await fetch('/national-e-clinic-portal/includes/search-clinic.inc.php', {
+            const response = await fetch('/national-e-clinic-portal/includes/clinic/search-clinic.inc.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams({
@@ -225,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function fetchAllClinicCategories() {
         try {
-            const response = await fetch('/national-e-clinic-portal/includes/search-clinic.inc.php', {
+            const response = await fetch('/national-e-clinic-portal/includes/clinic/search-clinic.inc.php', {
                 method: 'GET',
                 headers: { 'Accept': 'application/json' }
             });

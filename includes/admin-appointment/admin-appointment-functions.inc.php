@@ -1,5 +1,5 @@
 <?php
-require_once 'dbh.inc.php';
+require_once __DIR__ . '/../../includes/dbh.inc.php';
 
 function getAppointmentsByProvince($provinceTable)
 {
