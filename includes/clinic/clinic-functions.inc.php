@@ -2,18 +2,6 @@
 // Database connection
 require_once __DIR__ . '/../../includes/dbh.inc.php';
 
-// Whitelist valid province names to prevent SQL injection
-$allowedProvinces = ['Central', 
-                        'Eastern', 
-                        'Northern',
-                        'North Central', 
-                        'North Western', 
-                        'Sabaragamuwa', 
-                        'Southern', 
-                        'Uva', 
-                        'Western'
-                    ];
-
 
 // Handle AJAX delete request
 // if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteClinic') {
@@ -166,9 +154,8 @@ function getHospitalsByProvinceAndDistrictAndCategory($hospital_category, $distr
 
 // function getClinicCategoriesByHospital($hospitalName, $provinceName)
 // {
-//     global $conn, $allowedProvinces;
+//     global $conn;
 
-//     if (in_array($provinceName, $allowedProvinces)) {
 //         $provinceTable = 'clinic_' . $provinceName;
 //         $query = "SELECT DISTINCT c.clinic_name FROM clinics_categories c
 //                   JOIN $provinceTable p ON p.clinic_category_id = c.id
@@ -201,9 +188,6 @@ function getHospitalsByProvinceAndDistrictAndCategory($hospital_category, $distr
 //             ];
 
 //         }
-//     } else {
-//         die("Invalid province name.");
-//     }
 // }
 
 function getAllClinicCategories()
@@ -242,14 +226,7 @@ function getAllClinicCategories()
 
 function getClinicDetails($provinceTable,$provinceName,$hospital,$clinicCategory)
 {
-    global $conn, $allowedProvinces;
-
-    if (!in_array($provinceName, $allowedProvinces)) {
-        return [
-            'status' => 'error',
-            'message' => 'Invalid province.'
-        ];
-    }
+    global $conn;
 
 
     $query = "SELECT clinic_place, clinic_date, clinic_time FROM $provinceTable p

@@ -11,9 +11,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
   // Initialize table
-  var table = $('#patientTable').DataTable({
+  var tablePersonalInfo = $('#patientTable').DataTable({
     paging: true,
-    lengthMenu: [5, 10, 25, 50],
+    lengthMenu: [10, 20, 30, 50],
     searching: true,
     ordering: true,
     info: true,
@@ -70,14 +70,14 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function searchTable() {
-    table.search('').columns().search('').draw(); // Clear previous filters
+    tablePersonalInfo.search('').columns().search('').draw(); // Clear previous filters
 
     if (selectedColumn === "") {
       // Global search
-      table.search(searchTerm).draw();
+      tablePersonalInfo.search(searchTerm).draw();
     } else {
       // Individual column search
-      table.column(selectedColumn).search(searchTerm).draw();
+      tablePersonalInfo.column(selectedColumn).search(searchTerm).draw();
     }
   }
 
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function insertTableData(patients) {
-    table.clear(); // Clear existing data
+    tablePersonalInfo.clear(); // Clear existing data
 
     if (patients.length === 0) {
       return;
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
       let fullAddress = getFullAddress(addressLine1, addressLine2, addressLine3);
 
       // Add the new row with tooltip data
-      table.row.add([
+      tablePersonalInfo.row.add([
         `${firstName} ${lastName}`,
         nic,
         email,
@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
       ]);
 
       // Redraw the table after each insertion
-      table.draw();
+      tablePersonalInfo.draw();
     });
 
     // Initialize tooltips after table redraw
@@ -254,7 +254,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let year = age[0], month = age[1], day = age[2];
     let address = getFullAddress(updatedData.address1, updatedData.address2, updatedData.address3);
 
-    table.row(rowIndex).data([
+    tablePersonalInfo.row(rowIndex).data([
       updatedData.name,
       updatedData.nic,
       updatedData.email,
@@ -284,7 +284,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Main event handler for edit click
   $('tbody').on('click', '.edit-patient-info', function () {
     const row = $(this).closest('tr');  // Get the closest row
-    let rowIndex = table.row(row).index(); // Get row index in DataTables
+    let rowIndex = tablePersonalInfo.row(row).index(); // Get row index in DataTables
 
     let address = row.find('td').eq(4).text();
     let addressArray = address.split(',');
@@ -433,6 +433,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const searchInputNic = document.getElementById('search-nic');
   const errorMessageNic = document.querySelector('#search-nic-wrapper .invalid-field');
 
+  const nameOfPatient = document.getElementById('patient-name');
+  const clinicOfPatient = document.getElementById('patient-clinic');
+  const hospitalOfPatient = document.getElementById('patient-hospital');
+
   btnSearchPatient?.addEventListener('click', () => {
     let searchText = searchInputNic.value.trim();
     console.log(searchText);
@@ -440,20 +444,25 @@ document.addEventListener("DOMContentLoaded", function () {
     if (searchText === '') {
       errorMessageNic.style.display = 'block'; // Show error message
     } else {
-      // $.ajax({
-      //   type: 'GET',
-      //   url: `/national-e-clinic-portal/includes/admin-patient/admin-patient-fetch.inc.php?nic=${searchText}`,
-      //   contentType: "application/json",
-      //   success: function (response) {
-      //     console.log(response);
-      //     // if (response.status === "success") {
-            
-      //     // }
-      //   },
-      //   error: function (xhr, status, error) {
-      //     alert('Error updating patient: ' + error);
-      //   }
-      // });
+      $.ajax({
+        type: 'GET',
+        url: `/national-e-clinic-portal/includes/admin-patient/admin-patient-fetch.inc.php?nic=${searchText}`,
+        contentType: "application/json",
+        success: function (response) {
+          resetPreviousData();
+          if (response.status === "success") {
+            console.log(response.data);
+            populatePatientClinicData(response.data);
+          } else if (response.status === "error") {
+            if (response.message === 'Invalid province.') {
+              alert('No patient found for this NIC.')
+            }
+          }
+        },
+        error: function (xhr, status, error) {
+          alert('Error searching patient: ' + error);
+        }
+      });
 
     }
   });
@@ -462,6 +471,57 @@ document.addEventListener("DOMContentLoaded", function () {
   searchInputNic?.addEventListener('input', () => {
     errorMessageNic.style.display = 'none'; // Hide error message
   });
+
+  function resetPreviousData(){
+    nameOfPatient.value = '';
+    hospitalOfPatient.innerHTML = `<option value="" hidden>Select Hospital</option>`;
+    clinicOfPatient.innerHTML = `<option value="" hidden>Select Clinic</option>`;
+
+    hospitalOfPatient.disabled = true;
+    clinicOfPatient.disabled = true;
+  }
+
+  function populatePatientClinicData(data) {
+
+    var patient = data[0];
+    var name = patient.first_name + " " + patient.last_name;
+    nameOfPatient.value = name;
+
+    if (data.length === 1 && !patient.clinic_name && !patient.hospital_name && !patient.institute_type) {
+      alert('No Clinic visit');
+      return;
+    }
+
+    let hospitalSet = new Set();
+    let clinicSet = new Set();
+
+    data.forEach(d => {
+      var hospital = d.hospital_name + " " + d.institute_type;
+      var clinic = d.clinic_name;
+
+      hospitalSet.add(hospital.trim()); // Add only unique values
+      clinicSet.add(clinic.trim());
+    });
+
+    // Enable select elements
+    hospitalOfPatient.disabled = false;
+    clinicOfPatient.disabled = false;
+
+
+    // Append unique hospitals
+    hospitalSet.forEach(hospital => {
+        if (hospital) {
+            hospitalOfPatient.innerHTML += `<option value="${hospital}">${hospital}</option>`;
+        }
+    });
+
+    // Append unique clinics
+    clinicSet.forEach(clinic => {
+        if (clinic) {
+            clinicOfPatient.innerHTML += `<option value="${clinic}">${clinic}</option>`;
+        }
+    });
+  }
 
 
 

@@ -1,8 +1,15 @@
 <?php
 
 // Map province_name to database value
-function convertProvinceNameToTable($province,$prefix)
+function convertProvinceNameToTable($province, $prefix)
 {
+    if (!isValidProvince($province)) {
+        sendResponse([
+            'status' => 'error',
+            'message' => 'Invalid province.'
+        ]);
+    }
+
     $provinceMap = [
         'Central' => 'central_province',
         'Eastern' => 'eastern_province',
@@ -17,6 +24,29 @@ function convertProvinceNameToTable($province,$prefix)
 
     $provinceName = $provinceMap[$province];
     return $prefix . $provinceName;
+}
+
+function isValidProvince($province)
+{
+    // Whitelist valid province names to prevent SQL injection
+    $allowedProvinces = [
+        'Central',
+        'Eastern',
+        'Northern',
+        'North Central',
+        'North Western',
+        'Sabaragamuwa',
+        'Southern',
+        'Uva',
+        'Western'
+    ];
+
+    if (!in_array($province, $allowedProvinces)) {
+        return false;
+    } else {
+        return true;
+    }
+
 }
 
 function sendResponse($response)

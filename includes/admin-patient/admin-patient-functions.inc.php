@@ -66,10 +66,20 @@ function updatePatientInfo($data)
     $firstName = $names[0];
     $lastName = isset($names[1]) ? $names[1] : ''; // Handle cases where there's no last name
 
-    mysqli_stmt_bind_param($stmt, "ssssssssssi", 
-        $firstName, $lastName, $data['nic'], $data['email'], 
-        $data['phone'], $data['dob'], $data['address1'], 
-        $data['address2'], $data['address3'], $data['province'], $data['patientId']
+    mysqli_stmt_bind_param(
+        $stmt,
+        "ssssssssssi",
+        $firstName,
+        $lastName,
+        $data['nic'],
+        $data['email'],
+        $data['phone'],
+        $data['dob'],
+        $data['address1'],
+        $data['address2'],
+        $data['address3'],
+        $data['province'],
+        $data['patientId']
     );
 
     $result = mysqli_stmt_execute($stmt);
@@ -79,7 +89,64 @@ function updatePatientInfo($data)
     return $result
         ? ['status' => 'success', 'message' => 'Patient ' . $data['patientId'] . ' updated successfully.']
         : ['status' => 'error', 'message' => 'Patient not updated.'];
-    
+
+}
+
+function getProvinceByNic($nic)
+{
+    global $conn;
+    $query = "SELECT province FROM patient_profiles WHERE nic=?";
+
+    $stmt = mysqli_prepare($conn, $query);
+    if (!$stmt) {
+        return ['status' => 'error', 'message' => 'Error preparing query.'];
+    }
+
+    mysqli_stmt_bind_param($stmt, 's', $nic);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+    mysqli_stmt_close($stmt);
+
+    if ($row) {
+        return ['status' => 'success', 'data' => $row['province'], 'message' => 'Province fetched successfully.'];
+    } else {
+        return ['status' => 'error', 'message' => 'No province found for this NIC.'];
+    }
+}
+
+function getPatientInfoByNic($nic, $provinceTable)
+{
+    global $conn;
+
+    $query = "SELECT DISTINCT p.first_name, p.last_name, h.hospital_name, i.institute_type, c.clinic_name 
+              FROM patient_profiles p 
+              LEFT JOIN `$provinceTable` a ON a.profile_id = p.id
+              LEFT JOIN hospitals h ON h.id = a.hospital_id
+              LEFT JOIN institutes i ON i.id = h.institute_type_id
+              LEFT JOIN clinics_categories c ON c.id = a.clinic_id
+              WHERE p.nic = ?";
+
+
+    $stmt = mysqli_prepare($conn, $query);
+    if (!$stmt) {
+        return ['status' => 'error', 'message' => 'Error preparing query: ' . mysqli_error($conn)];
+    }
+
+    mysqli_stmt_bind_param($stmt, 's', $nic);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    $patient = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $patient[] = $row;
+    }
+
+    mysqli_stmt_close($stmt);
+
+    return !empty($patient)
+        ? ['status' => 'success', 'data' => $patient, 'message' => 'Patient fetched successfully.']
+        : ['status' => 'error', 'message' => 'No patient found.'];
 }
 
 

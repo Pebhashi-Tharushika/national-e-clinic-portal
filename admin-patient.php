@@ -105,19 +105,19 @@
       <!-- Form Fields -->
       <div class="row mb-3">
         <div class="col-md-4">
-          <label class="form-label">Patient Name</label>
-          <input type="text" class="form-control input-text" readonly>
+          <label for="patient-name" class="form-label">Patient Name</label>
+          <input id="patient-name" type="text" class="form-control input-text" readonly>
         </div>
         <div class="col-md-4">
-          <label class="form-label">Clinic</label>
-          <select class="form-select input-select" disabled>
-            <option value="">Select Clinic</option>
+          <label for="patient-clinic" class="form-label">Clinic</label>
+          <select id="patient-clinic" class="form-select input-select" disabled>
+            <option value="" hidden>Select Clinic</option>
           </select>
         </div>
         <div class="col-md-4">
-          <label class="form-label">Hospital</label>
-          <select class="form-select input-select" disabled>
-            <option>Select Hospital</option>
+          <label for="patient-hospital" class="form-label">Hospital</label>
+          <select id="patient-hospital" class="form-select input-select" disabled>
+            <option hidden value="">Select Hospital</option>
           </select>
         </div>
         <!-- <div class="col-md-2">
