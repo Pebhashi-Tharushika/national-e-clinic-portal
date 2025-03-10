@@ -149,5 +149,42 @@ function getPatientInfoByNic($nic, $provinceTable)
         : ['status' => 'error', 'message' => 'No patient found.'];
 }
 
+function getPatientClinicInfo($provinceTable, $nic, $clinic, $hospital)
+{
+    global $conn;
+
+    $query = "SELECT a.appointment_date, a.time_period, a.status 
+            FROM `$provinceTable` a 
+            JOIN patient_profiles p ON p.id = a.profile_id
+            JOIN clinics_categories c ON c.id = a.clinic_id
+            JOIN hospitals h ON h.id = a.hospital_id
+            WHERE p.nic=? AND c.clinic_name=? AND h.hospital_name=?";
+
+    $stmt = mysqli_prepare($conn, $query);
+    if (!$stmt) {
+        return ['status' => 'error', 'message' => 'Error preparing query: ' . mysqli_error($conn)];
+    }
+
+    mysqli_stmt_bind_param($stmt, 'sss', $nic,$clinic, $hospital);
+
+    mysqli_stmt_execute($stmt);
+
+    $result = mysqli_stmt_get_result($stmt);
+
+    $visits = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $visits[] = $row;
+    }
+
+    mysqli_stmt_close($stmt);
+
+    return !empty($visits)
+        ? ['status' => 'success', 'data' => $visits, 'message' => 'Patient visit fetched successfully.']
+        : ['status' => 'error', 'message' => 'No patient visit found.'];
+
+
+
+}
+
 
 ?>

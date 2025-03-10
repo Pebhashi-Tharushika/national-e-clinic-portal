@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initialize table
   var tablePersonalInfo = $('#patientTable').DataTable({
     paging: true,
-    lengthMenu: [10, 20, 30, 50],
+    lengthMenu: [10, 25, 50, 100],
     searching: true,
     ordering: true,
     info: true,
@@ -437,9 +437,18 @@ document.addEventListener("DOMContentLoaded", function () {
   const clinicOfPatient = document.getElementById('patient-clinic');
   const hospitalOfPatient = document.getElementById('patient-hospital');
 
+  const errorMessageClinic = document.querySelector('#select-clinic-wrapper .invalid-field');
+  const errorMessageHospital = document.querySelector('#select-hospital-wrapper .invalid-field');
+
+  let selectedClinic = '';
+  let selectedHospital = '';
+  let patientProvince = '';
+  let searchText = '';
+
   btnSearchPatient?.addEventListener('click', () => {
-    let searchText = searchInputNic.value.trim();
-    console.log(searchText);
+    resetPreviousData();
+
+    searchText = searchInputNic.value.trim();
 
     if (searchText === '') {
       errorMessageNic.style.display = 'block'; // Show error message
@@ -449,10 +458,9 @@ document.addEventListener("DOMContentLoaded", function () {
         url: `/national-e-clinic-portal/includes/admin-patient/admin-patient-fetch.inc.php?nic=${searchText}`,
         contentType: "application/json",
         success: function (response) {
-          resetPreviousData();
           if (response.status === "success") {
-            console.log(response.data);
-            populatePatientClinicData(response.data);
+            populatePatientClinicData(response.data.patientInfo);
+            patientProvince = response.data.province;
           } else if (response.status === "error") {
             if (response.message === 'Invalid province.') {
               alert('No patient found for this NIC.')
@@ -469,20 +477,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Remove error message when the user starts typing
   searchInputNic?.addEventListener('input', () => {
-    errorMessageNic.style.display = 'none'; // Hide error message
+    resetPreviousData();
   });
 
-  function resetPreviousData(){
+  function resetPreviousData() {
     nameOfPatient.value = '';
     hospitalOfPatient.innerHTML = `<option value="" hidden>Select Hospital</option>`;
     clinicOfPatient.innerHTML = `<option value="" hidden>Select Clinic</option>`;
 
     hospitalOfPatient.disabled = true;
     clinicOfPatient.disabled = true;
+
+    patientProvince = '';
+    selectedClinic = '';
+    selectedHospital = '';
+
+    hideErrorMessage();
+    clearPatientClinicTable();
+  }
+
+  function hideErrorMessage() {
+    errorMessageNic.style.display = 'none';
+    errorMessageClinic.style.display = 'none';
+    errorMessageHospital.style.display = 'none';
   }
 
   function populatePatientClinicData(data) {
-
     var patient = data[0];
     var name = patient.first_name + " " + patient.last_name;
     nameOfPatient.value = name;
@@ -496,10 +516,10 @@ document.addEventListener("DOMContentLoaded", function () {
     let clinicSet = new Set();
 
     data.forEach(d => {
-      var hospital = d.hospital_name + " " + d.institute_type;
+      var hospital = d.hospital_name;
       var clinic = d.clinic_name;
 
-      hospitalSet.add(hospital.trim()); // Add only unique values
+      hospitalSet.add(hospital.trim());
       clinicSet.add(clinic.trim());
     });
 
@@ -507,23 +527,152 @@ document.addEventListener("DOMContentLoaded", function () {
     hospitalOfPatient.disabled = false;
     clinicOfPatient.disabled = false;
 
-
-    // Append unique hospitals
     hospitalSet.forEach(hospital => {
-        if (hospital) {
-            hospitalOfPatient.innerHTML += `<option value="${hospital}">${hospital}</option>`;
-        }
+      if (hospital) {
+        var displayText = hospital + " " + data.find(d => d.hospital_name === hospital).institute_type; // Concatenate hospital_name and institute_type
+        hospitalOfPatient.innerHTML += `<option value="${hospital}">${displayText}</option>`;
+      }
     });
 
-    // Append unique clinics
     clinicSet.forEach(clinic => {
-        if (clinic) {
-            clinicOfPatient.innerHTML += `<option value="${clinic}">${clinic}</option>`;
-        }
+      if (clinic) {
+        clinicOfPatient.innerHTML += `<option value="${clinic}">${clinic}</option>`;
+      }
     });
   }
 
 
+
+  /* ---------------------------------- patient's clinic -data table --------------------------------- */
+
+
+  let tableClinicInfo = $('#clinicTable').DataTable({
+    lengthMenu: [10, 25, 50, 100],
+    drawCallback: function (settings) { // Add event listener to redraw tooltips when the table is redrawn or when page changes
+      initializeTooltips(); // Initialize tooltips after each table redraw (page change)
+    }
+  });
+
+  $(".filter-btn-group .btn").click(function () {
+    $(".filter-btn-group .btn").removeClass("active");
+    $(this).addClass("active");
+
+    let filter = $(this).data("filter");
+
+    if (filter === "all") {
+      tableClinicInfo.column(3).search("").draw();
+    } else {
+      tableClinicInfo.column(3).search('^' + filter + '$', true, false).draw();
+    }
+  });
+
+
+  function findSelectedOption(ele) {
+    let selectedValue = "";
+    ele.querySelectorAll('option').forEach(op => {
+      if (op.selected) {
+        selectedValue = op.value;
+      }
+    });
+    return selectedValue;
+  }
+
+
+  function populatePatientClinicTable() {
+    if (searchText === '') {
+      errorMessageNic.style.display = 'block';
+    }
+    else if (selectedClinic === '') {
+      errorMessageClinic.style.display = 'block';
+    }
+    else if (selectedHospital === '') {
+      errorMessageHospital.style.display = 'block';
+    } else {
+      $.ajax({
+        type: 'POST',
+        url: `/national-e-clinic-portal/includes/admin-patient/admin-patient-fetch.inc.php`,
+        contentType: "application/json",
+        dataType: "json",
+        data: JSON.stringify({
+          province: patientProvince.trim(),
+          nic: searchText.trim(),
+          clinic: selectedClinic.trim(),
+          hospital: selectedHospital.trim()
+        })
+        ,
+        success: function (response) {
+          if (response.status === "success") {
+            insertClinicVisitTableData(response.data);
+          } else if (response.status === "error") {
+            clearPatientClinicTable();
+            alert(response.message);
+          }
+
+        },
+        error: function (xhr, status, error) {
+          alert('Error updating patient: ' + error);
+        }
+      });
+    }
+
+  }
+
+  clinicOfPatient.addEventListener('change', event => {
+    errorMessageClinic.style.display = 'none';
+    selectedClinic = findSelectedOption(event.target);
+    populatePatientClinicTable();
+  });
+
+  hospitalOfPatient.addEventListener('change', event => {
+    errorMessageHospital.style.display = 'none';
+    selectedHospital = findSelectedOption(event.target);
+    populatePatientClinicTable();
+  });
+
+  function insertClinicVisitTableData(visits) {
+    tableClinicInfo.clear(); // Clear existing data
+
+    if (visits.length === 0) {
+      return;
+    }
+
+    visits.forEach(visit => {
+
+      let date = visit.appointment_date || '';
+      let time = visit.time_period || '';
+      let status = visit.status || '';
+
+      // Todo : upto now get randdomly visit or not
+      let randomValue = Math.floor(Math.random() * 2); // Returns either 0 or 1
+      let visitStatus = randomValue === 1 ? 'Visited' : 'Not Visited';
+
+      //Todo
+      let doctor = 'Dr. Smith';
+
+      // Add the new row
+      tableClinicInfo.row.add([
+        date,
+        time,
+        status,
+        visitStatus,
+        doctor,
+        `<div class="show-prescription" data-bs-toggle="modal" data-bs-target="#presription-modal">
+              <i class="fa-solid fa-eye" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Show Prescription" 
+              data-bs-custom-class="custom-tooltip" data-bs-offset="0,15"></i>
+          </div>`,
+      ]);
+
+      // Redraw the table after each insertion
+      tableClinicInfo.draw();
+    });
+
+    initializeTooltips();
+  }
+
+  function clearPatientClinicTable() {
+    tableClinicInfo.clear();
+    tableClinicInfo.draw();
+  }
 
 
 });

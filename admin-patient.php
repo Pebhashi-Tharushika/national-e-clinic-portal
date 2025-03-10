@@ -13,7 +13,7 @@
         information.</h6>
     </div>
 
-    <div class="patient-info" id="patient-info-title">
+    <div class="patient-info patient-title" id="sub-title1">
       <h4>Basic Personal Information of Patients</h4>
     </div>
 
@@ -51,9 +51,9 @@
 
     <div class="patient-info" id="patient-info-table">
 
-      <div id="tblWrapper">
+      <div class="tblWrapper">
 
-        <div id="tblContainer">
+        <div class="tblContainer">
           <table id="patientTable" class="table table-bordered table-striped">
             <thead>
               <tr>
@@ -83,7 +83,7 @@
 
     </div>
 
-    <div class="patient-info" id="patient-info-title">
+    <div class="patient-info patient-title" id="sub-title2">
       <h4>Medical Clinic Information of Patients</h4>
     </div>
 
@@ -99,94 +99,68 @@
           <button class="btn" id="btn-search-patient">Search <i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
 
-        <div class="invalid-field">required*</div>
+        <div class="invalid-field" id="nic-required">required*</div>
       </div>
 
       <!-- Form Fields -->
-      <div class="row mb-3">
+      <div class="row mb-4">
+
         <div class="col-md-4">
           <label for="patient-name" class="form-label">Patient Name</label>
           <input id="patient-name" type="text" class="form-control input-text" readonly>
         </div>
-        <div class="col-md-4">
-          <label for="patient-clinic" class="form-label">Clinic</label>
-          <select id="patient-clinic" class="form-select input-select" disabled>
-            <option value="" hidden>Select Clinic</option>
-          </select>
-        </div>
-        <div class="col-md-4">
-          <label for="patient-hospital" class="form-label">Hospital</label>
-          <select id="patient-hospital" class="form-select input-select" disabled>
-            <option hidden value="">Select Hospital</option>
-          </select>
-        </div>
-        <!-- <div class="col-md-2">
-            <label class="form-label">Dropdown</label>
-            <select class="form-select">
-              <option>Option 1</option>
-              <option>Option 2</option>
+
+        <div class="col-md-4" id="select-clinic-wrapper">
+          <div id="select-clinic-container">
+            <label for="patient-clinic" class="form-label">Clinic</label>
+            <select id="patient-clinic" class="form-select input-select" disabled>
+              <option value="" hidden>Select Clinic</option>
             </select>
           </div>
-          <div class="col-md-2">
-            <label class="form-label">Last 6 months</label>
-            <select class="form-select">
-              <option>Last 6 months</option>
-              <option>Last 1 year</option>
+          <div class="invalid-field" id="clinic-required">required*</div>
+        </div>
+
+        <div class="col-md-4" id="select-hospital-wrapper">
+          <div id="select-clinic-container">
+            <label for="patient-hospital" class="form-label">Hospital</label>
+            <select id="patient-hospital" class="form-select input-select" disabled>
+              <option hidden value="">Select Hospital</option>
             </select>
-          </div> -->
+          </div>
+          <div class="invalid-field" id="hospital-required">required*</div>
+        </div>
       </div>
 
       <!-- Filter Buttons -->
       <div class="mb-3">
         <div class="btn-group filter-btn-group" role="group">
-          <button type="button" class="btn btn-light active" data-filter="all">ALL</button>
-          <button type="button" class="btn btn-light" data-filter="approved">Approved</button>
-          <button type="button" class="btn btn-light" data-filter="pending">Pending</button>
-          <button type="button" class="btn btn-light" data-filter="rejected">Rejected</button>
+          <button type="button" class="btn active" data-filter="all">ALL</button>
+          <button type="button" class="btn" data-filter="visited">VISIT</button>
+          <button type="button" class="btn" data-filter="not visited">NOT VISIT</button>
         </div>
       </div>
 
-      <!-- Data Table -->
-      <table id="appointmentTable" class="display table table-bordered">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Appointment Status</th>
-            <th>Absent/Present</th>
-            <th>Doctor</th>
-            <th>Prescriptions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>2025-03-01</td>
-            <td>10:00 AM</td>
-            <td>Approved</td>
-            <td>Present</td>
-            <td>Dr. Smith</td>
-            <td>Paracetamol</td>
-          </tr>
-          <tr>
-            <td>2025-03-02</td>
-            <td>11:30 AM</td>
-            <td>Pending</td>
-            <td>Absent</td>
-            <td>Dr. John</td>
-            <td>Ibuprofen</td>
-          </tr>
-          <tr>
-            <td>2025-03-03</td>
-            <td>02:00 PM</td>
-            <td>Rejected</td>
-            <td>Absent</td>
-            <td>Dr. Lee</td>
-            <td>Aspirin</td>
-          </tr>
-        </tbody>
-      </table>
 
-      <!-- Pagination (Handled by DataTables) -->
+      <!-- Data Table -->
+      <div class="tblWrapper">
+        <div class="tblContainer">
+          <table id="clinicTable" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Appointment Status</th>
+                <th>Visit Status</th>
+                <th>Doctor</th>
+                <th>Prescriptions</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
 
     </div>
 
@@ -311,6 +285,24 @@
             <button type="button" class="btn btn-secondary me-2 mt-2" id="btnClear">Clear</button>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- patient prescription - modal -->
+  <div class="modal" tabindex="-1" id="presription-modal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content" id="m-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Patient Prescription</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+
+        </div>
+
       </div>
     </div>
   </div>
