@@ -13,6 +13,10 @@
         information.</h6>
     </div>
 
+    <p class="placeholder-glow patient-info">
+      <span class="placeholder col-12 placeholder-xs"></span>
+    </p>
+    
     <div class="patient-info patient-title" id="sub-title1">
       <h4>Basic Personal Information of Patients</h4>
     </div>
@@ -83,6 +87,10 @@
 
     </div>
 
+    <p class="placeholder-glow patient-info">
+      <span class="placeholder col-12 placeholder-xs"></span>
+    </p>
+
     <div class="patient-info patient-title" id="sub-title2">
       <h4>Medical Clinic Information of Patients</h4>
     </div>
@@ -103,7 +111,7 @@
       </div>
 
       <!-- Form Fields -->
-      <div class="row mb-4">
+      <div class="row" id="input-select-wrapper">
 
         <div class="col-md-4">
           <label for="patient-name" class="form-label">Patient Name</label>
@@ -131,8 +139,17 @@
         </div>
       </div>
 
-      <!-- Filter Buttons -->
-      <div class="mb-3">
+      <!-- Time Filters and Filter Buttons -->
+      <div class="mb-2" id="filter-wrapper">
+        <div id="filter-dropdown">
+          <select id="time-filter" class="form-select input-select">
+            <option selected value="0">last 6 months</option>
+            <option value="1">recent year</option>
+            <option value="2">last year</option>
+            <option value="3">last 2 years</option>
+            <option value="4">all</option>
+          </select>
+        </div>
         <div class="btn-group filter-btn-group" role="group">
           <button type="button" class="btn active" data-filter="all">ALL</button>
           <button type="button" class="btn" data-filter="visited">VISIT</button>

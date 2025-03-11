@@ -617,13 +617,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   }
 
-  clinicOfPatient.addEventListener('change', event => {
+  clinicOfPatient?.addEventListener('change', event => {
     errorMessageClinic.style.display = 'none';
     selectedClinic = findSelectedOption(event.target);
     populatePatientClinicTable();
   });
 
-  hospitalOfPatient.addEventListener('change', event => {
+  hospitalOfPatient?.addEventListener('change', event => {
     errorMessageHospital.style.display = 'none';
     selectedHospital = findSelectedOption(event.target);
     populatePatientClinicTable();

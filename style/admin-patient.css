@@ -3,13 +3,15 @@
   background-color: var(--background-color);
 
   --p-color-1: #757575;
+  --p-color-2: #0d6efd;
+
   --d-color-1: #de3333;
   --d-color-2: #02ff18;
   --d-color-3: #3c57e7;
   --d-color-4: #0049b2;
   --d-color-5: #4884db;
   --d-color-6: #086b98;
-  --d-color-7: #0d6efd;
+  
 }
 
 #patient-info-wrapper {
@@ -50,9 +52,6 @@
   letter-spacing: 0.05rem;
 }
 
-#sub-title2{
-  margin-top: 7vh;
-}
 
 /* --------------------- search -------------------------- */
 
@@ -135,6 +134,10 @@
 
 
 /* ---------------- patients table -------------- */
+
+#patient-info-table{
+  margin-bottom: 7vh;
+}
 
 .tblWrapper {
   width: 100%;
@@ -257,7 +260,7 @@ table.dataTable td.dataTables_empty {
 }
 
 .modal-header>h1 {
-  color: var(--d-color-7);
+  color: var(--p-color-2);
 }
 
 /* ---------------------------------- clinic info section -------------------------------------*/
@@ -333,6 +336,10 @@ table.dataTable td.dataTables_empty {
   left: 3.5%;
 }
 
+#input-select-wrapper{
+  margin-bottom: 2rem;
+}
+
 /* ---------------- clinic -info table ------------------------ */
 #select-clinic-wrapper{
   position: relative;
@@ -340,6 +347,12 @@ table.dataTable td.dataTables_empty {
 
 #select-hospital-wrapper{
   position: relative;
+}
+
+#filter-wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .filter-btn-group .btn {
@@ -357,3 +370,15 @@ table.dataTable td.dataTables_empty {
   border: 1px solid var(--d-color-5);
 }
 
+/* ----------------------------- placeholder ------------------------ */
+.placeholder-glow{
+  margin-bottom: 0;
+}
+
+.placeholder{
+  background-color: var(--color-3);
+}
+
+.placeholder-xs{
+  min-height: 0.1rem;
+}
