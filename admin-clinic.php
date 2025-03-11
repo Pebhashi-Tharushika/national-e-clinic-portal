@@ -20,15 +20,19 @@
         administrators must ensure that clinic details are maintained systematically and updated regularly.</h6>
     </div>
 
+    <p class="placeholder-glow patient-info">
+      <span class="placeholder col-12 placeholder-xs"></span>
+    </p>
+
     <div class="patient-clinic" id="clinic-category-title">
       <h4>All Clinic Categories</h4>
     </div>
 
+
     <div class="patient-clinic" id="clinic-categories-container">
       <div id="add-clinic-categories">
         <p>
-          <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-clinics"
-            aria-expanded="false" aria-controls="collapseWidthExample">
+          <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-clinics">
             <i class="fa-solid fa-circle-plus"></i>Add Clinic Category
           </button>
         </p>
@@ -67,152 +71,289 @@
 
     </div>
 
-    <!-- <div class="patient-clinic" id="patient-clinic-content2">
-      <h4>Central Province clinic</h4>
+    <p class="placeholder-glow patient-info" id="placeholder2">
+      <span class="placeholder col-12 placeholder-xs"></span>
+    </p>
 
-      <div id="filter-container">
+    <div class="patient-clinic" id="clinic-detail-title">
+      <h4>Details of All Clinics</h4>
+    </div>
 
-        <div id="filter-form">
-          <div id="filter-title">
-            <i class="fa-regular fa-filter-list"></i>
-            <p>Filter By:</p>
-          </div>
+    <div class="patient-clinic" id="clinic-detail-container">
+      <div id="btnAddClinic-wrapper">
+        <button class="btn" id="btnAddClinic" type="button" data-bs-toggle="modal" data-bs-target="#add-clinic-form">
+          <i class="fa-solid fa-circle-plus"></i>Add Clinic
+        </button>
+      </div>
+      <div id="drpdwnCategory-wrapper">
+        <label for="drpdwnCategory">Clinic</label>
+        <select id="drpdwnCategory" class="form-select input-select">
 
-          <div id="filter-options">
+        </select>
+      </div>
 
-            <div>
-              <input type="checkbox" id="cb-hospital" name="filter" value="cb-hospital">
-              <label for="hospital">Hospital</label>
-            </div>
 
-            <div>
-              <input type="checkbox" id="cb-clinic" name="filter" value="cb-clinic">
-              <label for="clinic">Clinic</label>
-            </div>
+      <div class="container mt-4">
+        <ul class="nav nav-tabs" id="clinicTabs">
+          <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#central">Central</a></li>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#north">Northern</a></li>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#east">Eastern</a></li>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#south">Southern</a></li>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#west">Western</a></li>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#north-central">North Central</a></li>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#north-west">North Western</a></li>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#uva">Uva</a></li>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#sabaragamuwa">Sabaragamuwa</a></li>
+        </ul>
 
-            <div>
-              <input type="checkbox" id="cb-patient" name="filter" value="cb-patient">
-              <label for="patient">Patient</label>
-            </div>
-
-            <div>
-              <input type="checkbox" id="cb-user" name="filter" value="cb-user">
-              <label for="user">User</label>
-            </div>
-            <div>
-              <input type="checkbox" id="cb-clinic-date" name="filter" value="cb-appointment-date">
-              <label for="appointment-date">Appointment Date</label>
-            </div>
-
-            <div>
-              <input type="checkbox" id="cb-reserved-date" name="filter" value="cb-reserved-date">
-              <label for="reserved-date">Reserved Date</label>
-            </div>
-
-            <div>
-              <input type="checkbox" id="cb-status" name="filter" value="cb-status">
-              <label for="status">Status</label>
-            </div>
-
-          </div>
-
-          <div id="filter-select">
-            <div class="row row-cols-6 gx-4 gy-2">
-              <div class="col" data-filter="hospital">
-                <div class="ps-1 pe-1 pt-0 pb-1">
-                  <select name="hospital" id="hospital">
-                    <option value="" hidden>Select Hospital</option>
-                  </select>
-                  <span id="hospital-error" class="error-message">required*</span>
-                </div>
-              </div>
-              <div class="col" data-filter="clinic">
-                <div class="ps-1 pe-1 pt-0 pb-1">
-                  <select name="clinic" id="clinic">
-                    <option value="" hidden>Select Clinic</option>
-                  </select>
-                  <span id="clinic-error" class="error-message">required*</span>
-                </div>
-              </div>
-              <div class="col" data-filter="patient">
-                <div class="ps-1 pe-1 pt-0 pb-1">
-                  <input type="text" id="patient" name="patient" placeholder="Patient NIC">
-                  <span id="patient-error" class="error-message">required*</span>
-                </div>
-              </div>
-              <div class="col" data-filter="user">
-                <div class="ps-1 pe-1 pt-0 pb-1">
-                  <input type="text" id="user" name="user" placeholder="User E-Mail">
-                  <span id="user-error" class="error-message">required*</span>
-                </div>
-              </div>
-              <div class="col" data-filter="appointment-date">
-                <div class="ps-1 pe-1 pt-0 pb-1">
-                  <input type="text" id="appointment-date" name="appointment-date" placeholder="Appointment Date"
-                    onfocus="(this.type='date')" onblur="(this.type='text')">
-                  <span id="appointment-date-error" class="error-message">required*</span>
-                </div>
-              </div>
-              <div class="col" data-filter="reserved-date">
-                <div class="ps-1 pe-1 pt-0 pb-1">
-                  <input type="text" id="reserved-date" name="reserved-date" placeholder="Reserved Date"
-                    onfocus="(this.type='date')" onblur="(this.type='text')">
-                  <span id="reserved-date-error" class="error-message">required*</span>
-                </div>
-              </div>
-
-              <div class="col" data-filter="status">
-                <div class="ps-1 pe-1 pt-0 pb-1">
-                  <select name="status" id="status">
-                    <option value="" hidden>Select Status</option>
-                    <option value="approved">APPROVED</option>
-                    <option value="pending">PENDING</option>
-                    <option value="rejected">REJECTED</option>
-                  </select>
-                  <span id="status-error" class="error-message">required*</span>
-                </div>
-              </div>
+        <div class="tab-content mt-3">
+          <!-- Generate 9 Tables for Each Province -->
+          <div class="tab-pane fade show active" id="central">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Hospital</th>
+                    <th>Clinic Venue</th>
+                    <th>Clinic Date</th>
+                    <th>Clinic Time</th>
+                    <th>Active</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="centralTable">
+                  <!-- Data will be inserted here -->
+                </tbody>
+              </table>
             </div>
           </div>
 
-          <div id="button-wrapper">
-            <button id="b-reset" disabled>RESET</button>
-            <button id="b-search" disabled>SEARCH</button>
+          <!-- Repeat for all provinces -->
+          <div class="tab-pane fade" id="north">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Hospital</th>
+                    <th>Clinic Venue</th>
+                    <th>Clinic Date</th>
+                    <th>Clinic Time</th>
+                    <th>Active</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="northTable"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="east">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Hospital</th>
+                    <th>Clinic Venue</th>
+                    <th>Clinic Date</th>
+                    <th>Clinic Time</th>
+                    <th>Active</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="eastTable"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="south">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Hospital</th>
+                    <th>Clinic Venue</th>
+                    <th>Clinic Date</th>
+                    <th>Clinic Time</th>
+                    <th>Active</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="southTable"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="west">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Hospital</th>
+                    <th>Clinic Venue</th>
+                    <th>Clinic Date</th>
+                    <th>Clinic Time</th>
+                    <th>Active</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="westTable"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="north-central">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Hospital</th>
+                    <th>Clinic Venue</th>
+                    <th>Clinic Date</th>
+                    <th>Clinic Time</th>
+                    <th>Active</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="north-centralTable"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="north-west">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Hospital</th>
+                    <th>Clinic Venue</th>
+                    <th>Clinic Date</th>
+                    <th>Clinic Time</th>
+                    <th>Active</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="north-westTable"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="uva">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Hospital</th>
+                    <th>Clinic Venue</th>
+                    <th>Clinic Date</th>
+                    <th>Clinic Time</th>
+                    <th>Active</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="uvaTable"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="sabaragamuwa">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Hospital</th>
+                    <th>Clinic Venue</th>
+                    <th>Clinic Date</th>
+                    <th>Clinic Time</th>
+                    <th>Active</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="sabaragamuwaTable"></tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- patient update form - modal -->
+  <div class="modal" id="add-clinic-form" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">Update Patient Details</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container overflow-hidden">
+            <form id="updatePatientForm">
+              <div class="row">
+                <!-- Left Column -->
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="patientName" class="form-label">Patient Name</label>
+                    <input type="text" class="form-control" id="patientName" placeholder="Enter patient name">
+                  </div>
+                  <div class="mb-3">
+                    <label for="nic" class="form-label">NIC</label>
+                    <input type="text" class="form-control" id="nic" placeholder="Enter NIC">
+                  </div>
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter email">
+                  </div>
+                  <div class="mb-3">
+                    <label for="phone" class="form-label">Phone No.</label>
+                    <input type="text" class="form-control" id="phone" placeholder="Enter phone number">
+                  </div>
+                  <div class="mb-3">
+                    <label for="province" class="form-label">Province</label>
+                    <select class="form-select" id="province" name="province">
+                      <option value="" disabled selected>Select Province</option>
+                      <option value="Central">Central</option>
+                      <option value="Eastern">Eastern</option>
+                      <option value="North Central">North Central</option>
+                      <option value="North Western">North Western</option>
+                      <option value="Northern">Northern</option>
+                      <option value="Sabaragamuwa">Sabaragamuwa</option>
+                      <option value="Southern">Southern</option>
+                      <option value="Uva">Uva</option>
+                      <option value="Western">Western</option>
+                    </select>
+                  </div>
+
+                </div>
+
+                <!-- Right Column -->
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="address1" class="form-label">Address Line 1</label>
+                    <input type="text" class="form-control" id="address1" placeholder="Enter address line 1">
+                  </div>
+                  <div class="mb-3">
+                    <label for="address2" class="form-label">Address Line 2</label>
+                    <input type="text" class="form-control" id="address2" placeholder="Enter address line 2">
+                  </div>
+                  <div class="mb-3">
+                    <label for="address3" class="form-label">Address Line 3</label>
+                    <input type="text" class="form-control" id="address3" placeholder="Enter address line 3">
+                  </div>
+                  <div class="mb-3">
+                    <label for="dob" class="form-label">Date of Birth</label>
+                    <input type="date" class="form-control" id="dob">
+                  </div>
+
+
+                </div>
+              </div>
+            </form>
           </div>
         </div>
-
-
-
+        <div class="modal-footer">
+          <!-- Buttons -->
+          <div class="d-flex justify-content-end pt-4">
+            <button type="button" class="btn btn-primary me-2 mt-2" id="btnUpdate">Save changes</button>
+            <button type="button" class="btn btn-secondary me-2 mt-2" id="btnClear">Clear</button>
+          </div>
+        </div>
       </div>
-
-      <div id="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Patient Name</th>
-              <th>Patient NIC</th>
-              <th>Hospital</th>
-              <th>Clinic</th>
-              <th>Appointment Date</th>
-              <th>Appointment Time</th>
-              <th>User Name</th>
-              <th>User Email</th>
-              <th>Reserved At</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-          <tfoot>
-            <tr>
-              <td colspan="11">Not found clinics</td>
-            </tr>
-          </tfoot>
-
-        </table>
-      </div>
-
-    </div> -->
-
+    </div>
   </div>
 </section>

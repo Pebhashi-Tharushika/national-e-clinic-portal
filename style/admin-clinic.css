@@ -14,6 +14,7 @@
   width: 95%;
   margin: 0 0 3vh auto;
 }
+
 /* ---------------------------- header - title ----------------------- */
 
 #patient-clinic-title {
@@ -28,7 +29,8 @@
 
 /* -------------------------------- clinic categories --------------------------- */
 
-#clinic-category-title > h4{
+#clinic-category-title>h4,
+#clinic-detail-title>h4 {
   text-align: center;
   margin: 0;
   color: var(--color-1);
@@ -38,18 +40,19 @@
   letter-spacing: 0.05rem;
 }
 
-#clinic-categories-container{
+#clinic-categories-container {
   box-shadow: 0px 0px 5px 0px rgb(16 37 161 / 31%);
   display: flex;
   flex-direction: column;
   padding: 1rem 0;
 }
 
-#add-clinic-categories{
+#add-clinic-categories {
   padding: 1rem 5rem 0;
 }
 
-#add-clinic-categories >p >button{
+#add-clinic-categories>p>button,
+#btnAddClinic {
   background-color: var(--color-4);
   color: var(--color-2);
   box-shadow: rgba(63, 172, 233, 0.36) 0px 0px 0px 5px, rgb(13 110 253 / 46%) 0px 0px 0px 2px;
@@ -63,11 +66,17 @@
   justify-content: space-between;
 }
 
-#add-clinic-categories >p >button:hover{
-box-shadow: var(--color-4) 0px 0px 0px 4px, var(--color-4) 0px 0px 0px 2px;
+#btnAddClinic {
+  width: 7.3vw;
+  float:right;
 }
 
-#new-clinic-category-container{
+#add-clinic-categories>p>button:hover,
+#btnAddClinic:hover {
+  box-shadow: var(--color-4) 0px 0px 0px 4px, var(--color-4) 0px 0px 0px 2px;
+}
+
+#new-clinic-category-container {
   padding: 1rem;
 }
 
@@ -75,11 +84,11 @@ box-shadow: var(--color-4) 0px 0px 0px 4px, var(--color-4) 0px 0px 0px 2px;
   font-weight: bold;
 }
 
-#new-clinic-category-container>#input-wrapper{
-margin-bottom: 0.75rem;
+#new-clinic-category-container>#input-wrapper {
+  margin-bottom: 0.75rem;
 }
 
-#new-clinic-category-container>button{
+#new-clinic-category-container>button {
   font-size: 1rem;
   line-height: 1;
   float: right;
@@ -92,19 +101,43 @@ margin-bottom: 0.75rem;
   margin-top: 0.1rem;
 }
 
-#clinic-categories-content{
+#clinic-categories-content {
   /* background-color: var(--color-7); */
   padding: 1rem 7rem;
 }
 
-#clinic-categories-content ul{
+#clinic-categories-content ul {
   list-style-type: disclosure-closed;
   padding-left: 2.5rem;
 }
 
-#clinic-categories-content ul li{
+#clinic-categories-content ul li {
   padding: 0.3rem 0;
 }
 
+/* ----------------------------- clinic detail ----------------------- */
 
+#placeholder2{
+  margin-top: 3vh;
+}
 
+#clinic-detail-container{
+  display: flex;
+  flex-direction: column;
+}
+
+#btnAddClinic-wrapper{
+  margin: 0.3rem 15rem;
+}
+
+#drpdwnCategory-wrapper{
+  margin: 1rem 15rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+#drpdwnCategory-wrapper>label{
+  font-weight: bold;
+  text-transform: uppercase;
+}

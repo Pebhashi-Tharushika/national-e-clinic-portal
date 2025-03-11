@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const collapseClinics = document.querySelector('#collapse-clinics');
 
+    const dropdownClinicCategories = document.getElementById('drpdwnCategory');
+
     let currentClinicCategories = []; // Fixed variable name typo
 
     getAllClinicCategories(); // Fetch existing categories on page load
@@ -28,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (response.status === 'success') {
                     currentClinicCategories.push({ id: response.id, clinic_name: newClinicCategory }); // add new clinic category
                     populateClinics(currentClinicCategories);// Re-render the clinic list
-                    
+                    populateClinicCategoryDropDown(currentClinicCategories);
                 } 
                 inputClinicCategory.value = ''; // Clear input field   
                 alert(response.message);
@@ -59,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (response.status === "success") {
                     currentClinicCategories = response.data; // Assign fetched categories
                     populateClinics(currentClinicCategories);
+                    populateClinicCategoryDropDown(currentClinicCategories);
                 } else {
                     alert(response.message);
                 }
@@ -83,10 +86,27 @@ document.addEventListener('DOMContentLoaded', () => {
         let itemPerColumn = Math.ceil(count / 3);
     
         clinics.forEach((clinic, index) => {
-            const EleLi = document.createElement("li");
-            EleLi.value = clinic.id;
-            EleLi.innerText = clinic.clinic_name;
-            clinicCols[Math.floor(index / itemPerColumn)].appendChild(EleLi);
+            const eleLi = document.createElement("li");
+            eleLi.value = clinic.id;
+            eleLi.innerText = clinic.clinic_name;
+            clinicCols[Math.floor(index / itemPerColumn)].appendChild(eleLi);
+        });
+    }
+
+    function populateClinicCategoryDropDown(clinics){
+
+        dropdownClinicCategories.innerHTML = '';
+
+        clinics.forEach((clinic, index) => {
+            const eleOption = document.createElement("option");
+            eleOption.value = clinic.clinic_name;
+            eleOption.innerText = clinic.clinic_name;
+            dropdownClinicCategories.appendChild(eleOption);
+            
+            // Select the first option
+            if (index === 0) {
+                eleOption.selected = true;
+            }
         });
     }
 });
