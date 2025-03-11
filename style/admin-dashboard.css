@@ -1,13 +1,6 @@
 #admin-dashboard-container {
   width: 100%;
   background-color: var(--background-color);
- 
-  --d-color-1: #de3333;
-  --d-color-2: #02ff18;
-  --d-color-3: #3c57e7;
-  --d-color-4: #0049b2;
-  --d-color-5: #4884db;
-  --d-color-6: #086b98;
 }
 
 #overview-wrapper {

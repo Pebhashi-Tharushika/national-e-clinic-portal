@@ -1,71 +1,82 @@
-#main-section{
-    --background-color:#ebf4fc;
-    background-color: var(--background-color);
+#main-section {
+  --background-color: #ebf4fc;
+
+  --d-color-1: #de3333;
+  --d-color-2: #02ff18;
+  --d-color-3: #3c57e7;
+  --d-color-4: #0049b2;
+  --d-color-5: #4884db;
+  --d-color-6: #086b98;
+
+  --p-color-1: #757575;
+  --p-color-2: #0d6efd;
+
+  background-color: var(--background-color);
 }
 
 /* ------------------- side bar ------------------- */
 
 .menu {
-    background-color: var(--color-2);
-    color: var(--color-1);
-    border: 1px solid var(--color-1);
-    width: 19vw;
-    left: -212px;
-    position: fixed;
-    padding: 0.75rem 1.5rem 0.75rem 1rem;
-    display: flex;
-    justify-content: space-between;
-    transition: left 1s;
-    border-top-right-radius: 2.5rem;
-    border-bottom-right-radius: 2.5rem;
-    align-items: center;
-    font-size: 1.35rem;
-  }
-  
-  .menu.active {
-    background-color: var(--color-1);
-    color: var(--color-2);
-    border: none;
-  }
-  
-  .menu h3 {
-    font-size: 1.35rem;
-    margin: 0;
-  }
-  
-  .menu span {
-    width: 2rem;
-    height: 2rem;
-    position: relative;
-  }
-  
-  .menu span i {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  .menu:hover {
-    left: 0px;
-  }
-  
-  #mnu1 {
-    top: 17vh;
-  }
-  
-  #mnu2 {
-    top: 27vh;
-  }
-  
-  #mnu3 {
-    top: 37vh;
-  }
-  
-  #mnu4 {
-    top: 47vh;
-  }
-  
-  #mnu5 {
-    top: 57vh;
-  }
+  background-color: var(--color-2);
+  color: var(--color-1);
+  border: 1px solid var(--color-1);
+  width: 19vw;
+  left: -212px;
+  position: fixed;
+  padding: 0.75rem 1.5rem 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  transition: left 1s;
+  border-top-right-radius: 2.5rem;
+  border-bottom-right-radius: 2.5rem;
+  align-items: center;
+  font-size: 1.35rem;
+}
+
+.menu.active {
+  background-color: var(--color-1);
+  color: var(--color-2);
+  border: none;
+}
+
+.menu h3 {
+  font-size: 1.35rem;
+  margin: 0;
+}
+
+.menu span {
+  width: 2rem;
+  height: 2rem;
+  position: relative;
+}
+
+.menu span i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.menu:hover {
+  left: 0px;
+}
+
+#mnu1 {
+  top: 17vh;
+}
+
+#mnu2 {
+  top: 27vh;
+}
+
+#mnu3 {
+  top: 37vh;
+}
+
+#mnu4 {
+  top: 47vh;
+}
+
+#mnu5 {
+  top: 57vh;
+}

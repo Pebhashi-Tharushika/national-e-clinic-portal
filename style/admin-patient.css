@@ -1,17 +1,6 @@
 #admin-patient-container {
   width: 100%;
-  background-color: var(--background-color);
-
-  --p-color-1: #757575;
-  --p-color-2: #0d6efd;
-
-  --d-color-1: #de3333;
-  --d-color-2: #02ff18;
-  --d-color-3: #3c57e7;
-  --d-color-4: #0049b2;
-  --d-color-5: #4884db;
-  --d-color-6: #086b98;
-  
+  background-color: var(--background-color);  
 }
 
 #patient-info-wrapper {

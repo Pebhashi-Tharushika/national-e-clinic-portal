@@ -3,7 +3,6 @@
 require_once __DIR__ . '/../../includes/dbh.inc.php';
 
 
-// Handle AJAX delete request
 // if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'deleteClinic') {
 //     if (isset($_POST['id'], $_POST['province'])) {
 //         $clinicId = intval($_POST['id']); // Sanitize ID
@@ -193,38 +192,38 @@ function getHospitalsByProvinceAndDistrictAndCategory($hospital_category, $distr
 function getAllClinicCategories()
 {
     global $conn;
-        
-        $query = "SELECT * FROM clinics_categories";
 
-        $stmt = mysqli_prepare($conn, $query);
+    $query = "SELECT * FROM clinics_categories";
 
-        if ($stmt) {
-            mysqli_stmt_execute($stmt);
-            $result = mysqli_stmt_get_result($stmt);
+    $stmt = mysqli_prepare($conn, $query);
 
-            $clinicCategories = [];
-            while ($row = mysqli_fetch_assoc($result)) {
-                $clinicCategories[] = $row;
-            }
+    if ($stmt) {
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
 
-            mysqli_stmt_close($stmt);
-
-            return !empty($clinicCategories) ?
-                ['status' => 'success', 'data' => $clinicCategories, 'message' => 'Clinic categories fetched successfully.'] :
-                ['status' => 'error', 'message' => 'No clinic categories found.'];
-
-
-        } else {
-            return [
-                'status' => 'error',
-                'message' => 'Error during preparing query.'
-            ];
-
+        $clinicCategories = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $clinicCategories[] = $row;
         }
+
+        mysqli_stmt_close($stmt);
+
+        return !empty($clinicCategories) ?
+            ['status' => 'success', 'data' => $clinicCategories, 'message' => 'Clinic categories fetched successfully.'] :
+            ['status' => 'error', 'message' => 'No clinic categories found.'];
+
+
+    } else {
+        return [
+            'status' => 'error',
+            'message' => 'Error during preparing query.'
+        ];
+
+    }
 
 }
 
-function getClinicDetails($provinceTable,$provinceName,$hospital,$clinicCategory)
+function getClinicDetails($provinceTable, $provinceName, $hospital, $clinicCategory)
 {
     global $conn;
 
@@ -237,21 +236,21 @@ function getClinicDetails($provinceTable,$provinceName,$hospital,$clinicCategory
     $stmt = mysqli_prepare($conn, $query);
 
     if ($stmt) {
-        mysqli_stmt_bind_param($stmt, "ss", $hospital,$clinicCategory);
+        mysqli_stmt_bind_param($stmt, "ss", $hospital, $clinicCategory);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
 
         $clinics = [];
         while ($row = mysqli_fetch_assoc($result)) {
-            $clinics[] = $row; 
+            $clinics[] = $row;
         }
 
-        mysqli_stmt_close($stmt); 
+        mysqli_stmt_close($stmt);
 
         return !empty($clinics) ?
-                ['status' => 'success', 'data' => $clinics, 'message' => 'Clinic deatils fetched successfully.'] :
-                ['status' => 'error', 'message' => 'No clinic details found.'];
-  
+            ['status' => 'success', 'data' => $clinics, 'message' => 'Clinic deatils fetched successfully.'] :
+            ['status' => 'error', 'message' => 'No clinic details found.'];
+
     } else {
         return [
             'status' => 'error',
@@ -260,6 +259,29 @@ function getClinicDetails($provinceTable,$provinceName,$hospital,$clinicCategory
     }
 }
 
+// Function to add new clinic category
+function saveNewClinicCategory($clinicCategory)
+{
+    global $conn;
+    $query = "INSERT INTO clinics_categories (clinic_name) VALUES (?)";
+    $stmt = mysqli_prepare($conn, $query);
+
+    if (!$stmt) {
+        return [
+            'status' => 'error',
+            'message' => 'Error during preparing query: ' . mysqli_error($conn)
+        ];
+    }
+
+    mysqli_stmt_bind_param($stmt, 's', $clinicCategory);
+    $result = mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+    return $result
+        ? ['status' => 'success', 'message' => 'New clinic category added successfully.']
+        : ['status' => 'error', 'message' => 'New clinic category not added.'];
+
+}
 
 // Function to add a clinic
 function addClinic($province, $clinicName, $clinicPlace, $clinicDate, $clinicTime)

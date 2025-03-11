@@ -38,9 +38,12 @@
 
               <div id="new-clinic-category-container">
                 <label for="new-clinic-category" class="form-label">Clinic Category :</label>
-                <input type="text" class="form-control input-text" id="new-clinic-category"
-                  placeholder="Please enter name of clinic category">
-                <button class="btn btn-primary">Submit</button>
+                <div id="input-wrapper">
+                  <input type="text" class="form-control input-text" id="new-clinic-category"
+                    placeholder="Please enter name of clinic category">
+                  <div class="error-field">required*</div>
+                </div>
+                <button class="btn btn-primary" id="btnSubmit">Submit</button>
               </div>
 
             </div>

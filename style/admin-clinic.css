@@ -1,13 +1,6 @@
 #admin-clinic-container {
   width: 100%;
   background-color: var(--background-color);
-
-  --d-color-1: #de3333;
-  --d-color-2: #02ff18;
-  --d-color-3: #3c57e7;
-  --d-color-4: #0049b2;
-  --d-color-5: #4884db;
-  --d-color-6: #086b98;
 }
 
 #patient-clinic-wrapper {
@@ -82,7 +75,7 @@ box-shadow: var(--color-4) 0px 0px 0px 4px, var(--color-4) 0px 0px 0px 2px;
   font-weight: bold;
 }
 
-#new-clinic-category-container>#new-clinic-category{
+#new-clinic-category-container>#input-wrapper{
 margin-bottom: 0.75rem;
 }
 
@@ -90,6 +83,13 @@ margin-bottom: 0.75rem;
   font-size: 1rem;
   line-height: 1;
   float: right;
+}
+
+.error-field {
+  display: none;
+  color: var(--d-color-1);
+  font-size: 0.8rem;
+  margin-top: 0.1rem;
 }
 
 #clinic-categories-content{
