@@ -68,7 +68,7 @@
 
 #btnAddClinic {
   width: 7.3vw;
-  float:right;
+  float: right;
 }
 
 #add-clinic-categories>p>button:hover,
@@ -117,27 +117,74 @@
 
 /* ----------------------------- clinic detail ----------------------- */
 
-#placeholder2{
+#placeholder2 {
   margin-top: 3vh;
 }
 
-#clinic-detail-container{
+#clinic-detail-container {
   display: flex;
   flex-direction: column;
 }
 
-#btnAddClinic-wrapper{
+#btnAddClinic-wrapper {
   margin: 0.3rem 15rem;
 }
 
-#drpdwnCategory-wrapper{
+#drpdwnCategory-wrapper {
   margin: 1rem 15rem;
   display: flex;
   gap: 1rem;
   align-items: center;
 }
 
-#drpdwnCategory-wrapper>label{
+#drpdwnCategory-wrapper>label {
   font-weight: bold;
   text-transform: uppercase;
+}
+
+/* ------------------------------------- nav tabs -------------------------- */
+
+/* .nav-tabs{
+--bs-nav-tabs-link-active-color: var(--color-2);
+--bs-nav-tabs-link-active-bg: var(--color-4);
+--bs-nav-tabs-link-active-border-color: var(--color-4);
+--bs-nav-tabs-border-color: var(--color-4);
+--bs-nav-tabs-link-hover-border-color:var(--color-4)
+}
+
+
+
+.nav-tabs .nav-link:hover {
+  border-bottom: transparent !important;
+} */
+
+/* Change border color of the tab container */
+.nav-tabs {
+  border-bottom: 1.5px solid var(--color-4);
+}
+
+.nav-tabs .nav-link {
+  color: var(--p-color-2);
+}
+
+.nav-tabs .nav-link:not(.nav-link.active):hover {
+  border-color: var(--color-7) var(--color-7) transparent;
+  color: var(--color-4);
+}
+
+/* Change border color of the active tab */
+.nav-tabs .nav-link.active {
+  border-width: 1.5px;
+  border-color: var(--color-4) var(--color-4) transparent;
+  /* Top, Left-Right, Bottom */
+  background-color: var(--color-2);
+  color: var(--color-4);
+}
+
+#btn-toggle-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

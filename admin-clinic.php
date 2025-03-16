@@ -80,11 +80,13 @@
     </div>
 
     <div class="patient-clinic" id="clinic-detail-container">
+
       <div id="btnAddClinic-wrapper">
         <button class="btn" id="btnAddClinic" type="button" data-bs-toggle="modal" data-bs-target="#add-clinic-form">
           <i class="fa-solid fa-circle-plus"></i>Add Clinic
         </button>
       </div>
+
       <div id="drpdwnCategory-wrapper">
         <label for="drpdwnCategory">Clinic</label>
         <select id="drpdwnCategory" class="form-select input-select">
@@ -92,181 +94,12 @@
         </select>
       </div>
 
-
       <div class="container mt-4">
-        <ul class="nav nav-tabs" id="clinicTabs">
-          <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#central">Central</a></li>
-          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#north">Northern</a></li>
-          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#east">Eastern</a></li>
-          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#south">Southern</a></li>
-          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#west">Western</a></li>
-          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#north-central">North Central</a></li>
-          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#north-west">North Western</a></li>
-          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#uva">Uva</a></li>
-          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#sabaragamuwa">Sabaragamuwa</a></li>
-        </ul>
+        <!-- Tabs Navigation -->
+        <ul class="nav nav-tabs" id="clinicTabs"></ul>
 
-        <div class="tab-content mt-3">
-          <!-- Generate 9 Tables for Each Province -->
-          <div class="tab-pane fade show active" id="central">
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Hospital</th>
-                    <th>Clinic Venue</th>
-                    <th>Clinic Date</th>
-                    <th>Clinic Time</th>
-                    <th>Active</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="centralTable">
-                  <!-- Data will be inserted here -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Repeat for all provinces -->
-          <div class="tab-pane fade" id="north">
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Hospital</th>
-                    <th>Clinic Venue</th>
-                    <th>Clinic Date</th>
-                    <th>Clinic Time</th>
-                    <th>Active</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="northTable"></tbody>
-              </table>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="east">
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Hospital</th>
-                    <th>Clinic Venue</th>
-                    <th>Clinic Date</th>
-                    <th>Clinic Time</th>
-                    <th>Active</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="eastTable"></tbody>
-              </table>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="south">
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Hospital</th>
-                    <th>Clinic Venue</th>
-                    <th>Clinic Date</th>
-                    <th>Clinic Time</th>
-                    <th>Active</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="southTable"></tbody>
-              </table>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="west">
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Hospital</th>
-                    <th>Clinic Venue</th>
-                    <th>Clinic Date</th>
-                    <th>Clinic Time</th>
-                    <th>Active</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="westTable"></tbody>
-              </table>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="north-central">
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Hospital</th>
-                    <th>Clinic Venue</th>
-                    <th>Clinic Date</th>
-                    <th>Clinic Time</th>
-                    <th>Active</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="north-centralTable"></tbody>
-              </table>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="north-west">
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Hospital</th>
-                    <th>Clinic Venue</th>
-                    <th>Clinic Date</th>
-                    <th>Clinic Time</th>
-                    <th>Active</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="north-westTable"></tbody>
-              </table>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="uva">
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Hospital</th>
-                    <th>Clinic Venue</th>
-                    <th>Clinic Date</th>
-                    <th>Clinic Time</th>
-                    <th>Active</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="uvaTable"></tbody>
-              </table>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="sabaragamuwa">
-            <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Hospital</th>
-                    <th>Clinic Venue</th>
-                    <th>Clinic Date</th>
-                    <th>Clinic Time</th>
-                    <th>Active</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="sabaragamuwaTable"></tbody>
-              </table>
-            </div>
-          </div>
-
-        </div>
+        <!-- Tab Content -->
+        <div class="tab-content mt-3" id="tabContent"></div>
       </div>
 
     </div>

@@ -223,7 +223,7 @@ function getAllClinicCategories()
 
 }
 
-function getClinicDetails($provinceTable, $provinceName, $hospital, $clinicCategory)
+function getClinicDetails($provinceTable, $hospital, $clinicCategory)
 {
     global $conn;
 
@@ -259,28 +259,11 @@ function getClinicDetails($provinceTable, $provinceName, $hospital, $clinicCateg
     }
 }
 
-// Function to add new clinic category
-function saveNewClinicCategory($clinicCategory)
+// Function to convert 24-hour format to 12-hour format with AM/PM
+function convertTo12HourFormat($time)
 {
-    global $conn;
-    $query = "INSERT INTO clinics_categories (clinic_name) VALUES (?)";
-    $stmt = mysqli_prepare($conn, $query);
-
-    if (!$stmt) {
-        return [
-            'status' => 'error',
-            'message' => 'Error during preparing query: ' . mysqli_error($conn)
-        ];
-    }
-
-    mysqli_stmt_bind_param($stmt, 's', $clinicCategory);
-    $result = mysqli_stmt_execute($stmt);
-
-    mysqli_stmt_close($stmt);
-    return $result
-        ? ['status' => 'success', 'message' => 'New clinic category added successfully.']
-        : ['status' => 'error', 'message' => 'New clinic category not added.'];
-
+    $dateTime = DateTime::createFromFormat('H:i', $time);
+    return $dateTime ? $dateTime->format('h:i A') : '';
 }
 
 // Function to add a clinic
@@ -293,32 +276,4 @@ function addClinic($province, $clinicName, $clinicPlace, $clinicDate, $clinicTim
     return mysqli_stmt_execute($stmt);
 }
 
-// Function to convert 24-hour format to 12-hour format with AM/PM
-function convertTo12HourFormat($time)
-{
-    $dateTime = DateTime::createFromFormat('H:i', $time);
-    return $dateTime ? $dateTime->format('h:i A') : '';
-}
-
-
-// Function to delete clinic by ID
-function deleteClinic($id, $province)
-{
-    global $conn;
-
-    $sql = "DELETE FROM `$province` WHERE Clinic_Id = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-
-    if ($stmt) {
-        mysqli_stmt_bind_param($stmt, 'i', $id);
-        if (mysqli_stmt_execute($stmt)) {
-            echo 'success';
-        } else {
-            echo 'error';
-        }
-        mysqli_stmt_close($stmt);
-    } else {
-        echo 'error';
-    }
-}
 ?>
