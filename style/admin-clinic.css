@@ -175,8 +175,7 @@
 /* Change border color of the active tab */
 .nav-tabs .nav-link.active {
   border-width: 1.5px;
-  border-color: var(--color-4) var(--color-4) transparent;
-  /* Top, Left-Right, Bottom */
+  border-color: var(--color-4) var(--color-4) transparent; /* Top, Left-Right, Bottom */
   background-color: var(--color-2);
   color: var(--color-4);
 }
@@ -187,4 +186,57 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#tabContent table th,
+#tabContent table td {
+  white-space: nowrap;
+  vertical-align: middle;
+  color: var(--d-color-6) !important;
+}
+
+#tabContent table .active-inactive{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#tabContent table .active-inactive > input{
+  cursor: pointer;
+  border: solid 1px var(--p-color-1);
+}
+#tabContent table .active-inactive > input:checked{
+  background-color: var(--d-color-6);
+}
+
+#tabContent table .edit-clinic {
+  display: flex;
+  padding: 0.5rem;
+  justify-content: center;
+  cursor: pointer;
+}
+
+#tabContent table .edit-clinic:hover{
+  scale: 1.2;
+  color: var(--color-1);
+}
+
+
+table.dataTable td.dataTables_empty {
+  text-align: left;
+  font-weight: 200;
+}
+
+.disable-scroll {
+  overflow-x: hidden !important;
+}
+
+/* ---------------------------- tooltip --------------------------- */
+.custom-tooltip {
+  --bs-tooltip-bg: var(--color-4);
+  --bs-tooltip-color: var(--color-2);
+}
+
+.tooltip .tooltip-arrow:before {
+  left: 6px;
 }

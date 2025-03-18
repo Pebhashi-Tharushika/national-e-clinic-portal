@@ -13,10 +13,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const provinces = ["Central", "Eastern", "North Central", "Northern", "North Western", "Sabaragamuwa", "Southern", "Uva", "Western"];
 
+    const tablePatientClinic = [];
+
     const tabsContainer = document.getElementById("clinicTabs");
     const tabContentContainer = document.getElementById("tabContent");
 
     getAllClinicCategories(); // Fetch existing categories on page load
+
+    createClinicInfoTable();
 
     btnSubmit?.addEventListener('click', () => {
         let newClinicCategory = inputClinicCategory.value.trim();
@@ -48,12 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    inputClinicCategory.addEventListener('input', () => {
+    inputClinicCategory?.addEventListener('input', () => {
         errorClinicCategory.style.display = 'none';
     });
 
     // Listen for the Bootstrap collapse event when the card is hidden
-    collapseClinics.addEventListener('hidden.bs.collapse', () => {
+    collapseClinics?.addEventListener('hidden.bs.collapse', () => {
         inputClinicCategory.value = ''; // Clear the input field
         errorClinicCategory.style.display = 'none';
     });
@@ -87,7 +91,12 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('#clinic-categories-content #col3 ul')
         ];
 
-        clinicCols.forEach(col => col.innerHTML = ''); // Clear previous content before repopulating
+
+        clinicCols.forEach(col => {
+            if (col) {
+                col.innerHTML = '';
+            }
+        }); // Clear previous content before repopulating
 
         let count = clinics.length;
         let itemPerColumn = Math.ceil(count / 3);
@@ -96,52 +105,41 @@ document.addEventListener('DOMContentLoaded', () => {
             const eleLi = document.createElement("li");
             eleLi.value = clinic.id;
             eleLi.innerText = clinic.clinic_name;
-            clinicCols[Math.floor(index / itemPerColumn)].appendChild(eleLi);
+            clinicCols[Math.floor(index / itemPerColumn)]?.appendChild(eleLi);
         });
     }
 
     function populateClinicCategoryDropDown(clinics) {
 
-        dropdownClinicCategories.innerHTML = '';
+        if (dropdownClinicCategories) {
+            dropdownClinicCategories.innerHTML = '';
 
-        clinics.forEach((clinic, index) => {
-            const eleOption = document.createElement("option");
-            eleOption.value = clinic.clinic_name;
-            eleOption.innerText = clinic.clinic_name;
-            dropdownClinicCategories.appendChild(eleOption);
 
-            // Select the first option
-            if (index === 0) {
-                eleOption.selected = true;
+            clinics.forEach((clinic, index) => {
+                const eleOption = document.createElement("option");
+                eleOption.value = clinic.clinic_name;
+                eleOption.innerText = clinic.clinic_name;
+                dropdownClinicCategories.appendChild(eleOption);
+
+                // Select the first option
+                if (index === 0) {
+                    eleOption.selected = true;
+                }
+            });
+
+            selectedClinic = dropdownClinicCategories.options[dropdownClinicCategories.selectedIndex].value;
+
+            if (selectedClinic) {
+                populateClinicInfoTable();
             }
-        });
-
-        selectedClinic = dropdownClinicCategories.options[dropdownClinicCategories.selectedIndex].value;
-
-        if (selectedClinic) {
-            insertInfoClinicTable();
         }
-
     }
 
-    dropdownClinicCategories.addEventListener('change', event => {
+    dropdownClinicCategories?.addEventListener('change', event => {
         selectedClinic = event.target.value;
-
-        let tabs = document.querySelectorAll('.nav-link');
-
-        console.log(tabs);
-        provinces.forEach((province,index) => {
-            console.log(index);
-            let tabId = tabs[index].getAttribute('href');
-            tabId = tabId.replace('#','');
-            console.log(tabId);
-        
-            populateTable(tabId, province);
-        });
-
-
-
+        populateClinicInfoTable();
     });
+
 
 
     /* --------------------------------------- tab container ------------------------------------ */
@@ -153,9 +151,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 url: `/national-e-clinic-portal/includes/admin-clinic/admin-clinic-fetch.inc.php?province=${province}&clinic=${selectedClinic}`,
                 success: function (response) {
                     if (response.status === "success") {
-                        console.log(response.data);
                         resolve(response.data);
-                    } else {
+                    } else if (response.status === "error" && response.message !== 'No clinic found.') {
                         reject(response.message);
                     }
                 },
@@ -166,47 +163,59 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function populateTable(provinceId, province) {
-        getAllClinicInfo(province)
-            .then(clinics => {
-                const tableBody = document.getElementById(`${provinceId}-tbody`);
-                if (!tableBody) return;
 
-                tableBody.innerHTML = ""; // Clear old data before adding new
+    function populateClinicInfoTable() {
+        provinces.forEach((province, index) => {
+            const provinceId = province.toLowerCase().replace(/\s+/g, '-');
 
-                clinics.forEach(clinic => {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td>${clinic.hospital_name} ${clinic.institute_type}</td>
-                        <td>${clinic.clinic_place}</td>
-                        <td>${clinic.clinic_date}</td>
-                        <td>${clinic.clinic_time}</td>
-                        <td>
-                            <div class="form-check form-switch" id="btn-toggle-wrapper">
-                                <input class="form-check-input" type="checkbox" role="switch" id="btn-toggle" ${clinic.active === 1 ? 'checked' : ''}>
-                            </div>
-                        </td>
-                        <td><i class="fas fa-edit edit-icon"></i></td>
-                    `;
-                    tableBody.appendChild(row);
+
+            if (!$.fn.DataTable.isDataTable(`#table-clinic-${provinceId}`)) {
+                let tbl = $(`#table-clinic-${provinceId}`).DataTable({
+                    lengthMenu: [10, 25, 50, 100],
+                    drawCallback: function () {
+                        initializeTooltips();
+                    }
                 });
+                tablePatientClinic.push(tbl);
+            }
 
-                // Initialize DataTable (if not already initialized)
-                // if (!$.fn.DataTable.isDataTable(`#table-clinic-${provinceId}`)) {
-                //     $(`#table-clinic-${provinceId}`).DataTable({
-                //         lengthMenu: [10, 25, 50, 100],
-                //         drawCallback: function () {
-                //             initializeTooltips(); // Ensure tooltips work after pagination
-                //         }
-                //     });
-                // }
-            })
-            .catch(error => {
-                console.error(error);
-            });
+            tablePatientClinic[index].clear().draw();
+
+
+            getAllClinicInfo(province)
+                .then(clinics => {
+
+                    clinics.forEach(clinic => {
+                        tablePatientClinic[index].row.add([
+                            clinic.hospital_name,
+                            clinic.clinic_place,
+                            clinic.clinic_date,
+                            clinic.clinic_time,
+                            `<div class="form-check form-switch active-inactive">
+                    <input class="form-check-input" type="checkbox" ${clinic.active === 1 ? 'checked' : ''}>
+                </div>`,
+                            `<div class="edit-clinic" data-bs-toggle="modal" data-bs-target="#edit-clinic-modal">
+                    <i class="fas fa-edit edit-icon" data-bs-toggle="tooltip" data-bs-placement="right" 
+                    data-bs-title="Edit" data-bs-custom-class="custom-tooltip" data-bs-offset="0,15"></i>
+                </div>`
+                        ]);
+                    });
+
+                    tablePatientClinic[index].draw(); // Ensure UI updates
+                    initializeTooltips();
+                    disableScroll(province);
+                })
+                .catch(error => console.error(error));
+
+        });
+
+
+
     }
 
-    function insertInfoClinicTable() {
+
+
+    function createClinicInfoTable() {
         provinces.forEach((province, index) => {
             const tabId = province.toLowerCase().replace(/\s+/g, '-');
 
@@ -218,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${province}
                 </a>
             `;
-            tabsContainer.appendChild(tabButton);
+            tabsContainer?.appendChild(tabButton);
 
             // Create Tab Content (Table)
             const tabPane = document.createElement("div");
@@ -230,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             tabPane.id = tabId;
             tabPane.innerHTML = `
-                <div class="table-responsive">
+                <div class="table-responsive" id="table-clinic-wrapper-${tabId}">
                     <table id="table-clinic-${tabId}" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -246,11 +255,41 @@ document.addEventListener('DOMContentLoaded', () => {
                     </table>
                 </div>
             `;
-            tabContentContainer.appendChild(tabPane);
-
-            populateTable(tabId, province);
+            tabContentContainer?.appendChild(tabPane);
 
         });
+    }
+
+    // Function to initialize tooltips
+    function initializeTooltips() {
+        // Dispose of existing tooltips to prevent duplication
+        $('[data-bs-toggle="tooltip"]').tooltip('dispose');
+
+        // Reinitialize tooltips
+        $('[data-bs-toggle="tooltip"]').tooltip();
+    }
+
+    function disableScroll(province) {
+        const editClinicButtons = document.querySelectorAll("#tabContent table .edit-clinic");
+        const tabId = province.toLowerCase().replace(/\s+/g, '-');
+        let tblWrapper = document.querySelector(`#tabContent #table-clinic-wrapper-${tabId}`);
+
+        if (editClinicButtons.length > 0) {
+            editClinicButtons.forEach(btn => {
+                btn.addEventListener("mouseover", function (event) {
+                    if (tblWrapper) {
+                        tblWrapper.classList.add("disable-scroll");
+                    }
+                });
+
+                btn.addEventListener("mouseout", function () {
+                    if (tblWrapper) {
+                        tblWrapper.classList.remove("disable-scroll");
+                    }
+                });
+            });
+        }
+
     }
 
 
