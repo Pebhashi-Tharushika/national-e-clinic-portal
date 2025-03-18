@@ -26,7 +26,8 @@ function saveNewClinicCategory($clinicCategory)
         : ['status' => 'error', 'message' => 'New clinic category not added.'];
 }
 
-function getClinicInfoByProvinceAndCategory($provinceTable,$clinic){
+function getClinicInfoByProvinceAndCategory($provinceTable, $clinic)
+{
     global $conn;
 
     $query = "SELECT p.id, h.hospital_name, i.institute_type, c.clinic_name, p.clinic_place, p.clinic_date, p.clinic_time, p.active
@@ -39,7 +40,7 @@ function getClinicInfoByProvinceAndCategory($provinceTable,$clinic){
     $stmt = mysqli_prepare($conn, $query);
 
     if ($stmt) {
-        mysqli_stmt_bind_param($stmt,'s',$clinic);
+        mysqli_stmt_bind_param($stmt, 's', $clinic);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
 
@@ -65,23 +66,28 @@ function getClinicInfoByProvinceAndCategory($provinceTable,$clinic){
 }
 
 
-function deleteClinic($id, $province)
+function toggleActiveStatusOfClinic($id, $provinceTable, $status)
 {
     global $conn;
 
-    $sql = "DELETE FROM `$province` WHERE Clinic_Id = ?";
+    $sql = "UPDATE `$provinceTable` SET active=? WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
 
+    $active_status = $status ? '1' : '0';
     if ($stmt) {
-        mysqli_stmt_bind_param($stmt, 'i', $id);
-        if (mysqli_stmt_execute($stmt)) {
-            echo 'success';
-        } else {
-            echo 'error';
-        }
+        mysqli_stmt_bind_param($stmt, 'si', $active_status, $id);
+        $success = mysqli_stmt_execute($stmt);
+        $affectedRows = mysqli_stmt_affected_rows($stmt);
         mysqli_stmt_close($stmt);
+
+        return ($success && $affectedRows > 0) ?
+            ['status' => 'success', 'message' => "Clinic-$id: " . ($active_status ? 'activated' : 'deactivated') . ' successfully.'] :
+            ['status' => 'error', 'message' => "No Clinic-$id: ". ($active_status ? 'activated.' : 'deactivated.')];
     } else {
-        echo 'error';
+        return [
+            'status' => 'error',
+            'message' => 'Error during preparing query: ' . mysqli_error($conn)
+        ];
     }
 }
 

@@ -83,10 +83,11 @@ function updatePatientInfo($data)
     );
 
     $result = mysqli_stmt_execute($stmt);
+    $affectedRows = mysqli_stmt_affected_rows($stmt);
 
     mysqli_stmt_close($stmt);
 
-    return $result
+    return ($result && $affectedRows > 0)
         ? ['status' => 'success', 'message' => 'Patient ' . $data['patientId'] . ' updated successfully.']
         : ['status' => 'error', 'message' => 'Patient not updated.'];
 
@@ -165,7 +166,7 @@ function getPatientClinicInfo($provinceTable, $nic, $clinic, $hospital)
         return ['status' => 'error', 'message' => 'Error preparing query: ' . mysqli_error($conn)];
     }
 
-    mysqli_stmt_bind_param($stmt, 'sss', $nic,$clinic, $hospital);
+    mysqli_stmt_bind_param($stmt, 'sss', $nic, $clinic, $hospital);
 
     mysqli_stmt_execute($stmt);
 

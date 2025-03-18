@@ -192,7 +192,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             clinic.clinic_date,
                             clinic.clinic_time,
                             `<div class="form-check form-switch active-inactive">
-                    <input class="form-check-input" type="checkbox" ${clinic.active === 1 ? 'checked' : ''}>
+                    <input class="form-check-input check-input-${provinceId}" type="checkbox" ${clinic.active === 1 ? 'checked' : ''}
+                    data-clinic-id="${clinic.id}">
                 </div>`,
                             `<div class="edit-clinic" data-bs-toggle="modal" data-bs-target="#edit-clinic-modal">
                     <i class="fas fa-edit edit-icon" data-bs-toggle="tooltip" data-bs-placement="right" 
@@ -204,6 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     tablePatientClinic[index].draw(); // Ensure UI updates
                     initializeTooltips();
                     disableScroll(province);
+                    toggleActiveStatus(province);
                 })
                 .catch(error => console.error(error));
 
@@ -291,6 +293,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
     }
+
+    function toggleActiveStatus(province) {
+        const provinceId = province.toLowerCase().replace(/\s+/g, '-');
+        const checkboxes = document.querySelectorAll(`.check-input-${provinceId}`);
+
+        checkboxes.forEach(checkbox => {
+
+            checkbox.addEventListener("mousedown", function (event) {
+                event.preventDefault(); // Prevent the checkbox from toggling automatically
+
+                let isChecked = event.target.checked;
+                let message = isChecked ? "Are you sure you want to deactivate?"
+                    : "Are you sure you want to activate?";
+
+                let confirmed = confirm(message); // Show confirmation dialog
+                if (confirmed) {
+                    let activestatus = !checkbox.checked
+                    let clinicId = checkbox.dataset.clinicId;
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/national-e-clinic-portal/includes/admin-clinic/admin-clinic-inactive.inc.php',
+                        data: JSON.stringify({ 
+                            id:clinicId,
+                            province:province,
+                            status: activestatus
+                        }),
+                        dataType: "json",
+                        contentType: "application/json",
+                        success: function (response) {
+                            if (response.status === 'success') {
+                                checkbox.checked = !isChecked;
+                            }
+                              
+                            alert(response.message);
+                        },
+                        error: function (xhr, status, error) {
+                            alert(`Error ${activestatus ? 'deactivating' : 'activating'} clinic: ${error}`);
+                        }
+                    });
+                }
+            });
+        });
+    }
+
+    
 
 
 
