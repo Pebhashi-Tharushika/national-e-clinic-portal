@@ -195,7 +195,7 @@
         </div>
         <div class="modal-footer">
           <!-- Buttons -->
-          <div class="d-flex justify-content-end pt-4">
+          <div class="d-flex justify-content-end pt-2">
             <button type="button" class="btn btn-primary me-2 mt-2" id="btnAddOrEdit">Save</button>
             <button type="button" class="btn btn-secondary me-2 mt-2" id="btnClear">Clear</button>
           </div>

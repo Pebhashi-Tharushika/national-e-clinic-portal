@@ -302,6 +302,10 @@ document.addEventListener("DOMContentLoaded", function () {
       dob: row.find('td').eq(6).text()
     };
 
+    //remove all error messages
+    $("#updatePatientForm input, #updatePatientForm select").removeClass("is-invalid");
+    $("#updatePatientForm input, #updatePatientForm select").next(".invalid-feedback").remove();
+
     openUpdateModal(patientData); // Open modal and populate form fields
 
     let userInfo = getUserInfo(row);

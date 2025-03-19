@@ -506,12 +506,22 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             console.log(clinicInfo);
 
+            //remove all error messages
+            $("#addNewClinicOrEditClinicForm input, #addNewClinicOrEditClinicForm select").removeClass("is-invalid");
+            $("#addNewClinicOrEditClinicForm input, #addNewClinicOrEditClinicForm select").next(".invalid-feedback").remove();
+
             openEditClinicModal(clinicInfo);
 
             let clinicId = target.dataset.clinicId;
             console.log(clinicId);
 
             $("#btnAddOrEdit").off('click').on('click', function () {
+                // Remove error message when user starts typing
+                $("input, select").on("input change", function () {
+                    $(this).removeClass("is-invalid");
+                    $(this).next(".invalid-feedback").remove();
+                });
+
                 if (!validateForm()) {
                     return;
                 }
@@ -649,8 +659,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function openEditClinicModal(clinic) {
-        modalDropdownDistrict.disabled = false;
-        modalDropdownHospital.disabled = false;
 
         getDistrictsAndHospitals(clinic.province, clinic.district)
             .then(response => {
@@ -660,8 +668,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 let districts = data[0];
                 let hospitals = data[1];
 
-                modalDropdownDistrict.innerHTML = `<option value="" disabled>Select District</option>`;
-                modalDropdownHospital.innerHTML = `<option value="" disabled>Select Hospital</option>`;
+                modalDropdownDistrict.disabled = false;
+                modalDropdownHospital.disabled = false;
+
+                modalDropdownDistrict.innerHTML = `<option value="" disabled selected>Select District</option>`;
+                modalDropdownHospital.innerHTML = `<option value="" disabled selected>Select Hospital</option>`;
 
                 if (status === 'success' || status === 'd-success') {
                     districts.data.forEach(d => {
