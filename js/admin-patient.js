@@ -423,7 +423,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // clear update patient details form
   btnClear?.addEventListener("click", function () {
-    document.getElementById("updatePatientForm").reset();
+    document.getElementById("updatePatientForm")?.reset();
   });
 
 

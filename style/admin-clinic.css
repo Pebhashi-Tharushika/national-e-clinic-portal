@@ -240,3 +240,14 @@ table.dataTable td.dataTables_empty {
 .tooltip .tooltip-arrow:before {
   left: 6px;
 }
+
+/* ------------------------ add and edit clinic modal ----------------------- */
+.lr-col{
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+.error {
+  color: var(--d-color-1);
+  font-size: 0.8rem;
+}

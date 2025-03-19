@@ -82,7 +82,7 @@
     <div class="patient-clinic" id="clinic-detail-container">
 
       <div id="btnAddClinic-wrapper">
-        <button class="btn" id="btnAddClinic" type="button" data-bs-toggle="modal" data-bs-target="#add-clinic-form">
+        <button class="btn" id="btnAddClinic" type="button" data-bs-toggle="modal" data-bs-target="#add-edit-clinic-modal">
           <i class="fa-solid fa-circle-plus"></i>Add Clinic
         </button>
       </div>
@@ -106,26 +106,124 @@
 
   </div>
 
-  <!-- patient update form - modal -->
-  <div class="modal" id="add-clinic-form" tabindex="-1">
+  <!-- new clinic add / clinic update form - modal -->
+  <div class="modal" id="add-edit-clinic-modal" tabindex="-1">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5">Update Patient Details</h1>
+          <h1 class="modal-title fs-5">Add New Clinic</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="container overflow-hidden">
-            <form id="updatePatientForm">
+            <form id="addNewClinicOrEditClinicForm">
+              <div class="row">
+                <!-- Left Column -->
+                <div class="col-md-6 lr-col">
+
+                  <div class="mb-3">
+                    <label for="clinic-category" class="form-label">Clinic Category</label>
+                    <select class="form-select" id="clinic-category">
+                      <option value="" disabled selected>Select Clinic Category</option>
+                    </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="province" class="form-label">Province</label>
+                    <select class="form-select" id="province">
+                      <option value="" disabled selected>Select Province</option>
+                      <?php
+                      $provinces = ["Central", "Eastern", "North Central", "Northern", "North Western", "Sabaragamuwa", "Southern", "Uva", "Western"];
+                      foreach ($provinces as $province) {
+                        echo "<option value='$province'>$province</option>";
+                      }
+                      ?>
+                    </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="district" class="form-label">District</label>
+                    <select class="form-select" id="district" disabled>
+                      <option value="" disabled selected>Select District</option>
+                    </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="hospital" class="form-label">Hospital</label>
+                    <select class="form-select" id="hospital" disabled>
+                      <option value="" disabled selected>Select Hospital</option>
+                    </select>
+                  </div>
+
+                </div>
+
+                <!-- Right Column -->
+                <div class="col-md-6 lr-col">
+
+                  <div class="mb-3">
+                    <label for="clinic-place" class="form-label">Clinic Place</label>
+                    <input type="text" class="form-control" id="clinic-place" placeholder="Enter Clinic Place">
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label" for="clinic-date">Clinic Day</label>
+                    <select class="form-select" id="clinic-date">
+                      <option value="" disabled selected>Select Clinic Day</option>
+                      <?php
+                      $daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+                      foreach ($daysOfWeek as $day) {
+                        echo "<option value='$day'>$day</option>";
+                      }
+                      ?>
+                    </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label" for="start-time">Start Time:</label>
+                    <input type="time" class="form-control" id="start-time">
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label" for="end-time">End Time:</label>
+                    <input type="time" class="form-control" id="end-time">
+                  </div>
+
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <!-- Buttons -->
+          <div class="d-flex justify-content-end pt-4">
+            <button type="button" class="btn btn-primary me-2 mt-2" id="btnAddOrEdit">Save</button>
+            <button type="button" class="btn btn-secondary me-2 mt-2" id="btnClear">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- clinic update form - modal -->
+  <div class="modal" id="edit-clinic-modal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">Update Clinic Details</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container overflow-hidden">
+            <form id="updateClinicForm">
               <div class="row">
                 <!-- Left Column -->
                 <div class="col-md-6">
                   <div class="mb-3">
-                    <label for="patientName" class="form-label">Patient Name</label>
+                    <label for="patientName" class="form-label">Clinic Name</label>
                     <input type="text" class="form-control" id="patientName" placeholder="Enter patient name">
                   </div>
                   <div class="mb-3">
-                    <label for="nic" class="form-label">NIC</label>
+                    <label for="nic" class="form-label">Hospital</label>
                     <input type="text" class="form-control" id="nic" placeholder="Enter NIC">
                   </div>
                   <div class="mb-3">
@@ -189,4 +287,5 @@
       </div>
     </div>
   </div>
+
 </section>
