@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     clinics.forEach(clinic => {
                         tablePatientClinic[index].row.add([
-                            clinic.hospital_name,
+                            `${clinic.hospital_name} ${clinic.institute_type}`,
                             clinic.clinic_place,
                             clinic.clinic_date,
                             clinic.clinic_time,
@@ -471,18 +471,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // }
 
     function setListenerToEditClinicInfo(province, tblClinic) {
-        console.log('setListenerToEditClinicInfo');
 
         const tabId = province.toLowerCase().replace(/\s+/g, '-');
 
-        document.querySelector(`#${tabId}-tbody`).addEventListener('click', function (event) {
+        $(`#${tabId}-tbody`).off('click').on('click', function (event) {
+            console.log(`#${tabId}-tbody`);
             let target = event.target.closest('.edit-clinic');
 
             if (!target) return;
 
             let row = target.closest('tr');
             let rowIndex = tblClinic.row(row).index();
-            console.log('rowIndex: ', rowIndex);
 
             let time = row.cells[3].textContent;
             let timeArray = time.split('-');
@@ -490,7 +489,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let activeStatusCell = row.cells[4];
             const checkbox = activeStatusCell.querySelector('input[type="checkbox"]');
             let activeStatus = checkbox.checked;
-            console.log("activeStatus: ", activeStatus);
 
             let district = target.dataset.district;
 
@@ -511,9 +509,10 @@ document.addEventListener('DOMContentLoaded', () => {
             $("#addNewClinicOrEditClinicForm input, #addNewClinicOrEditClinicForm select").next(".invalid-feedback").remove();
 
             openEditClinicModal(clinicInfo);
+            // setListenerToProvinceChange();
+            // setListenerToDistrictChange();
 
             let clinicId = target.dataset.clinicId;
-            console.log(clinicId);
 
             $("#btnAddOrEdit").off('click').on('click', function () {
                 // Remove error message when user starts typing
@@ -525,6 +524,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!validateForm()) {
                     return;
                 }
+
+                let selectedHospitalOption = Array.from(modalDropdownHospital.options).find(option => option.selected === true);
+                let selectedHospitalOptionInnerText = selectedHospitalOption?.innerText
+                console.log('selectedHospitalOptionInnerText: ',selectedHospitalOptionInnerText);
 
                 const updatedData = {
                     clinicId: clinicId,
@@ -541,6 +544,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('updatedData: ', updatedData);
 
                 let isUpdatedProvince = (clinicInfo.province !== updatedData.province);
+                let isUpdatedCategory = clinicInfo.category !== updatedData.category;
 
                 $.ajax({
                     type: 'POST',
@@ -549,13 +553,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     contentType: "application/json",
                     data: JSON.stringify(updatedData),
                     success: function (response) {
-                        console.log(response);
                         if (response.status === "success") {
                             modalBtnClear.click(); // Clear fields
                             bootstrap.Modal.getInstance(document.getElementById("add-edit-clinic-modal")).hide(); // Close modal
-                            updatePatientClinicTableRow(rowIndex, updatedData, tabId, tblClinic, response.data, activeStatus); // Update DataTables row
-                            alert(response.message);
+                            if(isUpdatedCategory){
+                                populateClinicInfoTable();
+                            }else{
+                                updatedData.hospital = selectedHospitalOptionInnerText;
+                                updatePatientClinicTableRow(rowIndex, updatedData, tabId, tblClinic, response.data, activeStatus); // Update DataTables row
+                            }
                         }
+                        alert(response.message);
                     },
                     error: function (xhr, status, error) {
                         alert('Error updating patient: ' + error);
@@ -679,28 +687,23 @@ document.addEventListener('DOMContentLoaded', () => {
                         const eleOption = document.createElement("option");
                         eleOption.value = d.district_name;
                         eleOption.innerText = d.district_name;
+                        if(eleOption.value === clinic.district){
+                            eleOption.selected = true;  // Set selected option for district dropdown
+                        }
                         modalDropdownDistrict.appendChild(eleOption);
                     });
                 }
+                console.log("clinic: ",clinic);
                 if (status === 'success' || response.status === 'h-success') {
                     hospitals.data.forEach(h => {
                         const eleOption = document.createElement("option");
                         eleOption.value = h.hospital_name;
                         eleOption.innerText = `${h.hospital_name} ${h.institute_type}`;
+                        if(eleOption.innerText === clinic.hospital){
+                            eleOption.selected =true; // Set selected option for hospital dropdown
+                        }
                         modalDropdownHospital.appendChild(eleOption);
                     });
-                }
-
-                // Set selected option for district dropdown
-                let districtOption = Array.from(modalDropdownDistrict.options).find(option => option.value.trim() === clinic.district.trim());
-                if (districtOption) {
-                    districtOption.selected = true;
-                }
-
-                // Set selected option for hospital dropdown
-                let hospitalOption = Array.from(modalDropdownHospital.options).find(option => option.value === clinic.hospital);
-                if (hospitalOption) {
-                    hospitalOption.selected = true;
                 }
 
                 modalDropdownClinic.value = clinic.category;
