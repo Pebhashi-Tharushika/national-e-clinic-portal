@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         clearAllErrorMessage();
         clearForm();
-        
+
         container.classList.add("active");
         setTimeout(() => scrollbar.classList.remove("invisible-scrollbar"), 2500); //show scroll bar in signup form
         updateQueryParam('action', 'register');  // Set action=register
@@ -67,7 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Display validation errors
                     Object.keys(result.errors).forEach((field) => {
                         const errorElement = document.getElementById(`${field}Error`);
-                        console.log(result.errors[field]);
                         errorElement.textContent = result.errors[field];
                         errorElement.style.display = "block";
                     });
@@ -86,21 +85,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     document.querySelectorAll('.input-box input').forEach((element) => {
-        element.addEventListener('input',event =>{
+        element.addEventListener('input', event => {
             hideErrorMessage(event.target); // error message disappears when the user starts typing
         });
     });
-    
+
 
     document.querySelector('.input-box select').addEventListener('change', function (event) {
         hideErrorMessage(event.target); // error message disappears on select change
 
         const adminCodeDiv = document.getElementById('adminCodeDiv');
-    if (this.value === 'admin') {
-        adminCodeDiv.style.display = 'block'; // Show Admin Code input
-    } else {
-        adminCodeDiv.style.display = 'none'; // Hide Admin Code input
-    }
+        if (this.value === 'admin') {
+            adminCodeDiv.style.display = 'block'; // Show Admin Code input
+        } else {
+            adminCodeDiv.style.display = 'none'; // Hide Admin Code input
+        }
 
     });
 
@@ -136,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const pwd = document.getElementById("pwd").value.trim();
 
 
-        const formData = { username, pwd};
+        const formData = { username, pwd };
 
         try {
             // Send data to server for validation
@@ -155,7 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Display validation errors
                     Object.keys(result.errors).forEach((field) => {
                         const errorElement = document.getElementById(`${field}Error`);
-                        console.log(result.errors[field]);
                         errorElement.textContent = result.errors[field];
                         errorElement.style.display = "block";
                     });

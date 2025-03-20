@@ -285,11 +285,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to initialize tooltips
     function initializeTooltips() {
-        // Dispose of existing tooltips to prevent duplication
-        $('[data-bs-toggle="tooltip"]').tooltip('dispose');
-
-        // Reinitialize tooltips
-        $('[data-bs-toggle="tooltip"]').tooltip();
+        $('[data-bs-toggle="tooltip"]').tooltip('dispose'); // Dispose of existing tooltips to prevent duplication
+        $('[data-bs-toggle="tooltip"]').tooltip(); // Reinitialize tooltips
     }
 
     function disableScroll(province) {
@@ -371,7 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modalDropdownHospital.disabled = true;
     });
 
-    btnAddClinic.addEventListener('click', event => {
+    btnAddClinic?.addEventListener('click', event => {
 
         let modal = new bootstrap.Modal(document.getElementById("add-edit-clinic-modal"));
         document.querySelector("#add-edit-clinic-modal .modal-title").textContent = "Add New Clinic";
@@ -386,19 +383,11 @@ document.addEventListener('DOMContentLoaded', () => {
         setListenerToDistrictChange();
 
         $("#btnAddOrEdit").off('click').on('click', function () {
-            // Remove error message when user starts typing
-            $("input, select").on("input change", function () {
-                $(this).removeClass("is-invalid");
-                $(this).next(".invalid-feedback").remove();
-            });
+            removeErrorMessageWhenStartTyping(); // Remove error message when user starts typing
 
             if (!validateForm()) {
                 return;
             }
-
-            let selectedHospitalOption = Array.from(modalDropdownHospital.options).find(option => option.selected === true);
-            let selectedHospitalOptionInnerText = selectedHospitalOption?.innerText
-            console.log('selectedHospitalOptionInnerText: ', selectedHospitalOptionInnerText);
 
             const clinicData = {
                 category: modalDropdownClinic.value,
@@ -410,8 +399,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 startTime: modalStartTime.value,
                 endTime: modalEndTime.value
             };
-
-            console.log('clinicdata: ', clinicData);
 
             $.ajax({
                 type: 'POST',
@@ -458,7 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tabId = province.toLowerCase().replace(/\s+/g, '-');
 
         $(`#${tabId}-tbody`).off('click').on('click', function (event) {
-            console.log(`#${tabId}-tbody`);
+
             let target = event.target.closest('.edit-clinic');
 
             if (!target) return;
@@ -485,10 +472,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 startTime: timeArray[0].trim(),
                 endTime: timeArray[1].trim()
             };
-            console.log(clinicInfo);
 
-            //remove all error messages
-            removeAllErrorMessages();
+            removeAllErrorMessages(); //remove all error messages
 
             openEditClinicModal(clinicInfo);
             setListenerToProvinceChange();
@@ -497,19 +482,15 @@ document.addEventListener('DOMContentLoaded', () => {
             let clinicId = target.dataset.clinicId;
 
             $("#btnAddOrEdit").off('click').on('click', function () {
-                // Remove error message when user starts typing
-                $("input, select").on("input change", function () {
-                    $(this).removeClass("is-invalid");
-                    $(this).next(".invalid-feedback").remove();
-                });
+
+                removeErrorMessageWhenStartTyping(); // Remove error message when user starts typing
 
                 if (!validateForm()) {
                     return;
                 }
 
                 let selectedHospitalOption = Array.from(modalDropdownHospital.options).find(option => option.selected === true);
-                let selectedHospitalOptionInnerText = selectedHospitalOption?.innerText
-                console.log('selectedHospitalOptionInnerText: ', selectedHospitalOptionInnerText);
+                let selectedHospitalOptionInnerText = selectedHospitalOption?.innerText;
 
                 const updatedData = {
                     clinicId: clinicId,
@@ -523,8 +504,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     startTime: modalStartTime.value,
                     endTime: modalEndTime.value
                 };
-
-                console.log('updatedData: ', updatedData);
 
                 let isUpdatedProvince = clinicInfo.province !== updatedData.province;
                 let isUpdatedCategory = clinicInfo.category !== updatedData.category;
@@ -554,6 +533,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
 
+        });
+    }
+
+    function removeErrorMessageWhenStartTyping() {
+        $("input, select").on("input change", function () {
+            $(this).removeClass("is-invalid");
+            $(this).next(".invalid-feedback").remove();
         });
     }
 
@@ -676,7 +662,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         modalDropdownDistrict.appendChild(eleOption);
                     });
                 }
-                console.log("clinic: ", clinic);
+
                 if (status === 'success' || response.status === 'h-success') {
                     hospitals.data.forEach(h => {
                         const eleOption = document.createElement("option");

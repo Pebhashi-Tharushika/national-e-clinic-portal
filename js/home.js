@@ -18,13 +18,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   window.addEventListener('scroll', function () {
 
-    if(gettingStartedSection){
+    if (gettingStartedSection) {
       const topOffset = gettingStartedSection.getBoundingClientRect().top;
       if (isClickedGettingStarted && topOffset) {
         if (topOffset > 0.8 || -1 * window.innerHeight > topOffset) {
           if (window.location.hash) {
             history.replaceState(null, '', window.location.pathname);
-  
+
           }
           isClickedGettingStarted = false;
         }
@@ -34,25 +34,25 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
     }
-    
-    
+
+
 
   });
 
 
-// dynamic percentage increment 
-const percentageElements = document.querySelectorAll('.percentage');
-    if (percentageElements.length === 0) {
-        return;
-    }
+  // dynamic percentage increment 
+  const percentageElements = document.querySelectorAll('.percentage');
+  if (percentageElements.length === 0) {
+    return;
+  }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-          if (entry.isIntersecting && !entry.target.hasAnimated) {
-              entry.target.hasAnimated = true; // Flag to prevent re-animation
-              incrementPercentage(entry.target);
-          }
-      });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !entry.target.hasAnimated) {
+        entry.target.hasAnimated = true; // Flag to prevent re-animation
+        incrementPercentage(entry.target);
+      }
+    });
   }, { threshold: 0.5 });
 
   percentageElements.forEach(element => observer.observe(element));
@@ -64,14 +64,14 @@ const percentageElements = document.querySelectorAll('.percentage');
     const incrementTime = duration / 100;
 
     const interval = setInterval(() => {
-        if (count < 100) {
-            count++;
-            element.textContent = count;
-        } else {
-            clearInterval(interval);
-        }
+      if (count < 100) {
+        count++;
+        element.textContent = count;
+      } else {
+        clearInterval(interval);
+      }
     }, incrementTime);
-}
+  }
 
 });
 

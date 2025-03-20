@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     let dateInput = document.querySelector('input[type="date"]');
 
-    if(!dateInput){
+    if (!dateInput) {
         return;
     }
 

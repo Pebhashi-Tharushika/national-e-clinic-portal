@@ -41,8 +41,8 @@ $(document).ready(function () {
 
 
 
-     // fetch Appointments
-     function fetchAppointments(provinces) {
+    // fetch Appointments
+    function fetchAppointments(provinces) {
         if (!Array.isArray(provinces) || provinces.length === 0) {
             alert("No provinces found!");
             return;
@@ -50,16 +50,16 @@ $(document).ready(function () {
 
         appointments = [];
         pendingRequests = provinces.length;
-    
+
         provinces.forEach(patientProvince => {
             $.ajax({
                 type: 'POST',
                 url: '/national-e-clinic-portal/includes/appointment/appointment-view.inc.php',
-                dataType: "json", 
+                dataType: "json",
                 data: { province: patientProvince },
                 success: function (response) {
                     if (response.status === "success") {
-                         appointments = [...appointments, ...response.data];
+                        appointments = [...appointments, ...response.data];
                     }
                 },
                 error: function (xhr, status, error) {
@@ -74,22 +74,22 @@ $(document).ready(function () {
             });
         });
     }
-    
+
     function sendDataToPHP(appointments) {
         fetch("/national-e-clinic-portal/includes/appointment/appointment-fetch.inc.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(appointments)
         })
-        .then(response => response.text())
-        .then(html => {
-            document.querySelector("#table-appointments tbody").innerHTML = html;
-        })
-        .catch(error => console.error("Error:", error));
+            .then(response => response.text())
+            .then(html => {
+                document.querySelector("#table-appointments tbody").innerHTML = html;
+            })
+            .catch(error => console.error("Error:", error));
     }
-    
-   
-    
-    
+
+
+
+
 
 });

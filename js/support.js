@@ -5,7 +5,7 @@ const uploadPool = document.getElementById('upload-pool');
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const uploadInput = document.getElementById('attachments');
     if (uploadInput) {
         uploadInput.addEventListener('change', handleFileUpload);
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function handleFileUpload(event) {
     const files = event.target.files;
-    
+
     for (const file of files) {
         if (file.size > maxFileSize) {
             uploadError.style.display = 'block';
@@ -30,20 +30,20 @@ function handleFileUpload(event) {
 function displayUploadedFile(file) {
     const listItem = document.createElement('li');
     listItem.classList.add('upload-item');
-    
+
     const fileLink = document.createElement('a');
     fileLink.href = URL.createObjectURL(file);
     fileLink.target = '_blank';
     fileLink.textContent = file.name;
-    
+
     const removeButton = document.createElement('span');
     removeButton.classList.add('upload-remove');
     removeButton.innerHTML = `<i class="fa-regular fa-xmark"></i>`;
     removeButton.addEventListener('click', () => removeFile(listItem));
-    
+
     listItem.appendChild(fileLink);
     listItem.appendChild(removeButton);
-    
+
     uploadPool.appendChild(listItem);
 }
 

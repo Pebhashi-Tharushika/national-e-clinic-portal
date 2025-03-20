@@ -5,9 +5,9 @@
       <img src="/national-e-clinic-portal/images/logo-h.png" alt="logo" />
     </div>
     <div id="nav">
-      <a class="nav-item" href="/national-e-clinic-portal/index.php?page=home">Home</a>
-      <a class="nav-item" href="/national-e-clinic-portal/index.php?page=about-us">About Us</a>
-      <a class="nav-item" href="/national-e-clinic-portal/index.php?page=services">Services</a>
+      <a class="nav-item" href="/national-e-clinic-portal/index.php?page=home" id="home-link">Home</a>
+      <a class="nav-item" href="/national-e-clinic-portal/index.php?page=about-us" id="about-us-link">About Us</a>
+      <a class="nav-item" href="/national-e-clinic-portal/index.php?page=services" id="services-link">Services</a>
       <div id="dropdown-account" class="dropdown">
         <a class="nav-item" href="#" id="account-link">Account</a>
         <div class="dropdown-content" id="dropdown-menu">

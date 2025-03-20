@@ -293,13 +293,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // Attach event listeners with confirmation
             btnApprove.addEventListener('click', function () {
                 if (confirmApproveOrReject('approve')) {
-                    processApproval('approve', row.id,btnApprove,btnReject);
+                    processApproval('approve', row.id, btnApprove, btnReject);
                 }
             });
 
             btnReject.addEventListener('click', function () {
                 if (confirmApproveOrReject('reject')) {
-                    processApproval('reject', row.id,btnApprove,btnReject);
+                    processApproval('reject', row.id, btnApprove, btnReject);
                 }
             });
 
@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return confirm(`Are you sure you want to ${action} the appointment?`);
     }
 
-    function processApproval(action, appointmentId,btnApprove,btnReject) {
+    function processApproval(action, appointmentId, btnApprove, btnReject) {
         provinceName = provinceName.replace('Province', '').trim();
 
         let appointmentStatus = action === 'approve' ? "APPROVED" : action === 'reject' ? "REJECTED" : null;
@@ -325,11 +325,11 @@ document.addEventListener('DOMContentLoaded', () => {
             type: 'PUT',
             url: "/national-e-clinic-portal/includes/admin-appointment/admin-appointment-approve.inc.php",
             data: JSON.stringify({
-                province: provinceName, 
+                province: provinceName,
                 status: appointmentStatus,
                 id: appointmentId
             }),
-            contentType: "application/json", 
+            contentType: "application/json",
             success: function (response) {
                 alert(response.message);
                 btnApprove.classList.add('disabled');
@@ -339,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Error in appointment approval process:', error);
             }
         });
-        
+
     }
 
     // Function to get unique values from an array of objects

@@ -228,7 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    function hidePreviousClinicInfor(){
+    function hidePreviousClinicInfor() {
         selectionCriteria.style.display = 'none';
         tableContainer.style.display = 'none';
         noSelectionMsg.style.display = 'block';
