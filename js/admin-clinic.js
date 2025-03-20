@@ -325,7 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     $.ajax({
                         type: 'POST',
-                        url: '/national-e-clinic-portal/includes/admin-clinic/admin-clinic-update.inc.php',
+                        url: '/national-e-clinic-portal/includes/admin-clinic/admin-clinic-update.inc.php?change=active',
                         data: JSON.stringify({
                             id: clinicId,
                             province: province,
@@ -533,6 +533,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     clinicId: clinicId,
                     category: modalDropdownClinic.value,
                     province: modalDropdownProvince.value,
+                    previousProvince: clinicInfo.province,
                     district: modalDropdownDistrict.value,
                     hospital: modalDropdownHospital.value,
                     place: modalClinicPlace.value.trim(),
@@ -543,12 +544,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 console.log('updatedData: ', updatedData);
 
-                let isUpdatedProvince = (clinicInfo.province !== updatedData.province);
+                let isUpdatedProvince = clinicInfo.province !== updatedData.province;
                 let isUpdatedCategory = clinicInfo.category !== updatedData.category;
 
                 $.ajax({
                     type: 'POST',
-                    url: `/national-e-clinic-portal/includes/admin-clinic/admin-clinic-update.inc.php?change=${isUpdatedProvince}`,
+                    url: `/national-e-clinic-portal/includes/admin-clinic/admin-clinic-update.inc.php`,
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(updatedData),
@@ -556,7 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (response.status === "success") {
                             modalBtnClear.click(); // Clear fields
                             bootstrap.Modal.getInstance(document.getElementById("add-edit-clinic-modal")).hide(); // Close modal
-                            if (isUpdatedCategory) {
+                            if (isUpdatedCategory || isUpdatedProvince) {
                                 populateClinicInfoTable();
                             } else {
                                 updatedData.hospital = selectedHospitalOptionInnerText;

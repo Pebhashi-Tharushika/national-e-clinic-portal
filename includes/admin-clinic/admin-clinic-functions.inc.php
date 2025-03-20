@@ -132,7 +132,7 @@ function getHospitalsByProvinceAndDistrict($province, $district)
 }
 
 
-function updateClinicInfo($provinceTable, $data, $time_slot)
+function updateClinicInfo($provinceTable, $data)
 {
     global $conn;
 
@@ -160,7 +160,7 @@ function updateClinicInfo($provinceTable, $data, $time_slot)
         $data['category'],
         $data['place'],
         $data['day'],
-        $time_slot,
+        $data['time_slot'],
         $data['clinicId']
     );
 
@@ -170,9 +170,76 @@ function updateClinicInfo($provinceTable, $data, $time_slot)
     mysqli_stmt_close($stmt);
 
     return ($result && $affectedRows > 0)
-        ? ['status' => 'success', 'data'=>$time_slot, 'message' => 'Clinic ' . $data['clinicId'] . ' updated successfully.']
+        ? ['status' => 'success', 'data' => $data['time_slot'], 'message' => 'Clinic ' . $data['clinicId'] . ' updated successfully.']
         : ['status' => 'error', 'message' => 'Clinic not updated.'];
 
 }
+
+function addNewClinic($provinceTable, $data)
+{
+    global $conn;
+
+    $hospital_id = findHospitalIDByName($data['hospital']);
+    $clinic_category_id = findClinicCategoryIdByName($data['category']);
+
+    if (!$hospital_id || !$clinic_category_id) {
+        return ['status' => 'error', 'message' => 'Invalid hospital or clinic category.'];
+    }
+
+    $query = "INSERT INTO `$provinceTable` (hospital_id, clinic_category_id, clinic_place, clinic_date, clinic_time) 
+              VALUES (?, ?, ?, ?, ?)";
+    $stmt = mysqli_prepare($conn, $query);
+
+    if (!$stmt) {
+        return ['status' => 'error', 'message' => 'Error preparing query.'];
+    }
+
+    mysqli_stmt_bind_param($stmt, "sssss", $hospital_id, $clinic_category_id, $data['place'], $data['day'], $data['time_slot']);
+    $result = mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+    return $result
+        ? ['status' => 'success', 'message' => 'New clinic added successfully.']
+        : ['status' => 'error', 'message' => 'New clinic not added.'];
+}
+
+
+function findHospitalIDByName($name){
+    global $conn;
+    $query = "SELECT id FROM hospitals WHERE hospital_name=?";
+    $stmt = mysqli_prepare($conn, $query);
+
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "s", $name);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $row = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+
+        return $row ? $row['id'] : null; 
+    }
+
+    return null;
+}
+
+
+function findClinicCategoryIdByName($name){
+    global $conn;
+    $query = "SELECT id FROM clinics_categories WHERE clinic_name=?";
+    $stmt = mysqli_prepare($conn, $query);
+
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "s", $name);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $row = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+
+        return $row ? $row['id'] : null; 
+    }
+
+    return null;
+}
+
 
 ?>

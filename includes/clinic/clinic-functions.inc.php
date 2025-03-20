@@ -266,14 +266,4 @@ function convertTo12HourFormat($time)
     return $dateTime ? $dateTime->format('h:i A') : '';
 }
 
-// Function to add a clinic
-function addClinic($province, $clinicName, $clinicPlace, $clinicDate, $clinicTime)
-{
-    global $conn;
-    $sql = "INSERT INTO `$province` (Clinic_Name, Clinic_Place, Clinic_Date, Clinic_Time) VALUES (?, ?, ?, ?)";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "ssss", $clinicName, $clinicPlace, $clinicDate, $clinicTime);
-    return mysqli_stmt_execute($stmt);
-}
-
 ?>
