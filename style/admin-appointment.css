@@ -30,7 +30,7 @@
   text-align: justify;
 }
 
-#patient-appointment-header>h6:last-child{
+#patient-appointment-header>h6:last-child {
   font-weight: 600;
   color: var(--color-4);
   margin-top: 0.5rem;
@@ -103,7 +103,7 @@
   text-shadow: 3px -3px 3px var(--color-3);
 }
 
-#filter-container{
+#filter-container {
   padding: 1rem 0;
 }
 
@@ -113,13 +113,13 @@
   gap: 1rem;
 }
 
-#filter-title{
+#filter-title {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
 
-#filter-title > i{
+#filter-title>i {
   font-size: 1.15rem;
 }
 
@@ -128,13 +128,13 @@
   font-weight: 600;
 }
 
-#filter-options{
+#filter-options {
   display: flex;
   gap: 3rem;
 }
 
 #filter-select select,
-#filter-select input{
+#filter-select input {
   width: 100%;
   border: none;
   border-bottom: 2px solid var(--d-color-6);
@@ -142,8 +142,8 @@
   background-color: rgb(134 183 254 / 64%);
   color: var(--d-color-6);
   height: 23px;
-    padding-top: 0;
-    padding-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 #filter-select input::placeholder {
@@ -152,26 +152,26 @@
 }
 
 #filter-select select:focus,
-#filter-select input:focus{
+#filter-select input:focus {
   border-bottom-color: var(--color-1);
 }
 
-#filter-select{
+#filter-select {
   display: none;
 }
 
-#filter-select .col{
+#filter-select .col {
   display: none;
   padding-left: 0.3rem;
   padding-right: 0.3rem;
 }
 
-#button-wrapper{
+#button-wrapper {
   padding-top: 5px;
   padding-bottom: 5px;
 }
 
-#button-wrapper>button{
+#button-wrapper>button {
   background-color: var(--d-color-6);
   font-size: 0.85rem;
   color: var(--color-2);
@@ -179,7 +179,7 @@
   border: none;
   border-radius: 0.2rem;
   box-shadow: rgba(63, 172, 233, 0.36) 0px 0px 0px 5px, rgb(18 81 210 / 40%) 0px 0px 0px 2px;
-  margin:0 7px;
+  margin: 0 7px;
   padding: 0.25rem 0;
 }
 
@@ -188,49 +188,53 @@
   cursor: not-allowed;
 }
 
-#button-wrapper>button:enabled:hover{
+#button-wrapper>button:enabled:hover {
   box-shadow: none;
 }
 
 /* ----------------- search result table ---------------- */
-#table-container{
+#table-container {
   display: none;
   margin-top: 1rem;
   width: 100%;
   overflow-x: auto;
   position: relative;
   box-shadow: 0px 0px 5px 0px rgb(16 37 161 / 31%);
-  border-right:1px solid var(--color-1);
-  transition: all 1s ease; /* Smooth transition */
+  border-right: 1px solid var(--color-1);
+  transition: all 1s ease;
+  /* Smooth transition */
 }
 
-#table-container table{
+#table-container table {
   width: 100%;
-    border-collapse: collapse;
-    color: var(--d-color-6);
+  border-collapse: collapse;
+  color: var(--d-color-6);
 }
 
 
-#table-container table th, #table-container table td {
-    border: 1px solid var(--color-1);
-    vertical-align: middle;
-    white-space: nowrap; /* Prevent text wrapping */
+#table-container table th,
+#table-container table td {
+  border: 1px solid var(--color-1);
+  vertical-align: middle;
+  white-space: nowrap;
+  /* Prevent text wrapping */
 }
 
-#table-container table th{
+#table-container table th {
   text-align: center;
   padding: 1rem;
   line-height: 2.5;
 }
 
-#table-container table td{
+#table-container table td {
   line-height: 1;
   padding: 0.75rem;
-    text-align: left;
+  text-align: left;
 }
 
 /* Freeze the last column */
-#table-container table th:last-child, #table-container table td:last-child {
+#table-container table th:last-child,
+#table-container table td:last-child {
   position: sticky;
   right: 0;
   background-color: var(--color-3);
@@ -238,19 +242,20 @@
   /* box-shadow: 0px 0px 5px 0px rgb(16 37 161 / 31%); */
 }
 
-#table-container table th:last-child.unfreeze, #table-container table td:last-child.unfreeze{
+#table-container table th:last-child.unfreeze,
+#table-container table td:last-child.unfreeze {
   position: relative;
   background-color: transparent;
 }
 
-#table-container table tr td:last-child > div{
+#table-container table tr td:last-child>div {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.9rem;
 }
 
-#table-container table tr td:last-child > div>div{
+#table-container table tr td:last-child>div>div {
   padding: 0.5rem;
   color: var(--color-2);
   border-radius: 0.3rem;
@@ -260,15 +265,15 @@
   word-spacing: 2px;
 }
 
-#table-container table .btnApprove{
+#table-container table .btnApprove {
   background-color: var(--d-color-5);
 }
 
-#table-container table .btnReject{
+#table-container table .btnReject {
   background-color: var(--d-color-1);
 }
 
-#table-container table .btnApprove:not(.disabled):hover{
+#table-container table .btnApprove:not(.disabled):hover {
   background-color: var(--color-2);
   color: var(--d-color-5);
   cursor: pointer;
@@ -280,7 +285,7 @@
   cursor: not-allowed;
 }
 
-#table-container table .btnReject:not(.disabled):hover{
+#table-container table .btnReject:not(.disabled):hover {
   background-color: var(--color-2);
   color: var(--d-color-1);
   cursor: pointer;
@@ -302,13 +307,15 @@
 
 
 #table-container::-webkit-scrollbar {
-  display: none; /* For WebKit browsers */
+  display: none;
+  /* For WebKit browsers */
 }
 
 
 /* Webkit-based browsers */
 #table-container:hover::-webkit-scrollbar {
-  display: block; /* Show scrollbar on hover */
+  display: block;
+  /* Show scrollbar on hover */
   width: 10px;
 }
 
@@ -318,13 +325,13 @@
 }
 
 #table-container::-webkit-scrollbar-thumb {
-  background: linear-gradient(90deg, var(--color-4),var(--d-color-6));
+  background: linear-gradient(90deg, var(--color-4), var(--d-color-6));
   border-radius: 8px;
   border: 2px solid var(--background-color);
 }
 
 #table-container::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(90deg,var(--d-color-6), var(--color-4));
+  background: linear-gradient(90deg, var(--d-color-6), var(--color-4));
 }
 
 /* --------------- object validation error -------------------------- */

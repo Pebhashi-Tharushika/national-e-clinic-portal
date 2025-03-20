@@ -86,7 +86,7 @@
   background-color: var(--d-color-5);
 }
 
-#hospitals{
+#hospitals {
   background-color: var(--d-color-6);
 }
 
@@ -123,12 +123,12 @@
 }
 
 .chart-container {
-      width: 100%;
-      padding: 0 1.5rem;
-      flex-grow: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+  width: 100%;
+  padding: 0 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #stacked-bar-chart {
@@ -274,18 +274,20 @@ svg #Sri_Lanka path.selected+text {
   text-align: center;
   margin: 0;
   padding: 1rem;
-  flex-shrink: 0; /* Ensures <h6> doesn't shrink */
+  flex-shrink: 0;
+  /* Ensures <h6> doesn't shrink */
 }
 
 #pie-chart-container {
-  flex-grow: 1; /* Takes up remaining space */
-  display: flex; 
-   align-items: center;
-   justify-content: center; 
+  flex-grow: 1;
+  /* Takes up remaining space */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#pie-chart-wrapper{
-  height:100%;
+#pie-chart-wrapper {
+  height: 100%;
 }
 
 #nationwide-overview-container {
@@ -307,7 +309,7 @@ svg #Sri_Lanka path.selected+text {
 }
 
 
-#area-chart-container{
+#area-chart-container {
   flex-grow: 1;
   display: flex;
   align-items: center;
@@ -315,8 +317,7 @@ svg #Sri_Lanka path.selected+text {
 }
 
 #stacked-area-chart-wrapper,
-#area-chart-wrapper{
+#area-chart-wrapper {
   width: 48%;
   height: 90%;
 }
-

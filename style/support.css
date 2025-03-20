@@ -3,24 +3,24 @@
     margin: 9vh auto;
 }
 
-#support-container > .row > div:first-child{
+#support-container>.row>div:first-child {
     margin-top: 2rem;
 }
 
-#support-container > .row > div:nth-child(3){
+#support-container>.row>div:nth-child(3) {
     margin-top: 8rem;
 }
 
 /* ----------------- get-in-touch ----------------- */
 
-#get-in-touch{
+#get-in-touch {
     height: 105%;
     width: 110%;
     display: flex;
     flex-direction: column;
 }
 
-#get-in-touch #git-title p{
+#get-in-touch #git-title p {
     letter-spacing: 0.05rem;
     font-size: 3.5rem;
     margin: 0;
@@ -31,14 +31,14 @@
     text-shadow: 3px -3px 3px var(--color-3);
 }
 
-#get-in-touch #git-slogan p{
+#get-in-touch #git-slogan p {
     margin-top: 1rem;
     font-size: 1.2rem;
     color: var(--color-3);
     letter-spacing: 0.05rem;
 }
 
-#get-in-touch #connect-details{
+#get-in-touch #connect-details {
     width: 100%;
     height: 40vh;
     display: flex;
@@ -48,14 +48,14 @@
     flex-grow: 1;
 }
 
-#get-in-touch #connect-details > .row{
+#get-in-touch #connect-details>.row {
     height: 100%;
     width: 100%;
 }
 
 #get-in-touch #connect-details #connect-l,
 #get-in-touch #connect-details #connect-m,
-#get-in-touch #connect-details #connect-r{
+#get-in-touch #connect-details #connect-r {
     background-color: var(--color-7);
     height: 100%;
     display: flex;
@@ -66,7 +66,7 @@
     border-radius: 0.5rem;
 }
 
-#get-in-touch #connect-details .connect{
+#get-in-touch #connect-details .connect {
     width: 10rem;
     height: 10rem;
     border-radius: 50%;
@@ -74,7 +74,7 @@
     background-color: var(--color-2);
 }
 
-#get-in-touch #connect-details .connect a{
+#get-in-touch #connect-details .connect a {
     width: 100%;
     height: 100%;
     padding: 1rem;
@@ -93,21 +93,21 @@
     transition: all 0.3s ease;
 }
 
-#get-in-touch #connect-details .connect a:hover{
+#get-in-touch #connect-details .connect a:hover {
     background-color: var(--color-4);
     color: var(--color-2);
 }
 
-#get-in-touch #connect-details .connect a:hover i{
+#get-in-touch #connect-details .connect a:hover i {
     color: var(--color-2);
 }
 
-#get-in-touch #connect-details .connect a i{
+#get-in-touch #connect-details .connect a i {
     font-size: 1.5rem;
     color: var(--color-4);
 }
 
-#get-in-touch #connect-details .command{
+#get-in-touch #connect-details .command {
     font-size: 1rem;
     color: var(--color-3);
     font-weight: 500;
@@ -115,7 +115,7 @@
 
 /* ----------------- image ------------------- */
 
-#image-container img{
+#image-container img {
     z-index: -10;
     position: absolute;
     top: 10vh;
@@ -126,16 +126,17 @@
 
 /* ---------------- request-submission ---------------- */
 
-#support-main-title{
+#support-main-title {
     color: var(--color-1);
 }
-#support-main-content{
+
+#support-main-content {
     font-size: 1.2rem;
     color: var(--color-3);
     letter-spacing: 0.05rem;
 }
 
-#request-submission{
+#request-submission {
     width: 60%;
     margin: 0 auto;
     display: flex;
@@ -169,7 +170,7 @@
     font-size: 1rem;
 }
 
-.form-field.required > label:after {
+.form-field.required>label:after {
     margin-left: 0.2rem;
     color: var(--color-8);
     content: "*";
@@ -191,7 +192,7 @@
 .form-field input[type="text"]:focus,
 .form-field input[type="email"]:focus,
 .form-field textarea:focus {
-    border-color: var(--color-4); 
+    border-color: var(--color-4);
     outline: 0;
 }
 
@@ -200,7 +201,7 @@
     min-height: 14vh;
 }
 
-.form-field .hint{
+.form-field .hint {
     font-size: 0.82rem;
     color: var(--color-3);
 }
@@ -233,7 +234,7 @@
     padding: 0.5rem;
 }
 
-.upload-dropzone span a{
+.upload-dropzone span a {
     text-decoration: none;
     color: var(--color-1) !important;
     background-color: transparent;
@@ -276,7 +277,7 @@
     color: var(--color-8);
 }
 
-.form-field button{
+.form-field button {
     border: 0;
     outline: 0;
     border-radius: 0.2rem;
@@ -287,38 +288,38 @@
     transition: background-color 0.5s ease;
 }
 
-.form-field button:hover{
+.form-field button:hover {
     background: linear-gradient(var(--color-1), var(--color-4));
 }
 
 /* ------------- map ------------------- */
 
-#map-title{
+#map-title {
     color: var(--color-1);
     margin-bottom: 2rem;
 }
 
-#map-container{
-        box-shadow: 0 0 10px var(--color-3);
-        border-radius: 0.5rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 1rem;
+#map-container {
+    box-shadow: 0 0 10px var(--color-3);
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
 }
 
-#map-container > iframe {
+#map-container>iframe {
     width: 100%;
 }
 
 
 
-#triangle{
+#triangle {
     position: absolute;
     bottom: 0;
     right: 0;
     width: 44.2vw;
     height: 5vh;
-    background: linear-gradient(-45deg,#004aad, #5de0e6);
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%,20% 100%);
+    background: linear-gradient(-45deg, #004aad, #5de0e6);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 20% 100%);
 }

@@ -17,8 +17,8 @@
   --color-7: #dddddd;
   --color-8: #0ef;
   --color-9: #081b29;
-  --color-10:#f4f4f4;
-  --color-11:#ff0000;
+  --color-10: #f4f4f4;
+  --color-11: #ff0000;
 }
 
 body {
@@ -27,7 +27,7 @@ body {
   min-height: 100vh;
 }
 
-.login-wrapper{
+.login-wrapper {
   flex-grow: 1;
   display: flex;
   justify-content: center;
@@ -92,7 +92,7 @@ body {
 .input-box input:focus,
 .input-box input:valid,
 .input-box select:focus,
-.input-box select:valid{
+.input-box select:valid {
   border-bottom-color: var(--color-4);
   color: var(--color-4);
 }
@@ -117,7 +117,7 @@ body {
   color: var(--color-4);
 }
 
-.input-box > i {
+.input-box>i {
   position: absolute;
   top: 50%;
   right: 0;
@@ -157,7 +157,7 @@ body {
   transition-delay: calc(.1s * var(--hidden-rate));
 }
 
-.pwd-forgot-remember{
+.pwd-forgot-remember {
   margin: 1.5625rem 0;
   display: flex;
   justify-content: space-between;
@@ -165,32 +165,32 @@ body {
 }
 
 .pwd-forgot-remember #pwd-forgot .pwd-forgot-link,
-.pwd-forgot-remember #remember-me{
+.pwd-forgot-remember #remember-me {
   font-size: 0.8rem;
   color: var(--color-4);
   font-weight: bold;
 }
 
-.pwd-forgot-remember #remember-me, 
+.pwd-forgot-remember #remember-me,
 .pwd-forgot-remember #pwd-forgot {
   display: flex;
-  align-items: center;   
+  align-items: center;
 }
 
-.pwd-forgot-remember #remember-me{
-  gap: 0.2rem;  
+.pwd-forgot-remember #remember-me {
+  gap: 0.2rem;
 }
 
 .pwd-forgot-remember #remember-me #remember-check,
-.pwd-forgot-remember #remember-me #lbl-remember-me{
+.pwd-forgot-remember #remember-me #lbl-remember-me {
   cursor: pointer;
 }
 
-.pwd-forgot-remember #pwd-forgot .pwd-forgot-link{
+.pwd-forgot-remember #pwd-forgot .pwd-forgot-link {
   text-decoration: underline;
 }
 
-#nameAndPwdError{
+#nameAndPwdError {
   text-align: center;
 }
 
@@ -224,7 +224,7 @@ body {
   transition-delay: calc(.1s * var(--hidden-rate));
 }
 
-#signupForm{
+#signupForm {
   height: 85%;
   display: flex;
   flex-direction: column;
@@ -232,24 +232,27 @@ body {
   justify-content: center;
 }
 
-#scroll-container{
+#scroll-container {
   overflow-y: scroll;
   overflow-x: hidden;
   height: 85%;
   width: 100%;
   margin-bottom: 1.6rem;
   padding: 0 1rem 0 0;
-  transition: all 1s ease; /* Smooth transition */
+  transition: all 1s ease;
+  /* Smooth transition */
 }
 
 #scroll-container::-webkit-scrollbar {
-  display: none; /* For WebKit browsers */
+  display: none;
+  /* For WebKit browsers */
 }
 
 
 /* Webkit-based browsers */
 #scroll-container:hover::-webkit-scrollbar {
-  display: block; /* Show scrollbar on hover */
+  display: block;
+  /* Show scrollbar on hover */
   width: 10px;
 }
 
@@ -259,22 +262,24 @@ body {
 }
 
 #scroll-container::-webkit-scrollbar-thumb {
-  background: linear-gradient(90deg, var(--color-4),var(--color-9));
+  background: linear-gradient(90deg, var(--color-4), var(--color-9));
   border-radius: 8px;
   border: 2px solid var(--color-10);
 }
 
 #scroll-container::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(90deg,var(--color-1), var(--color-4));
+  background: linear-gradient(90deg, var(--color-1), var(--color-4));
 }
 
 
 .invisible-scrollbar::-webkit-scrollbar {
-  display: none; /* For Chrome, Safari, and Edge */
+  display: none;
+  /* For Chrome, Safari, and Edge */
 }
 
-.invisible-scrollbar{
-  scrollbar-width: none; /* For Firefox */
+.invisible-scrollbar {
+  scrollbar-width: none;
+  /* For Firefox */
 }
 
 /* -------------------- form - button ------------------- */
@@ -312,13 +317,13 @@ body {
 }
 
 /* ------------ terms & condictions and privacy policy ------------- */
-#agreement{
+#agreement {
   font-size: 0.75rem;
-margin-bottom: 0.5rem;
-text-align: center;
+  margin-bottom: 0.5rem;
+  text-align: center;
 }
 
-#agreement > a {
+#agreement>a {
   color: var(--color-1);
 }
 
@@ -352,7 +357,7 @@ text-align: center;
 
 }
 
-.login-wrapper .login-container .info-text h2{
+.login-wrapper .login-container .info-text h2 {
   font-size: 1.75rem;
   color: var(--color-2);
   line-height: 1.3;
@@ -373,7 +378,7 @@ text-align: center;
   padding: 0 2.5rem 6rem;
 }
 
-.login-wrapper .login-container .info-text.login p{
+.login-wrapper .login-container .info-text.login p {
   padding-left: 4rem;
 }
 
@@ -397,7 +402,7 @@ text-align: center;
 .login-wrapper .login-container .info-text.register {
   left: 0;
   text-align: left;
-  padding: 0  0 6rem 2.5rem;
+  padding: 0 0 6rem 2.5rem;
   pointer-events: none;
 }
 
@@ -481,7 +486,7 @@ text-align: center;
 
 
 /* --------------- password information -------------------- */
-#password-info{
+#password-info {
   font-size: 0.75rem;
   padding-top: 0.1rem;
   color: var(--color-6);
@@ -490,24 +495,18 @@ text-align: center;
   gap: 0.2rem;
 }
 
-#password-info > p{
+#password-info>p {
   margin-bottom: 0;
 }
 
-#password-info > i{
+#password-info>i {
   font-size: 1rem;
 }
 
 
 
 /* ------------------- admin-code-modal ---------------- */
-/* .modal-title{
-  font-weight: 600;
-} */
 
-#adminCodeDiv{
+#adminCodeDiv {
   display: none;
 }
-
-
-

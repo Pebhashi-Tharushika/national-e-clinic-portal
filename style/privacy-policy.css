@@ -23,7 +23,7 @@
   text-align: justify;
 }
 
-#privacy-policy-content >p{
+#privacy-policy-content>p {
   margin: 0;
   padding-bottom: 2rem;
 }
@@ -40,9 +40,10 @@
 }
 
 #privacy-policy-content>ol>ul,
-#privacy-policy-content>ol>p{
+#privacy-policy-content>ol>p {
   padding-bottom: 1.7rem;
 }
+
 #privacy-policy-content>ol p,
 #privacy-policy-content>ol ul {
   font-weight: normal;
@@ -54,6 +55,6 @@
   padding-left: 2rem;
 }
 
-#privacy-policy-content > hr{
+#privacy-policy-content>hr {
   border-width: 2px;
 }

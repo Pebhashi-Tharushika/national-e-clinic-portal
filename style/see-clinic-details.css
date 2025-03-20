@@ -286,7 +286,7 @@ svg #Sri_Lanka path.selected+text {
     background-color: var(--color-2);
 }
 
-#other-selection>#search-heading-and-form>form>.form-field:last-child>#button-wrapper>button:disabled{
+#other-selection>#search-heading-and-form>form>.form-field:last-child>#button-wrapper>button:disabled {
     opacity: 0.6;
     background-color: var(--color-3);
     color: var(--color-6);
@@ -295,14 +295,14 @@ svg #Sri_Lanka path.selected+text {
 /* --------------- search result ----------- */
 
 
-#selected-clinic-info-container{
+#selected-clinic-info-container {
     width: 85%;
     margin: 0 auto;
     background-color: var(--color-2);
     padding: 5vh 0;
 }
 
-#selected-clinic-info-title{
+#selected-clinic-info-title {
     font-size: 1.5rem;
     text-align: center;
     color: var(--color-1);
@@ -323,7 +323,7 @@ svg #Sri_Lanka path.selected+text {
     left: 0;
 }
 
-#not-selected-msg{
+#not-selected-msg {
     font-size: 1rem;
     text-align: center;
     display: block;
@@ -331,7 +331,7 @@ svg #Sri_Lanka path.selected+text {
     color: var(--color-3);
 }
 
-#selection-criteria{
+#selection-criteria {
     display: none;
     font-size: 0.85rem;
     flex-direction: column;
@@ -340,27 +340,27 @@ svg #Sri_Lanka path.selected+text {
     color: var(--color-1);
 }
 
-#table-container{
+#table-container {
     display: none;
     max-width: 80%;
     margin: 5vh auto;
 }
 
-#clinicTable{
+#clinicTable {
     color: var(--color-7);
     background-color: var(--color-1);
     border-collapse: collapse;
     max-width: 100%;
 }
 
-#clinicTable thead{
+#clinicTable thead {
     border-bottom: 2.5px solid var(--color-3);
 }
 
 #clinicTable th,
 #clinicTable td {
-    width: 3.33%; 
-    text-align: center; 
+    width: 3.33%;
+    text-align: center;
     vertical-align: middle;
 }
 
@@ -374,4 +374,3 @@ svg #Sri_Lanka path.selected+text {
     font-size: 1rem;
     height: 3.2rem;
 }
-
