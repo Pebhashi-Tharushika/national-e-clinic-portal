@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const dropdownClinicCategories = document.getElementById('drpdwnCategory');
 
+    const btnAddClinic = document.getElementById("btnAddClinic");
+
     const modalDropdownClinic = document.getElementById('clinic-category');
     const modalDropdownProvince = document.getElementById('province');
     const modalDropdownDistrict = document.getElementById('district');
@@ -16,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalStartTime = document.getElementById('start-time');
     const modalEndTime = document.getElementById('end-time');
 
-    const modalBtnAddOrEdit = document.getElementById("btnAddOrEdit");
     const modalBtnClear = document.getElementById("btnClear");
 
     let currentClinicCategories = [];
@@ -45,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         $.ajax({
             type: 'POST',
-            url: '/national-e-clinic-portal/includes/admin-clinic/admin-clinic-add.inc.php',
+            url: '/national-e-clinic-portal/includes/admin-clinic/admin-clinic-add.inc.php?add=category',
             data: JSON.stringify({ clinic_category: newClinicCategory }),
             dataType: "json",
             contentType: "application/json",
@@ -181,19 +182,19 @@ document.addEventListener('DOMContentLoaded', () => {
         provinces.forEach((province, index) => {
             const provinceId = province.toLowerCase().replace(/\s+/g, '-');
 
+            const tableSelector = `#table-clinic-${provinceId}`;
 
-            if (!$.fn.DataTable.isDataTable(`#table-clinic-${provinceId}`)) {
-                let tbl = $(`#table-clinic-${provinceId}`).DataTable({
+            if (!$.fn.DataTable.isDataTable(tableSelector)) {
+                tablePatientClinic[index] = $(tableSelector).DataTable({
                     lengthMenu: [10, 25, 50, 100],
+                    scrollX: true, // Enables horizontal scrolling
                     drawCallback: function () {
                         initializeTooltips();
                     }
                 });
-                tablePatientClinic.push(tbl);
+            } else {
+                tablePatientClinic[index].clear().draw();
             }
-
-            tablePatientClinic[index].clear().draw();
-
 
             getAllClinicInfo(province)
                 .then(clinics => {
@@ -217,7 +218,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     tablePatientClinic[index].draw(); // Ensure UI updates
                     initializeTooltips();
-                    disableScroll(province);
                     toggleActiveStatus(province);
                     setListenerToEditClinicInfo(province, tablePatientClinic[index]);
                 })
@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             tabPane.id = tabId;
             tabPane.innerHTML = `
-                <div class="table-responsive" id="table-clinic-wrapper-${tabId}">
+                <div id="table-clinic-wrapper-${tabId}">
                     <table id="table-clinic-${tabId}" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -271,7 +271,17 @@ document.addEventListener('DOMContentLoaded', () => {
             tabContentContainer?.appendChild(tabPane);
 
         });
+
     }
+
+    $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+        let targetTableId = $(e.target).attr("href"); // Get the active tab's table ID
+        let dataTable = $(targetTableId).find("table").DataTable();
+
+        if (dataTable) {
+            dataTable.columns.adjust().draw(); // Adjust column sizes when tab is shown
+        }
+    });
 
     // Function to initialize tooltips
     function initializeTooltips() {
@@ -349,11 +359,80 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
     /* ------------------------------------ add or edit clinic modal ---------------------------- */
 
     modalBtnClear?.addEventListener("click", function () {
         document.getElementById("addNewClinicOrEditClinicForm")?.reset();
+
+        modalDropdownDistrict.innerHTML = `<option value="" disabled selected>Select District</option>`;
+        modalDropdownHospital.innerHTML = `<option value="" disabled selected>Select Hospital</option>`;
+
+        modalDropdownDistrict.disabled = true;
+        modalDropdownHospital.disabled = true;
+    });
+
+    btnAddClinic.addEventListener('click', event => {
+
+        let modal = new bootstrap.Modal(document.getElementById("add-edit-clinic-modal"));
+        document.querySelector("#add-edit-clinic-modal .modal-title").textContent = "Add New Clinic";
+        document.querySelector("#add-edit-clinic-modal .modal-footer #btnAddOrEdit").textContent = "Save";
+        modal.show();
+
+        removeAllErrorMessages(); //remove all error messages
+
+        modalBtnClear.click();
+
+        setListenerToProvinceChange();
+        setListenerToDistrictChange();
+
+        $("#btnAddOrEdit").off('click').on('click', function () {
+            // Remove error message when user starts typing
+            $("input, select").on("input change", function () {
+                $(this).removeClass("is-invalid");
+                $(this).next(".invalid-feedback").remove();
+            });
+
+            if (!validateForm()) {
+                return;
+            }
+
+            let selectedHospitalOption = Array.from(modalDropdownHospital.options).find(option => option.selected === true);
+            let selectedHospitalOptionInnerText = selectedHospitalOption?.innerText
+            console.log('selectedHospitalOptionInnerText: ', selectedHospitalOptionInnerText);
+
+            const clinicData = {
+                category: modalDropdownClinic.value,
+                province: modalDropdownProvince.value,
+                district: modalDropdownDistrict.value,
+                hospital: modalDropdownHospital.value,
+                place: modalClinicPlace.value.trim(),
+                day: modalDropdownClinicDay.value,
+                startTime: modalStartTime.value,
+                endTime: modalEndTime.value
+            };
+
+            console.log('clinicdata: ', clinicData);
+
+            $.ajax({
+                type: 'POST',
+                url: '/national-e-clinic-portal/includes/admin-clinic/admin-clinic-add.inc.php?add=clinic',
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(clinicData),
+                success: function (response) {
+                    if (response.status === "success") {
+                        modalBtnClear.click(); // Clear fields
+                        bootstrap.Modal.getInstance(document.getElementById("add-edit-clinic-modal")).hide(); // Close modal
+                        populateClinicInfoTable();
+                    }
+                    alert(response.message);
+                },
+                error: function (xhr, status, error) {
+                    alert('Error updating patient: ' + error);
+                }
+            });
+        });
+
     });
 
 
@@ -373,102 +452,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // const btnAddOrEdit = document.getElementById("btnAddOrEdit");
-    // const btnAddNewClinic = document.getElementById("btnAddClinic");
-    // const modalAddOrEditClinic = document.getElementById("add-edit-clinic-modal");
-
-    // let isNewClinic = false;
-    // btnAddNewClinic?.addEventListener('click', () => isNewClinic = true);
-    // modalAddOrEditClinic?.addEventListener('hidden.bs.modal', () => isNewClinic = false);
-
-    // function validateForm() {
-    //     let isValid = true;
-
-    //     // Array of required fields
-    //     let requiredFields = [
-    //         modalDropdownClinic,
-    //         modalDropdownProvince,
-    //         modalDropdownDistrict,
-    //         modalDropdownHospital,
-    //         modalDropdownClinicPlace,
-    //         modalDropdownClinicDay,
-    //         modalDropdownStartTime,
-    //         modalDropdownEndTime
-    //     ];
-
-    //     // Loop through each field and validate
-    //     requiredFields.forEach(field => {
-    //         console.log(field.value.trim());
-    //         if (!field.value.trim()) {
-    //             isValid = false;
-    //             field.classList.add('error'); 
-    //         } else {
-    //             field.classList.remove('error'); 
-    //         }
-    //     });
-
-    //     return isValid;
-    // }
-
-
-    // btnAddOrEdit?.addEventListener('click', event => {
-    //     let selectedClinicCategory = modalDropdownClinic.options[modalDropdownClinic.selectedIndex].value;
-    //     let selectedProvince = modalDropdownProvince.options[modalDropdownProvince.selectedIndex].value;
-    //     let selectedDistrict = modalDropdownDistrict.options[modalDropdownDistrict.selectedIndex].value;
-    //     let selectedHospital = modalDropdownHospital.options[modalDropdownHospital.selectedIndex].value;
-    //     let clinicPlace = modalDropdownClinicPlace.value;
-    //     let selectedDay = modalDropdownClinicDay.options[modalDropdownClinicDay.selectedIndex].value;
-    //     let startTime = modalDropdownStartTime.value;
-    //     let endTime = modalDropdownEndTime.value;
-
-
-    //     if (isNewClinic) {
-
-    //         let isValid = validateForm();
-
-    //         if (isValid) {
-    //             collectedData = {
-    //                 clinicCategory: selectedClinicCategory,
-    //                 province: selectedProvince,
-    //                 district: selectedDistrict,
-    //                 hospital: selectedHospital,
-    //                 place: clinicPlace,
-    //                 day: selectedDay,
-    //                 time: startTime + "-" + endTime
-    //             }
-    //             console.log(collectedData);
-    //         }
-
-    //     }
-
-    //     // let isValid = validateForm();
-
-    //     // if(isValid){
-    //     //     let selectedClinicCategory = modalDropdownClinic.options[modalDropdownClinic.selectedIndex].value;
-    //     //     let selectedProvince = modalDropdownProvince.options[modalDropdownProvince.selectedIndex].value;
-    //     //     let selectedDistrict = modalDropdownDistrict.options[modalDropdownDistrict.selectedIndex].value;
-    //     //     let selectedHospital = modalDropdownHospital.options[modalDropdownHospital.selectedIndex].value;
-    //     //     let clinicPlace = modalDropdownClinicPlace.value;
-    //     //     let selectedDay = modalDropdownClinicDay.options[modalDropdownClinicDay.selectedIndex].value;
-    //     //     let startTime = modalDropdownStartTime.value;
-    //     //     let endTime = modalDropdownEndTime.value;
-    //     //     collectedData = {
-    //     //         clinicCategory: selectedClinicCategory,
-    //     //         province: selectedProvince,
-    //     //         district: selectedDistrict,
-    //     //         hospital: selectedHospital,
-    //     //         place: clinicPlace,
-    //     //         day: selectedDay,
-    //     //         time: startTime+ " " + endTime
-    //     //     }
-    //     //     console.log(collectedData);
-    //     // }
-
-    // });
-
-    // function validateForm() {
-    //     return true;
-    // }
 
     function setListenerToEditClinicInfo(province, tblClinic) {
 
@@ -505,8 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(clinicInfo);
 
             //remove all error messages
-            $("#addNewClinicOrEditClinicForm input, #addNewClinicOrEditClinicForm select").removeClass("is-invalid");
-            $("#addNewClinicOrEditClinicForm input, #addNewClinicOrEditClinicForm select").next(".invalid-feedback").remove();
+            removeAllErrorMessages();
 
             openEditClinicModal(clinicInfo);
             setListenerToProvinceChange();
@@ -715,6 +697,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 modalEndTime.value = convertTo24Hour(clinic.endTime);
 
                 let modal = new bootstrap.Modal(document.getElementById("add-edit-clinic-modal"));
+                document.querySelector("#add-edit-clinic-modal .modal-title").textContent = "Update Clinic Details";
+                document.querySelector("#add-edit-clinic-modal .modal-footer #btnAddOrEdit").textContent = "Save Changes";
                 modal.show();
 
             })
@@ -767,9 +751,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         $(modalDropdownProvince).off('change').on('change', event => {
             let selectedProvince = event.target.value;
+            modalDropdownDistrict.disabled = false;
+            modalDropdownHospital.disabled = true;
             modalDropdownDistrict.innerHTML = `<option value="" disabled selected>Select District</option>`;
             modalDropdownHospital.innerHTML = `<option value="" disabled selected>Select Hospital</option>`;
-            modalDropdownHospital.disabled = true;
 
             $.ajax({
                 type: 'GET',
@@ -832,6 +817,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    function removeAllErrorMessages() {
+        $("#addNewClinicOrEditClinicForm input, #addNewClinicOrEditClinicForm select").removeClass("is-invalid");
+        $("#addNewClinicOrEditClinicForm input, #addNewClinicOrEditClinicForm select").next(".invalid-feedback").remove();
+    }
 
 });
 

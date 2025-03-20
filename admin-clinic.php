@@ -82,7 +82,7 @@
     <div class="patient-clinic" id="clinic-detail-container">
 
       <div id="btnAddClinic-wrapper">
-        <button class="btn" id="btnAddClinic" type="button" data-bs-toggle="modal" data-bs-target="#add-edit-clinic-modal">
+        <button class="btn" id="btnAddClinic" type="button">
           <i class="fa-solid fa-circle-plus"></i>Add Clinic
         </button>
       </div>
@@ -111,7 +111,7 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5">Add New Clinic</h1>
+          <h1 class="modal-title fs-5">Update Clinic Details</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -196,7 +196,7 @@
         <div class="modal-footer">
           <!-- Buttons -->
           <div class="d-flex justify-content-end pt-2">
-            <button type="button" class="btn btn-primary me-2 mt-2" id="btnAddOrEdit">Save</button>
+            <button type="button" class="btn btn-primary me-2 mt-2" id="btnAddOrEdit">Save Changes</button>
             <button type="button" class="btn btn-secondary me-2 mt-2" id="btnClear">Clear</button>
           </div>
         </div>
