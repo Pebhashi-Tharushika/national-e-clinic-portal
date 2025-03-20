@@ -509,8 +509,8 @@ document.addEventListener('DOMContentLoaded', () => {
             $("#addNewClinicOrEditClinicForm input, #addNewClinicOrEditClinicForm select").next(".invalid-feedback").remove();
 
             openEditClinicModal(clinicInfo);
-            // setListenerToProvinceChange();
-            // setListenerToDistrictChange();
+            setListenerToProvinceChange();
+            setListenerToDistrictChange();
 
             let clinicId = target.dataset.clinicId;
 
@@ -527,7 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 let selectedHospitalOption = Array.from(modalDropdownHospital.options).find(option => option.selected === true);
                 let selectedHospitalOptionInnerText = selectedHospitalOption?.innerText
-                console.log('selectedHospitalOptionInnerText: ',selectedHospitalOptionInnerText);
+                console.log('selectedHospitalOptionInnerText: ', selectedHospitalOptionInnerText);
 
                 const updatedData = {
                     clinicId: clinicId,
@@ -556,9 +556,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (response.status === "success") {
                             modalBtnClear.click(); // Clear fields
                             bootstrap.Modal.getInstance(document.getElementById("add-edit-clinic-modal")).hide(); // Close modal
-                            if(isUpdatedCategory){
+                            if (isUpdatedCategory) {
                                 populateClinicInfoTable();
-                            }else{
+                            } else {
                                 updatedData.hospital = selectedHospitalOptionInnerText;
                                 updatePatientClinicTableRow(rowIndex, updatedData, tabId, tblClinic, response.data, activeStatus); // Update DataTables row
                             }
@@ -687,20 +687,20 @@ document.addEventListener('DOMContentLoaded', () => {
                         const eleOption = document.createElement("option");
                         eleOption.value = d.district_name;
                         eleOption.innerText = d.district_name;
-                        if(eleOption.value === clinic.district){
+                        if (eleOption.value === clinic.district) {
                             eleOption.selected = true;  // Set selected option for district dropdown
                         }
                         modalDropdownDistrict.appendChild(eleOption);
                     });
                 }
-                console.log("clinic: ",clinic);
+                console.log("clinic: ", clinic);
                 if (status === 'success' || response.status === 'h-success') {
                     hospitals.data.forEach(h => {
                         const eleOption = document.createElement("option");
                         eleOption.value = h.hospital_name;
                         eleOption.innerText = `${h.hospital_name} ${h.institute_type}`;
-                        if(eleOption.innerText === clinic.hospital){
-                            eleOption.selected =true; // Set selected option for hospital dropdown
+                        if (eleOption.innerText === clinic.hospital) {
+                            eleOption.selected = true; // Set selected option for hospital dropdown
                         }
                         modalDropdownHospital.appendChild(eleOption);
                     });
@@ -760,6 +760,75 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    }
+
+    function setListenerToProvinceChange() {
+
+        $(modalDropdownProvince).off('change').on('change', event => {
+            let selectedProvince = event.target.value;
+            modalDropdownDistrict.innerHTML = `<option value="" disabled selected>Select District</option>`;
+            modalDropdownHospital.innerHTML = `<option value="" disabled selected>Select Hospital</option>`;
+            modalDropdownHospital.disabled = true;
+
+            $.ajax({
+                type: 'GET',
+                url: `/national-e-clinic-portal/includes/admin-clinic/admin-clinic-fetch.inc.php?p=${selectedProvince}`,
+                contentType: "application/json",
+                success: function (response) {
+                    if (response.status === "success") {
+
+                        response.data.forEach(d => {
+                            const eleOption = document.createElement("option");
+                            eleOption.value = d.district_name;
+                            eleOption.innerText = d.district_name;
+                            modalDropdownDistrict.appendChild(eleOption);
+                        });
+
+                    }
+                    else if (response.status === "error") {
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Error updating patient: ' + error);
+                }
+            });
+        });
+    }
+
+    function setListenerToDistrictChange() {
+
+        $(modalDropdownDistrict).off('change').on('change', event => {
+            let selectedDistrict = event.target.value;
+            let selectedProvince = modalDropdownProvince.value;
+
+            modalDropdownHospital.disabled = false;
+            modalDropdownHospital.innerHTML = `<option value="" disabled selected>Select Hospital</option>`;
+
+            $.ajax({
+                type: 'GET',
+                url: `/national-e-clinic-portal/includes/admin-clinic/admin-clinic-fetch.inc.php?p=${selectedProvince}&d=${selectedDistrict}`,
+                contentType: "application/json",
+                success: function (response) {
+                    if (response.status === "success") {
+
+                        response.data.forEach(h => {
+                            const eleOption = document.createElement("option");
+                            eleOption.value = h.hospital_name;
+                            eleOption.innerText = `${h.hospital_name} ${h.institute_type}`;
+                            modalDropdownHospital.appendChild(eleOption);
+                        });
+
+                    } else if (response.status === "error") {
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('Error updating patient: ' + error);
+                }
+            });
+        });
+
     }
 
 

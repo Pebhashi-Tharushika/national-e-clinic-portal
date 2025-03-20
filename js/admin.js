@@ -5,8 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
     const activePage = urlParams.get('content') || 'mnu1'; 
 
-    console.log(activePage);
-
     menus.forEach(menu => menu.classList.remove('active')); // Remove 'active' from all menu items
 
     document.getElementById(activePage)?.classList.add('active'); // Set active class

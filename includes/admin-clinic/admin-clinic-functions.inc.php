@@ -136,7 +136,7 @@ function updateClinicInfo($provinceTable, $data, $time_slot)
 {
     global $conn;
 
-    $query = "UPDATE $provinceTable p
+    $query = "UPDATE `$provinceTable` p
             JOIN hospitals h ON h.hospital_name = ? 
             JOIN clinics_categories c ON c.clinic_name = ?
             SET p.hospital_id = h.id,

@@ -108,7 +108,7 @@
 
   <!-- new clinic add / clinic update form - modal -->
   <div class="modal" id="add-edit-clinic-modal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5">Add New Clinic</h1>
