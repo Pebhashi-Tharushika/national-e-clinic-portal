@@ -16,7 +16,9 @@ The **National E-Clinic Portal** is a web-based healthcare application designed 
 - **Database**: MySQL
 - **Frameworks and Libraries**: Bootstrap, JQuery, Chart.js
 
-### Screenshots
+### Preview
+![](/assets/others.gif)
+
 
 ### Live Demo
 [Click Here](https://www.national-e-clinic-portal.wuaze.com/){:target="_blank"}
