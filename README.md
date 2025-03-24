@@ -18,9 +18,13 @@ The **National E-Clinic Portal** is a web-based healthcare application designed 
 
 ### Preview
 
-<img src="./assets/home-page-and-others.gif" alt="Home Page Preview" style="border: 2px solid #000;"/>
-<br><br>
-<img src="./assets/admin-dashbord.gif" alt="Admin Dashboard Preview" style="border: 2px solid #000;"/>
+|           |
+|-----------|
+|![](/assets/home-page-and-others.gif)| 
+
+|           |
+|-----------|
+|![](/assets/admin-dashbord.gif)|
 
 
 ### Live Demo
