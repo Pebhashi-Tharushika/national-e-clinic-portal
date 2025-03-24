@@ -1,0 +1,33 @@
+#admin-request-container {
+  width: 100%;
+  height: 80vh;
+  background-color: var(--background-color);
+}
+
+#admin-request-wrapper {
+  width: 90%;
+  margin: 5vh auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-request {
+  width: 95%;
+  margin: 0 0 3vh auto;
+}
+
+/* ------------------ header (title) -------------------------- */
+
+#admin-request-header {
+  display: flex;
+  flex-direction: column;
+}
+
+#admin-request-title {
+  word-spacing: 0.5rem;
+}
+
+#admin-request-header>h6 {
+  text-align: justify;
+}
+
