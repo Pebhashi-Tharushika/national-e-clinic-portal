@@ -1,7 +1,9 @@
 # National E-Clinic Portal
 
 ### Overview
-The **National E-Clinic Portal** is a web-based healthcare application designed to improve medical accessibility and streamline patient care. The healthcare sector has long struggled with issues such as overcrowded hospitals, limited access to medical services and inefficient healthcare delivery systems. This platform addresses these challenges.
+The **National E-Clinic Portal** is a web-based healthcare application designed to improve medical accessibility and streamline patient care across the nation. The healthcare sector often struggles with persistent issues such as overcrowded hospitals, limited access to medical services, and inefficient care delivery. This platform offers a secure, intuitive and centralized digital solution featuring end-to-end care coordination to tackle these challenges. Ultimately, this delivers a more convenient and reliable way for all citizens to access essential healthcare services.
+
+
 
 ### Features
 - **Online Appointment Booking** – Schedule doctor consultations seamlessly.  
